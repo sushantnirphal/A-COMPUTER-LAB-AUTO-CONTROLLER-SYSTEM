@@ -5,9 +5,9 @@ const Home = () => {
   return (
     <main>
       <Header />
-      <section className="p-6">
+      <section className=" pt-20">
         <form action="" className="flex xl:space-x-6 flex-wrap space-y-6">
-          <div className="mr-6 border rounded-md p-4 flex space-x-4 justify-start">
+          <div className=" border mr-6 ml-6  rounded-md p-4  flex space-x-4 justify-start">
             <label htmlFor="Year" className="text-lg"> Select Year:
             </label>
           

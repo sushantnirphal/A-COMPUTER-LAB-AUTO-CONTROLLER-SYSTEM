@@ -1,12 +1,12 @@
 import React from "react";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter,createHashRouter, RouterProvider} from "react-router-dom";
 
 import Home from "./partials/Home";
 import Courses from "./partials/Courses";
 import Header from "./partials/Header";
 import Code from "./partials/Code";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
