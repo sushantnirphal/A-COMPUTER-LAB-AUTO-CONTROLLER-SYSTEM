@@ -1,26 +1,31 @@
 import React, {Dispatch, FC, SetStateAction, useState} from "react";
 import Output from "./Output";
-
+import langcode from "../../../public/apicode";
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
 }> = ({code, setCode}) => {
-  const [result, setResult] = useState<string | null>(null);
-
+  const [result, setResult] = useState<string | null | boolean>(false);
+  const [langCode, setLangCode] = useState(0);
   function runCode() {
-    setResult("Compiling, please wait...");
     if (!code.trim()) {
+      alert("Empty code is not allowed");
       return;
     }
+    if (!langCode) {
+      alert("Please choose language");
+      return;
+    }
+    setResult("Compiling, please wait...");
     const encodedParams = new URLSearchParams();
-    encodedParams.append("LanguageChoice", "5");
-    encodedParams.append("Program", code);
+    encodedParams.append("LanguageChoice", `${langCode}`);
+    encodedParams.append("Program", `${code}`);
 
     const options = {
       method: "POST",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "7874306081msh098c99528347d4dp1d2128jsn6c4dac996975",
+        "X-RapidAPI-Key": "5c77346bcdmsh42c7871be9b2910p136d8djsn050adb52544a",
         "X-RapidAPI-Host": "code-compiler.p.rapidapi.com",
       },
       body: encodedParams,
@@ -33,11 +38,21 @@ const CodeWindow: FC<{
       })
       .catch((err) => console.error(err));
   }
+  //   {
+  //     "Errors": null,
+  //     "Result": null,
+  //     "Stats": "No Status Available",
+  //     "Files": null
+  // }
   return (
     <div className="resize-x  flex-1 border-r flex flex-col">
       <div className="bg-slate-900 py-3 px-4 flex justify-between">
         <select
           name="lang"
+          onChange={(e) => {
+            setLangCode(e.target.value);
+            console.log(e.target.value);
+          }}
           className="w-max bg-transparent text-white text-xl cursor-pointer"
         >
           {/* <option value="c" className="text-slate-900">
@@ -46,9 +61,13 @@ const CodeWindow: FC<{
           <option value="js" className="text-slate-900">
             Javascript
           </option> */}
-          <option value="python" className="text-slate-900">
-            Python
-          </option>
+          {langcode.map(({code, label}) => {
+            return (
+              <option key={label} value={code} className="text-slate-900">
+                {label}
+              </option>
+            );
+          })}
         </select>
         <div className="space-x-4 px-4">
           <button
@@ -71,7 +90,10 @@ const CodeWindow: FC<{
         name="code"
         className="code-window text-xl w-full flex-1 bg-transparent p-6 text-pink-500"
       ></textarea>
-      {result ? <Output result={result} setResult={setResult} /> : null}
+      <Output
+        result={result === null ? "You didnt printed anything" : result}
+        setResult={setResult}
+      />
     </div>
   );
 };

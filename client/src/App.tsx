@@ -1,10 +1,15 @@
 import React from "react";
-import {createBrowserRouter,createHashRouter, RouterProvider} from "react-router-dom";
-
-import Home from "./partials/Home";
+import {
+  createBrowserRouter,
+  createHashRouter,
+  RouterProvider,
+} from "react-router-dom";
+import StudentContext from "../Context/StudentContext";
+import Home from "./pages/Home";
 import Courses from "./partials/Courses";
 import Header from "./partials/Header";
-import Code from "./partials/Code";
+import Code from "./pages/Code";
+import LoginPage from "./pages/Login";
 
 const router = createHashRouter([
   {
@@ -19,12 +24,18 @@ const router = createHashRouter([
     path: "/code",
     element: <Code />,
   },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
 ]);
 const App = () => {
   return (
     <>
       {/* <Header /> */}
-      <RouterProvider router={router} />
+      <StudentContext>
+        <RouterProvider router={router} />
+      </StudentContext>
     </>
   );
 };
