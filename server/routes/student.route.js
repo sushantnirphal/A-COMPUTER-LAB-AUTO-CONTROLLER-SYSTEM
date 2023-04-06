@@ -1,4 +1,6 @@
 import express from "express";
+import jwt from "jsonwebtoken";
+
 import studentModel from "../model/student.model.js";
 const studentRouter = express.Router();
 studentRouter.get("/", async (req, res) => {
@@ -6,15 +8,26 @@ studentRouter.get("/", async (req, res) => {
   res.json(students);
 });
 
+studentRouter.post("/enroll", async (req, res) => {
+  const {payload} = req.body;
+  if (!payload) {
+    return res.status(400).send({success: true, message: "All fieds needed."});
+  }
+  const akg = await studentModel.create(payload);
+  res.status(200).send({success: true, message: "Created", akg});
+});
+
 studentRouter.post("/login", async (req, res) => {
   const {prn, phone} = req.body;
   try {
     const student = await studentModel.findOne({prn, phone});
+    const token = jwt.sign({prn, name: student.name}, process.env.JWT_SECRET);
     if (student) {
       // User found, return success response
       return res
+        .setHeader("Set-Cookie", `token=${token}; Secure; HttpOnly`)
         .status(200)
-        .json({success: true, message: "User found", student});
+        .json({success: true, message: "User found", data: student});
     } else {
       // User not found, return error response
       return res.status(404).json({success: false, message: "User not found"});

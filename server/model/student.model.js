@@ -19,7 +19,7 @@ const studentSchema = Schema({
   },
   semester: {
     type: "Number",
-    required: true,
+     
   },
   dob: {
     type: "Date",
@@ -33,7 +33,7 @@ const studentSchema = Schema({
     type: "String",
     required: true,
   },
-  photo: {
+  profile: {
     type: "String",
     required: true,
   },

@@ -133,7 +133,7 @@ const Home = () => {
         <div className="w-11/12 mx-auto p-6 items-center flex">
           <img
             className="rounded-full w-40 h-40 border border-dashed p-2"
-            src={student?.photo}
+            src={student?.profile}
             alt=""
           />
           <div className="ml-12 py-2 space-y-2">

@@ -10,7 +10,7 @@ import Courses from "./partials/Courses";
 import Header from "./partials/Header";
 import Code from "./pages/Code";
 import LoginPage from "./pages/Login";
-
+import EnrollPage from "./pages/EnrollPage";
 const router = createHashRouter([
   {
     path: "/",
@@ -28,6 +28,10 @@ const router = createHashRouter([
     path: "/login",
     element: <LoginPage />,
   },
+  {
+    path:"/enroll",
+    element:<EnrollPage/>,
+  }
 ]);
 const App = () => {
   return (

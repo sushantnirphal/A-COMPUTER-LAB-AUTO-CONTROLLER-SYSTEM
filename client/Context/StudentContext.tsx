@@ -1,4 +1,4 @@
-import React, {createContext, ReactNode, useState} from "react";
+import React, {createContext, ReactNode, useEffect, useState} from "react";
 import {StudentType} from "../interfaces/student";
 
 export const StudentContext = createContext({});
@@ -7,6 +7,9 @@ const StudentContextProvider: React.FC<{children: ReactNode}> = ({
   children,
 }) => {
   const [student, setStudent] = useState<StudentType>();
+  useEffect(() => {
+    setStudent(JSON.parse(localStorage.getItem("user")));
+  }, []);
   return (
     <StudentContext.Provider value={{student, setStudent}}>
       {children}

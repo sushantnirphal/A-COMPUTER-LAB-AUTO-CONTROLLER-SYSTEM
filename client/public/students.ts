@@ -14,7 +14,7 @@ const students: StudentType[] = [
   {
     name: "Kajal Gujare",
     email: "kajalgujare@gmail.com",
-    prn:" 1910121245001",
+    prn:"1910121245001",
     year:1,
     semester:1,
     dob:"04-07-2001",

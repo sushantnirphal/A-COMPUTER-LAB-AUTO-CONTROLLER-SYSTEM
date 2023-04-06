@@ -1,6 +1,12 @@
 import {StudentContext} from "../../Context/StudentContext";
 import {useContext, useEffect, useState} from "react";
-import {json, useLocation, useNavigate, useRoutes} from "react-router-dom";
+import {
+  Link,
+  json,
+  useLocation,
+  useNavigate,
+  useRoutes,
+} from "react-router-dom";
 
 function LoginPage() {
   const {student, setStudent} = useContext<any>(StudentContext);
@@ -32,7 +38,8 @@ function LoginPage() {
     const res = await req.json();
     console.log(res);
     if (res.success) {
-      setStudent(res.student);
+      setStudent(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
       console.log(student);
     } else {
       alert(res.message);
@@ -84,7 +91,12 @@ function LoginPage() {
           >
             Sign In
           </button>
+         
         </div>
+        <span className="text-white  block cursor-pointer">
+            Don't have an account ,then
+            <Link to={"/enroll"} className="text-sky-600 underline"> Enroll here</Link>
+          </span>
       </form>
     </div>
   );

@@ -14,6 +14,7 @@ const Header = () => {
   }, [router.pathname]);
   function logout() {
     setStudent({});
+    localStorage.removeItem("user");
     navigate("/login");
   }
   return (
