@@ -1,12 +1,13 @@
 import extractFormData from "@/utils/Extractform";
-import { useState } from "react";
-import {Link} from "react-router-dom";
+import { useState,useEffect } from "react";
+import {Link, useNavigate,useLocation} from "react-router-dom";
 function EnrollPage() {
     const [profile, setProfile] = useState("");
+    const navigate = useNavigate();
     
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-  
+      navigate('/Login');
       const payload = extractFormData(event.currentTarget);
   
       const req = await fetch("http://localhost:7890/student/enroll", {
@@ -23,8 +24,7 @@ function EnrollPage() {
           "Content-Type": "application/json",
         },
       });
-      const res = await req.json();
-      alert(JSON.stringify(res));
+      const res = await req.json();  
     };
   
     async function handleFile(
@@ -40,9 +40,9 @@ function EnrollPage() {
         e.target.value = "";
         return alert("Please upload image file (.png, .jpeg, .jpg)");
       }
-      if (file.size / 1000 > 250) {
+      if (file.size / 1000 > 500) {
         e.target.value = "";
-        return alert("Please upload file under 250kb");
+        return alert("Please upload file under 500kb");
       }
       const reader = new FileReader();
       reader.readAsDataURL(file as File);

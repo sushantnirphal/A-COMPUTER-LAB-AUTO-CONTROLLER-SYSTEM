@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "react-alert": "^7.0.3"
+  },
+  "devDependencies": {
+    "@types/react-alert": "^7.0.2"
+  }
+}

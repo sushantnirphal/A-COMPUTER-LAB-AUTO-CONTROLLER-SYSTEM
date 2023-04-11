@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import {
   createBrowserRouter,
   createHashRouter,
@@ -7,14 +7,34 @@ import {
 import StudentContext from "../Context/StudentContext";
 import Home from "./pages/Home";
 import Courses from "./partials/Courses";
-import Header from "./partials/Header";
 import Code from "./pages/Code";
 import LoginPage from "./pages/Login";
 import EnrollPage from "./pages/EnrollPage";
+import Academic from "./pages/Academic";
+import Manualsubmission from "./pages/Manualsubmission";
+import Attendence from "./pages/Attendence";
+import Practice from "./pages/Practice";
 const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/academic",
+    element: <Academic />,
+  },
+  {
+    path: "/manualsubmission",
+    element: <Manualsubmission />,
+  },
+  {
+    path: "/attendence",
+    element: <Attendence />,
+  },
+  {
+    path:"/practice",
+    element:<Practice/>
+
   },
   {
     path: "/courses",

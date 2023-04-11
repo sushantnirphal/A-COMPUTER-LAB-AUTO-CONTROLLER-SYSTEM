@@ -42,6 +42,7 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
+    autoHideMenuBar: true,
     title: 'Main window',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
     webPreferences: {
@@ -51,6 +52,7 @@ async function createWindow() {
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
+      
     },
   })
 
@@ -106,6 +108,10 @@ ipcMain.handle('open-win', (_, arg) => {
       nodeIntegration: true,
       contextIsolation: false,
     },
+  })
+  
+  const mainWindow = new BrowserWindow({
+    autoHideMenuBar: true,
   })
 
   if (process.env.VITE_DEV_SERVER_URL) {

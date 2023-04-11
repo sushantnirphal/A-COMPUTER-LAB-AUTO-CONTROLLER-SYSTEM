@@ -1,5 +1,5 @@
 import {StudentContext} from "../../Context/StudentContext";
-import {useContext, useEffect, useState} from "react";
+import {SetStateAction, useContext, useEffect, useState} from "react";
 import {
   Link,
   json,
@@ -15,15 +15,15 @@ function LoginPage() {
   const [prn, setPrn] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  function handlePrnChange(event) {
+  function handlePrnChange(event: { target: { value: SetStateAction<string>; }; }) {
     setPrn(event.target.value);
   }
 
-  function handlePhoneNumberChange(event) {
+  function handlePhoneNumberChange(event: { target: { value: SetStateAction<string>; }; }) {
     setPhoneNumber(event.target.value);
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: { preventDefault: () => void; }) {
     event.preventDefault();
     const req = await fetch("http://localhost:7890/student/login", {
       method: "post",
