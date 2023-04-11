@@ -7,6 +7,7 @@ const CodeWindow: FC<{
 }> = ({code, setCode}) => {
   const [result, setResult] = useState<string | null | boolean>(false);
   const [langCode, setLangCode] = useState(0);
+  const [userInput, setUserInput] = useState("");
   function runCode() {
     if (!code.trim()) {
       alert("Empty code is not allowed");
@@ -50,7 +51,7 @@ const CodeWindow: FC<{
         <select
           name="lang"
           onChange={(e) => {
-            setLangCode(e.target.value);
+            setLangCode(Number(e.target.value || 0) );
             console.log(e.target.value);
           }}
           className="w-max bg-transparent text-white text-xl cursor-pointer"
@@ -90,6 +91,9 @@ const CodeWindow: FC<{
         name="code"
         className="code-window text-xl w-full flex-1 bg-transparent p-6 text-pink-500"
       ></textarea>
+      <textarea onChange=
+              {(e) => setUserInput(e.target.value)}>
+      </textarea>
       <Output
         result={result === null ? "You didnt printed anything" : result}
         setResult={setResult}
@@ -97,5 +101,7 @@ const CodeWindow: FC<{
     </div>
   );
 };
+
+
 
 export default CodeWindow;
