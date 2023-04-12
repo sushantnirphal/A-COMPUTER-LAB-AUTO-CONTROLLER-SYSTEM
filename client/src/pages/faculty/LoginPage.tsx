@@ -105,15 +105,15 @@ function LoginPage() {
         <div className="space-y-2 pt-4">
           <span className="text-white  block cursor-pointer">
             Don't have an account ,then
-            <Link to={"/enroll"} className="text-sky-600 underline">
+            <Link to={"/faculty/enroll"} className="text-sky-600 underline">
               {" "}
-              Enroll here
+              Enroll here (faculty)
             </Link>
           </span>
 
           <span className="text-white  block cursor-pointer">
-            Faculty
-            <Link to={"/faculty/login"} className="text-sky-600 underline">
+          
+            <Link to={"/login"} className="text-sky-600 underline">
               {" "}
               Click here
             </Link>

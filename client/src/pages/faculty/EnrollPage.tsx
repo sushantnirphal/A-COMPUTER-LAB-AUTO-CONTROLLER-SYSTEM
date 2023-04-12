@@ -8,7 +8,7 @@ function EnrollPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate("/Login");
+    // navigate("/Login");
     const payload = extractFormData(event.currentTarget);
 
     const req = await fetch("http://localhost:7890/student/enroll", {

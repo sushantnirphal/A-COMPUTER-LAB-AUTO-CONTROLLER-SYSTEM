@@ -17,15 +17,10 @@ import Practice from "./pages/Practice";
 
 //  faculty
 import FacultyLogin from './pages/faculty/LoginPage'
-import SelectPage from "./pages/SelectPage";
-import Error from "./pages/404";
+import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 const router = createHashRouter([
   {
     path: "/",
-    element: <SelectPage />,
-  },
-  {
-    path: "/home",
     element: <Home />,
   },
   {
@@ -62,12 +57,12 @@ const router = createHashRouter([
     element:<EnrollPage/>,
   },
   {
-    path:"/faculty/login",
-    element:<FacultyLogin/>,
+    path:"/faculty/enroll",
+    element:<FacultyEnrollPage/>,
   },
   {
-    path:"/*",
-    element:<Error/>,
+    path:"/faculty/login",
+    element:<FacultyLogin/>,
   }
 ]);
 const App = () => {
