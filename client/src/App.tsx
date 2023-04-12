@@ -18,10 +18,15 @@ import Practice from "./pages/Practice";
 //  faculty
 import FacultyLogin from './pages/faculty/LoginPage'
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
+import SelectPage from "./pages/SelectPage";
 const router = createHashRouter([
   {
-    path: "/",
+    path: "/home",
     element: <Home />,
+  },
+  {
+    path: "/",
+    element: <SelectPage />,
   },
   {
     path: "/academic",
