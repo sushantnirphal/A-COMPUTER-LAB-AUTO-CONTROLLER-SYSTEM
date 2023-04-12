@@ -1,8 +1,8 @@
-import { FacultyContext } from "../../../Context/FacultyContex";
+import {FacultyContext} from "../../../Context/FacultyContex";
 import {SetStateAction, useContext, useEffect, useState} from "react";
 import {
   Link,
-  json, 
+  json,
   useLocation,
   useNavigate,
   useRoutes,
@@ -15,15 +15,19 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleUsernameChange(event: { target: { value: SetStateAction<string>; }; }) {
+  function handleUsernameChange(event: {
+    target: {value: SetStateAction<string>};
+  }) {
     setUsername(event.target.value);
   }
 
-  function handlePasswordChange(event: { target: { value: SetStateAction<string>; }; }) {
+  function handlePasswordChange(event: {
+    target: {value: SetStateAction<string>};
+  }) {
     setPassword(event.target.value);
   }
 
-  async function handleSubmit(event: { preventDefault: () => void; }) {
+  async function handleSubmit(event: {preventDefault: () => void}) {
     event.preventDefault();
     const req = await fetch("http://localhost:7890/faculty/login", {
       method: "post",
@@ -55,8 +59,14 @@ function LoginPage() {
   return (
     <div className="flex justify-center items-center h-screen gr-bg">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
+        <h4
+         className="text-xl font-semibold text-white py-8"
+        >Faculty login</h4>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-200 font-bold mb-2">
+          <label
+            htmlFor="username"
+            className="block text-gray-200 font-bold mb-2"
+          >
             User Name
           </label>
           <input
@@ -91,12 +101,30 @@ function LoginPage() {
           >
             Sign In
           </button>
-         
         </div>
-        <span className="text-white  block cursor-pointer">
+        <div className="space-y-2 pt-4">
+          <span className="text-white  block cursor-pointer">
             Don't have an account ,then
-            <Link to={"/faculty/enroll"} className="text-sky-600 underline"> Enroll here</Link>
+            <Link to={"/enroll"} className="text-sky-600 underline">
+              {" "}
+              Enroll here
+            </Link>
           </span>
+
+          <span className="text-white  block cursor-pointer">
+            Faculty
+            <Link to={"/faculty/login"} className="text-sky-600 underline">
+              {" "}
+              Click here
+            </Link>
+          </span>
+          <span className="text-white  block cursor-pointer">
+            <Link to={"/"} className="text-sky-600 underline">
+              {" "}
+              Go back
+            </Link>
+          </span>
+        </div>
       </form>
     </div>
   );

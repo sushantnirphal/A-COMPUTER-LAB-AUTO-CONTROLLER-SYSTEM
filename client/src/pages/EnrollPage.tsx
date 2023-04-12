@@ -52,10 +52,10 @@ function EnrollPage() {
     }
   return (
     <div>
-      <main className="bg-slate-200 py-12">
+      <main className="gr-bg py-12">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
+        className=" p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
       >
         <input type="hidden" name="role" value={"setter"} />
         <div className="mb-4 flex-1  flex-wrap flex py-6">
@@ -86,7 +86,7 @@ function EnrollPage() {
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="fname"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               First name:
             </label>
@@ -94,13 +94,13 @@ function EnrollPage() {
               type="text"
               name="fname"
               id="fname"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="lname"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               Last Name:
             </label>
@@ -108,7 +108,7 @@ function EnrollPage() {
               type="text"
               name="lname"
               id="lname"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
         </section>
@@ -117,7 +117,7 @@ function EnrollPage() {
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="email"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               Email:
             </label>
@@ -125,13 +125,13 @@ function EnrollPage() {
               type="email"
               name="email"
               id="email"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="phone"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               Phone:
             </label>
@@ -139,7 +139,7 @@ function EnrollPage() {
               type="tel"
               name="phone"
               id="phone"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
         </section>
@@ -148,7 +148,7 @@ function EnrollPage() {
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="branch"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               Branch:
               
@@ -158,7 +158,7 @@ function EnrollPage() {
               type="text"
               name="branch"
               id="branch"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
             <datalist id="branch-list">
               <option value="Computer Engineering"></option>
@@ -171,7 +171,7 @@ function EnrollPage() {
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="year"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               Year:
             </label>
@@ -180,7 +180,7 @@ function EnrollPage() {
               type="text"
               name="year"
               id="year"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
             <datalist id="year-list">
               <option value="1"></option>
@@ -196,7 +196,7 @@ function EnrollPage() {
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="prn"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               PRN:
             </label>
@@ -204,14 +204,14 @@ function EnrollPage() {
               type="text"
               name="prn"
               id="prn"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
 
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="dob"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               DOB:
             </label>
@@ -220,7 +220,7 @@ function EnrollPage() {
               placeholder=""
               name="dob"
               id="dob"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
         </section>
@@ -228,7 +228,7 @@ function EnrollPage() {
           <div className="mb-4 w-full md:w-auto flex-1">
             <label
               htmlFor="instituteid"
-              className="block text-gray-700 font-bold mb-2"
+              className="block text-gray-300 font-bold mb-2"
             >
               Institute Id:
             </label>
@@ -237,19 +237,19 @@ function EnrollPage() {
               type="file"
               name="instituteid"
               id="instituteid"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
         </section> */}
         <section className="flex items-center space-x-0 md:space-x-4">
           <div className="mb-4 w-full md:w-auto flex-1">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-300 font-bold mb-2">
               Address:
             </label>
             <textarea
               placeholder="Enter address..."
               name="address"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
             />
           </div>
         </section>
@@ -261,6 +261,10 @@ function EnrollPage() {
             Submit
           </button>
         </div>
+        <span className="text-white py-3   block cursor-pointer">
+           Already have an account, 
+            <Link to={"/login"} className="text-sky-600 underline"> Login  here</Link>
+          </span>
       </form>
     </main>
 

@@ -15,4 +15,19 @@ const StudentContextProvider: React.FC<{children: ReactNode}> = ({
 export default StudentContextProvider;
 
 
+<<<<<<< HEAD
  
+=======
+  // export const FacultyContext = createContext({});
+  // const FacultyContextProvider: React.FC<{children: ReactNode}> = ({
+  //   children,
+  // }) => {
+  //   const [faculty, setFaculty] = useState<FacultyType>();
+  //   return (  
+  //     <FacultyContext.Provider value={{faculty, setFaculty}}>
+  //       {children}
+  //     </FacultyContext.Provider>
+  //   );
+  // };
+  // export  FacultyContextProvider;  
+>>>>>>> ddeaf07ca66cb86137530168cd7dbc5455e56162
