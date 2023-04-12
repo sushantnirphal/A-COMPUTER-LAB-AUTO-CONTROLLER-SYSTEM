@@ -2,15 +2,17 @@ import {StudentContext} from "../../Context/StudentContext";
 import {StudentType} from "interfaces/student";
 import React, {useContext, useEffect, useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Academic from "@/pages/Academic";
 import MenuItem from "@/pages/MenuItem";
+import {FacultyContext} from "../../Context/FacultyContex";
 
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
+  const {faculty, setFaculty} = useContext<any>(FacultyContext);
   const navigate = useNavigate();
   const router = useLocation();
-  
+
   useEffect(() => {
     if (!student || !student._id) {
       navigate("/login");
@@ -21,7 +23,7 @@ const Header = () => {
     localStorage.removeItem("user");
     navigate("/login");
   }
-  const [isExpected, setIsExpected] = useState(false)
+  const [isExpected, setIsExpected] = useState(false);
 
   return (
     <header className="py-5 px-6 shadow-md justify-between flex fixed w-full bg-slate-700">
@@ -32,18 +34,20 @@ const Header = () => {
             <Link className="hover:text-slate-200 text-white" to={"/"}>
               Home
             </Link>
-            
-             <button onClick={()=> setIsExpected(true)}>Academic</button>
-            {      
-              isExpected && 
-              <MenuItem/>
-            }
-           
-            
-            <Link className="hover:text-slate-200 text-white" to={"/manualsubmission"}>
+
+            <button onClick={() => setIsExpected(true)}>Academic</button>
+            {isExpected && <MenuItem />}
+
+            <Link
+              className="hover:text-slate-200 text-white"
+              to={"/manualsubmission"}
+            >
               ManualSubmission
             </Link>
-            <Link className="hover:text-slate-200 text-white" to={"/attendence"}>
+            <Link
+              className="hover:text-slate-200 text-white"
+              to={"/attendence"}
+            >
               Attendence
             </Link>
             <Link className="hover:text-slate-200 text-white" to={"/practice"}>

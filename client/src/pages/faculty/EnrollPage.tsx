@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
 import Header from "./Header";
 function EnrollPage() {
+  console.log('im here')
   const [profile, setProfile] = useState("");
   const navigate = useNavigate();
 
@@ -52,8 +53,8 @@ function EnrollPage() {
   }
   return (
     <div>
-      <Header />
-      <main className="bg-slate-200 py-12">
+      {/* <Header /> */}
+      <main className="gr-bg py-12">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
