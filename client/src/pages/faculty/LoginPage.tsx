@@ -1,8 +1,8 @@
-import { FacultyContext } from "Context/FacultyContex";
+import { FacultyContext } from "../../../Context/FacultyContex";
 import {SetStateAction, useContext, useEffect, useState} from "react";
 import {
   Link,
-  json,
+  json, 
   useLocation,
   useNavigate,
   useRoutes,

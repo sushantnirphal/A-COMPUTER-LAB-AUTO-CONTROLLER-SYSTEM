@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 
-import facultyModel from "../model/faculty.model.js";
+import facultyModel from "./model/faculty.model.js"
 const facultyRouter = express.Router();
 facultyRouter.get("/", async (req, res) => {
   const faculties = await facultyModel.find();

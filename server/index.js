@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import studentRouter from "./routes/student.route.js";
+import facultyRouter from "./faculty.route.js";
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({extended: true}));
 
 // router handlers
 app.use("/student", studentRouter);
+app.use('/faculty', facultyRouter)
 
 try {
   mongoose.connect(process.env.MONGO_URI);

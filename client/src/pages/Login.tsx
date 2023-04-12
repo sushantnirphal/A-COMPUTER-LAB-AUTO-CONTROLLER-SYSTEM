@@ -12,18 +12,22 @@ function LoginPage() {
   const {student, setStudent} = useContext<any>(StudentContext);
   const navigate = useNavigate();
   const router = useLocation();
+  const [loading, setLoading] = useState(false);
   const [prn, setPrn] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  function handlePrnChange(event: { target: { value: SetStateAction<string>; }; }) {
+  function handlePrnChange(event: {target: {value: SetStateAction<string>}}) {
     setPrn(event.target.value);
   }
 
-  function handlePhoneNumberChange(event: { target: { value: SetStateAction<string>; }; }) {
+  function handlePhoneNumberChange(event: {
+    target: {value: SetStateAction<string>};
+  }) {
     setPhoneNumber(event.target.value);
   }
 
-  async function handleSubmit(event: { preventDefault: () => void; }) {
+  async function handleSubmit(event: {preventDefault: () => void}) {
+    setLoading(true);
     event.preventDefault();
     const req = await fetch("http://localhost:7890/student/login", {
       method: "post",
@@ -38,11 +42,13 @@ function LoginPage() {
     const res = await req.json();
     console.log(res);
     if (res.success) {
-      setStudent(res.data);
+      setStudent(res.student);
       localStorage.setItem("user", JSON.stringify(res.data));
       console.log(student);
+      setLoading(false);
     } else {
       alert(res.message);
+      setLoading(false);
     }
   }
 
@@ -86,17 +92,28 @@ function LoginPage() {
         </div>
         <div className="flex items-center justify-between">
           <button
+            disabled={loading}
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Sign In
+            {loading ? "Please wait..." : " Sign In"}
           </button>
-         
         </div>
         <span className="text-white  block cursor-pointer">
-            Don't have an account ,then
-            <Link to={"/enroll"} className="text-sky-600 underline"> Enroll here</Link>
-          </span>
+          Don't have an account ,then
+          <Link to={"/enroll"} className="text-sky-600 underline">
+            {" "}
+            Enroll here
+          </Link>
+        </span>
+
+        <span className="text-white  block cursor-pointer">
+          Faculty
+          <Link to={"/faculty/login"} className="text-sky-600 underline">
+            {" "}
+            Click here
+          </Link>
+        </span>
       </form>
     </div>
   );

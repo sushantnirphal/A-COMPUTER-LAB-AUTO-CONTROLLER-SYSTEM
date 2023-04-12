@@ -14,6 +14,9 @@ import Academic from "./pages/Academic";
 import Manualsubmission from "./pages/Manualsubmission";
 import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
+
+//  faculty
+import FacultyLogin from './pages/faculty/LoginPage'
 const router = createHashRouter([
   {
     path: "/",
@@ -51,6 +54,10 @@ const router = createHashRouter([
   {
     path:"/enroll",
     element:<EnrollPage/>,
+  },
+  {
+    path:"/faculty/login",
+    element:<FacultyLogin/>,
   }
 ]);
 const App = () => {
