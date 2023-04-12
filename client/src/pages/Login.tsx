@@ -54,13 +54,14 @@ function LoginPage() {
 
   useEffect(() => {
     if (student?._id) {
-      navigate("/");
+      navigate("/home");
     }
   }, [router.pathname, student?._id]);
 
   return (
     <div className="flex justify-center items-center h-screen gr-bg">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
+        <h5 className="text-xl font-semibold text-white py-8">Student login</h5>
         <div className="mb-4">
           <label htmlFor="prn" className="block text-gray-200 font-bold mb-2">
             PRN
@@ -99,21 +100,32 @@ function LoginPage() {
             {loading ? "Please wait..." : " Sign In"}
           </button>
         </div>
-        <span className="text-white  block cursor-pointer">
-          Don't have an account ,then
-          <Link to={"/enroll"} className="text-sky-600 underline">
-            {" "}
-            Enroll here
-          </Link>
-        </span>
+        <div
+        className="space-y-2 pt-4"
+        >
+          <span className="text-white  block cursor-pointer">
+            Don't have an account ,then
+            <Link to={"/enroll"} className="text-sky-600 underline">
+              {" "}
+              Enroll here
+            </Link>
+          </span>
 
-        <span className="text-white  block cursor-pointer">
-          Faculty
-          <Link to={"/faculty/login"} className="text-sky-600 underline">
-            {" "}
-            Click here
-          </Link>
-        </span>
+          <span className="text-white  block cursor-pointer">
+            Faculty
+            <Link to={"/faculty/login"} className="text-sky-600 underline">
+              {" "}
+              Click here
+            </Link>
+          </span>
+          <span className="text-white  block cursor-pointer">
+            
+            <Link to={"/"} className="text-sky-600 underline">
+              {" "}
+              Go back
+            </Link>
+          </span>
+        </div>
       </form>
     </div>
   );
