@@ -95,7 +95,7 @@ function LoginPage() {
         </div>
         <span className="text-white  block cursor-pointer">
             Don't have an account ,then
-            <Link to={"/enroll"} className="text-sky-600 underline"> Enroll here</Link>
+            <Link to={"/faculty/enroll"} className="text-sky-600 underline"> Enroll here</Link>
           </span>
       </form>
     </div>

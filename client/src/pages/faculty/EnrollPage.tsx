@@ -1,7 +1,7 @@
 import extractFormData from "@/utils/Extractform";
 import { useState,useEffect } from "react";
 import {Link, useNavigate,useLocation} from "react-router-dom";
-function EnrollPage() {
+function FacultyEnrollPage() {
     const [profile, setProfile] = useState("");
     const navigate = useNavigate();
     
@@ -53,6 +53,9 @@ function EnrollPage() {
   return (
     <div>
       <main className="bg-slate-200 py-12">
+        <h4>
+          Facuty enroll page
+        </h4>
       <form
         onSubmit={handleSubmit}
         className="bg-white p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
@@ -190,4 +193,4 @@ function EnrollPage() {
   )
 }
 
-export default EnrollPage
+export default FacultyEnrollPage
