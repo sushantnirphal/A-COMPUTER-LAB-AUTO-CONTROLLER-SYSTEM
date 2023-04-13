@@ -42,9 +42,10 @@ function LoginPage() {
     const res = await req.json();
     console.log(res);
     if (res.success) {
-      setFaculty(res.data);
+      setFaculty(res.faculty);
       localStorage.setItem("user", JSON.stringify(res.data));
       console.log(faculty);
+      
     } else {
       alert(res.message);
     }
@@ -52,7 +53,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (faculty?._id) {
-      navigate("/");
+      navigate("/home");
     }
   }, [router.pathname, faculty?._id]);
 

@@ -12,7 +12,7 @@ function EnrollPage() {
     // navigate("/Login");
     const payload = extractFormData(event.currentTarget);
 
-    const req = await fetch("http://localhost:7890/student/enroll", {
+    const req = await fetch("http://localhost:7890/faculty/enroll", {
       method: "post",
       body: JSON.stringify({
         payload: {

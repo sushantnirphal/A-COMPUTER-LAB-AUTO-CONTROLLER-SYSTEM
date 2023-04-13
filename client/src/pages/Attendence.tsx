@@ -3,7 +3,7 @@ import Header from "@/partials/Header";
 
 const Attendence = () => {
   return (
-    <div>
+    <div className="h-screen gr-bg">
       <Header />
       Attendence
     </div>
