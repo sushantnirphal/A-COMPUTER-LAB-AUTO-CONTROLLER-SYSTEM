@@ -1,3 +1,4 @@
+import {StudentContext} from "../../../Context/StudentContext";
 import {FacultyContext} from "../../../Context/FacultyContex";
 import {SetStateAction, useContext, useEffect, useState} from "react";
 import {
@@ -9,7 +10,11 @@ import {
 } from "react-router-dom";
 
 function LoginPage() {
-  const {faculty, setFaculty} = useContext<any>(FacultyContext);
+  // const {faculty, setFaculty} = useContext<any>(FacultyContext);
+  const {student: faculty, setStudent: setFaculty} =
+    useContext<any>(StudentContext);
+  console.log(faculty, setFaculty);
+
   const navigate = useNavigate();
   const router = useLocation();
   const [username, setUsername] = useState("");
@@ -42,27 +47,24 @@ function LoginPage() {
     const res = await req.json();
     console.log(res);
     if (res.success) {
-      setFaculty(res.faculty);
+      setFaculty(res.data);
+      if (res?.data?._id) {
+        navigate("/home");
+      }
       localStorage.setItem("user", JSON.stringify(res.data));
-      console.log(faculty);
-      
     } else {
       alert(res.message);
     }
   }
 
   useEffect(() => {
-    if (faculty?._id) {
-      navigate("/home");
-    }
+    console.log(faculty);
   }, [router.pathname, faculty?._id]);
 
   return (
     <div className="flex justify-center items-center h-screen gr-bg">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <h4
-         className="text-xl font-semibold text-white py-8"
-        >Faculty login</h4>
+        <h4 className="text-xl font-semibold text-white py-8">Faculty login</h4>
         <div className="mb-4">
           <label
             htmlFor="username"
@@ -112,7 +114,7 @@ function LoginPage() {
           </span>
 
           <span className="text-white  block cursor-pointer">
-          Student login
+            Student login
             <Link to={"/login"} className="text-sky-600 underline">
               {" "}
               Click here

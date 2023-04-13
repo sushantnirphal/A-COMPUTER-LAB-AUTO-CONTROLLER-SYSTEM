@@ -1,6 +1,5 @@
 import React, {createContext, ReactNode, useState} from "react";
 import {StudentType} from "../interfaces/student";
-import {FacultyType} from "../interfaces/faculty";
 export const StudentContext = createContext({});
 const StudentContextProvider: React.FC<{children: ReactNode}> = ({
   children,

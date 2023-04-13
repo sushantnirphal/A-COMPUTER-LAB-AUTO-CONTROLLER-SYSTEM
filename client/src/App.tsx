@@ -1,4 +1,4 @@
-import React, { SetStateAction } from "react";
+import React, {SetStateAction} from "react";
 import {
   createBrowserRouter,
   createHashRouter,
@@ -16,9 +16,10 @@ import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
 
 //  faculty
-import FacultyLogin from './pages/faculty/LoginPage'
+import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
+import FacultyContext from "../Context/FacultyContex";
 const router = createHashRouter([
   {
     path: "/home",
@@ -41,9 +42,8 @@ const router = createHashRouter([
     element: <Attendence />,
   },
   {
-    path:"/practice",
-    element:<Practice/>
-
+    path: "/practice",
+    element: <Practice />,
   },
   {
     path: "/courses",
@@ -58,24 +58,26 @@ const router = createHashRouter([
     element: <LoginPage />,
   },
   {
-    path:"/enroll",
-    element:<EnrollPage/>,
+    path: "/enroll",
+    element: <EnrollPage />,
   },
   {
-    path:"/faculty/enroll",
-    element:<FacultyEnrollPage/>,
+    path: "/faculty/enroll",
+    element: <FacultyEnrollPage />,
   },
   {
-    path:"/faculty/login",
-    element:<FacultyLogin/>,
-  }
+    path: "/faculty/login",
+    element: <FacultyLogin />,
+  },
 ]);
 const App = () => {
   return (
     <>
       {/* <Header /> */}
       <StudentContext>
-        <RouterProvider router={router} />
+        <FacultyContext>
+          <RouterProvider router={router} />
+        </FacultyContext>
       </StudentContext>
     </>
   );

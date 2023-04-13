@@ -13,11 +13,11 @@ const Header = () => {
   const navigate = useNavigate();
   const router = useLocation();
 
-  useEffect(() => {
-    if (!student || !student._id) {
-      navigate("/login");
-    }
-  }, [router.pathname]);
+  // useEffect(() => {
+  //   if (!student || !student._id) {
+  //     navigate("/login");
+  //   }
+  // }, [router.pathname]);
   function logout() {
     setStudent({});
     localStorage.removeItem("user");
