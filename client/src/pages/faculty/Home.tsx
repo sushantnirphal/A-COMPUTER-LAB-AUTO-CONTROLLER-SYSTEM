@@ -1,6 +1,6 @@
 import Header from "./Header";
 import {Link} from "react-router-dom";
-import { FacultyContext } from "Context/FacultyContex";
+import { FacultyContext } from "../../../Context/FacultyContex";
 import React, {useContext} from "react";
 const Home = () => {
   const {faculty, setFaculty} = useContext(FacultyContext);

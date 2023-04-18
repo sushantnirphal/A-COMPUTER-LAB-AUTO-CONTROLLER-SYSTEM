@@ -130,6 +130,9 @@ const Home = () => {
       </section> */}
       <div className="py-12 text-slate-200 pt-20 text-xl font-serif">
         {/* <pre>{JSON.stringify(student, null, 4)}</pre> */}
+        <h4
+        className="text-sm py-3 px-6 bg-green-600 text-white w-max rounded-full ml-auto"
+        >Teacher</h4>
         <div className="w-11/12 mx-auto p-6 items-center flex">
           <img
             className="rounded-full w-40 h-40 border border-dashed p-2"

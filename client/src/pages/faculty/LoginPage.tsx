@@ -49,17 +49,13 @@ function LoginPage() {
     if (res.success) {
       setFaculty(res.data);
       if (res?.data?._id) {
-        navigate("/home");
+        navigate("/faculty/home");
       }
       localStorage.setItem("user", JSON.stringify(res.data));
     } else {
       alert(res.message);
     }
   }
-
-  useEffect(() => {
-    console.log(faculty);
-  }, [router.pathname, faculty?._id]);
 
   return (
     <div className="flex justify-center items-center h-screen gr-bg">

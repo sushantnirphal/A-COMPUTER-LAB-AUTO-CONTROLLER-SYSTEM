@@ -10,11 +10,17 @@ studentRouter.post("/login", async (req, res) => {
   const {prn, phone} = req.body;
   try {
     const student = await studentModel.findOne({prn, phone});
+
     if (student) {
+      student.role = "student";
       // User found, return success response
       return res
         .status(200)
-        .json({success: true, message: "User found", student});
+        .json({
+          success: true,
+          message: "User found",
+          student: student,
+        });
     } else {
       // User not found, return error response
       return res.status(404).json({success: false, message: "User not found"});

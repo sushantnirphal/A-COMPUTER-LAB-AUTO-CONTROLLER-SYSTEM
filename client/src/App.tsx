@@ -16,6 +16,7 @@ import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
 
 //  faculty
+import FacultyHome from "./pages/faculty/Home";
 import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
@@ -68,6 +69,10 @@ const router = createHashRouter([
   {
     path: "/faculty/login",
     element: <FacultyLogin />,
+  },
+  {
+    path: "/faculty/home",
+    element: <FacultyHome />,
   },
 ]);
 const App = () => {

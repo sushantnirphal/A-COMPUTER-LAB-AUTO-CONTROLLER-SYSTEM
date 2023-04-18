@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 
-import facultyModel from "./model/faculty.model.js"
+import facultyModel from "./model/faculty.model.js";
 const facultyRouter = express.Router();
 facultyRouter.get("/", async (req, res) => {
   const faculties = await facultyModel.find();
@@ -21,8 +21,12 @@ facultyRouter.post("/login", async (req, res) => {
   const {username, password} = req.body;
   try {
     const faculty = await facultyModel.findOne({username, password});
-    const token = jwt.sign({username, name: faculty.name}, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      {username, name: faculty.name},
+      process.env.JWT_SECRET
+    );
     if (faculty) {
+      faculty.role = "faculty";
       // User found, return success response
       return res
         .setHeader("Set-Cookie", `token=${token}; Secure; HttpOnly`)

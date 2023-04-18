@@ -59,7 +59,7 @@ function EnrollPage() {
           className=" p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
         >
           <h2
-            className="text-xl  font-semibold text-white py-8"
+            className="text-xl  font-semibold text-white py- text-center"
           >
             Student enroll form
           </h2>
@@ -85,7 +85,7 @@ function EnrollPage() {
               accept=".jpg,.jpeg,.png"
               onChange={(e) => handleFile(e, setProfile)}
             />
-            <p className="px-6 mt-auto">Choose profile picture</p>
+            <p className="px-6 mt-auto text-white">Choose profile picture</p>
           </div>
 
           <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
@@ -230,23 +230,7 @@ function EnrollPage() {
               />
             </div>
           </section>
-          {/* <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
-          <div className="mb-4 w-full md:w-auto flex-1">
-            <label
-              htmlFor="instituteid"
-              className="block text-gray-300 font-bold mb-2"
-            >
-              Institute Id:
-            </label>
-            <input
-              onChange={(e) => handleFile(e, setCollege_id)}
-              type="file"
-              name="instituteid"
-              id="instituteid"
-              className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
-            />
-          </div>
-        </section> */}
+         
           <section className="flex items-center space-x-0 md:space-x-4">
             <div className="mb-4 w-full md:w-auto flex-1">
               <label className="block text-gray-300 font-bold mb-2">

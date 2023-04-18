@@ -42,21 +42,19 @@ function LoginPage() {
     const res = await req.json();
     console.log(res);
     if (res.success) {
-      setStudent(res.student);
-      localStorage.setItem("user", JSON.stringify(res.data));
-      console.log(student);
+      setStudent(res?.student);
+      localStorage.setItem("user", JSON.stringify(res?.student));
+      console.log(student, "here");
       setLoading(false);
     } else {
       alert(res.message);
       setLoading(false);
     }
   }
-
+  const location = useLocation();
   useEffect(() => {
-    if (student?._id) {
-      navigate("/home");
-    }
-  }, [router.pathname, student?._id]);
+    location.pathname === "/login" && student?._id ? navigate("/home") : null;
+  }, [location.pathname]);
 
   return (
     <div className="flex justify-center items-center h-screen gr-bg">
@@ -100,9 +98,7 @@ function LoginPage() {
             {loading ? "Please wait..." : " Sign In"}
           </button>
         </div>
-        <div
-        className="space-y-2 pt-4"
-        >
+        <div className="space-y-2 pt-4">
           <span className="text-white  block cursor-pointer">
             Don't have an account ,then
             <Link to={"/enroll"} className="text-sky-600 underline">
@@ -119,7 +115,6 @@ function LoginPage() {
             </Link>
           </span>
           <span className="text-white  block cursor-pointer">
-            
             <Link to={"/"} className="text-sky-600 underline">
               {" "}
               Go back

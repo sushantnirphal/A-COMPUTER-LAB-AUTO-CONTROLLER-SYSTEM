@@ -13,13 +13,13 @@ const Header = () => {
   
   useEffect(() => {
     if (!faculty || !faculty._id) {
-      navigate("/login");
+      navigate("/faculty/login");
     }
   }, [router.pathname]);
   function logout() {
     setFaculty({});
-    localStorage.removeItem("user");
-    navigate("/login");
+    localStorage.removeItem("faculty");
+    navigate("/faculty/login");
   }
   const [isExpected, setIsExpected] = useState(false)
 

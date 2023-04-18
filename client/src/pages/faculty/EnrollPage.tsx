@@ -54,10 +54,10 @@ function EnrollPage() {
   return (
     <div>
       {/* <Header /> */}
-      <main className="gr-bg py-12">
+      <main className="gr-bg py-12 text-center text-white">  Faculty enroll form
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
+          className="gr-bg  p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
         >
           <input type="hidden" name="role" value={"setter"} />
           <div className="mb-4 flex-1  flex-wrap flex py-6">
@@ -81,14 +81,16 @@ function EnrollPage() {
               accept=".jpg,.jpeg,.png"
               onChange={(e) => handleFile(e, setProfile)}
             />
+
             <p className="px-6 mt-auto">Choose profile picture</p>
+            
           </div>
 
           <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="fname"
-                className="block text-gray-700 font-bold mb-2"
+                className="block text-white font-bold mb-2 "
               >
                 First name:
               </label>
@@ -102,7 +104,7 @@ function EnrollPage() {
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="lname"
-                className="block text-gray-700 font-bold mb-2"
+                className="block text-white font-bold mb-2"
               >
                 Last Name:
               </label>
@@ -119,7 +121,7 @@ function EnrollPage() {
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="email"
-                className="block text-gray-700 font-bold mb-2"
+                className="block text-white font-bold mb-2"
               >
                 Email:
               </label>
@@ -133,7 +135,7 @@ function EnrollPage() {
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="phone"
-                className="block text-gray-700 font-bold mb-2"
+                className="block text-white font-bold mb-2"
               >
                 Phone:
               </label>
@@ -150,7 +152,7 @@ function EnrollPage() {
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="username"
-                className="block text-gray-700 font-bold mb-2"
+                className="block text-white font-bold mb-2"
               >
                 User Name:
               </label>
@@ -165,7 +167,7 @@ function EnrollPage() {
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="year"
-                className="block text-gray-700 font-bold mb-2"
+                className="block text-white font-bold mb-2"
               >
                 Password :
               </label>

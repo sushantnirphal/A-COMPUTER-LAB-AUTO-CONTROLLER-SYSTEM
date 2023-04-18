@@ -9,15 +9,24 @@ import {FacultyContext} from "../../Context/FacultyContex";
 
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
-  const {faculty, setFaculty} = useContext<any>(FacultyContext);
   const navigate = useNavigate();
   const router = useLocation();
 
-  // useEffect(() => {
-  //   if (!student || !student._id) {
-  //     navigate("/login");
-  //   }
-  // }, [router.pathname]);
+  useEffect(() => {
+    if (!student || !student._id) {
+      navigate("/login");
+    }
+  }, [router.pathname]);
+
+  useEffect(() => {
+    setStudent(JSON.parse(localStorage.getItem("user")));
+    
+    if (window.location.href.endsWith("/login") && student?._id) {
+      navigate("/home");
+      console.log(student);
+    }
+  }, [location.pathname]);
+
   function logout() {
     setStudent({});
     localStorage.removeItem("user");
@@ -27,7 +36,9 @@ const Header = () => {
 
   return (
     <header className="py-5 px-6 shadow-md justify-between flex fixed w-full bg-slate-700">
-      <h4 className="text-xl text-sky-400 font-medium">Admin</h4>
+      <h4 className="text-xl text-sky-400 font-medium">
+        {student?.role === "student" ? "Student" : "Teacher"}
+      </h4>
       <nav className="space-x-4 text-lg text-slate-400 ">
         {student && student?._id ? (
           <>
