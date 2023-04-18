@@ -1,46 +1,48 @@
-import  { model, Schema } from "mongoose";
+import {model, Schema} from "mongoose";
 
 const studentSchema = Schema({
   name: {
-    type: "String",
+    type: String,
     required: true,
   },
   email: {
-    type: "String",
+    type: String,
     required: true,
+    unique : true
   },
   prn: {
-    type: "String",
+    type: String,
     required: true,
+    unique : true
   },
   year: {
-    type: "Number",
+    type: Number,
     required: true,
   },
   semester: {
-    type: "Number",
-     
+    type: Number,
   },
   dob: {
-    type: "Date",
+    type: Date,
     required: true,
   },
   address: {
-    type: "String",
+    type: String,
     required: true,
   },
   branch: {
-    type: "String",
+    type: String,
     required: true,
   },
   profile: {
-    type: "String",
+    type: String,
     required: true,
   },
   phone: {
-    type: "String",
+    type: String,
     required: true,
   },
+  role: String,
 });
 
-export default model('student' , studentSchema)
+export default model("student", studentSchema);

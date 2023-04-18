@@ -1,31 +1,25 @@
-import  { model, Schema } from "mongoose";
+import {model, Schema} from "mongoose";
 
 const facultySchema = Schema({
   name: {
-    type: "String",
+    type: String,
     required: true,
   },
   email: {
-    type: "String",
+    type: String,
     required: true,
+    unique: true,
   },
-  username: {
-    type: "String",
-    required: true,
-  },
-  password: {
-    type: "String",
-    required: true,
-  },
-  
+  password: String,
   profile: {
-    type: "String",
+    type: String,
     required: true,
   },
   phone: {
-    type: "String",
+    type: String,
     required: true,
   },
+  role: String,
 });
 
-export default model('faculty' , facultySchema)
+export default model("faculty", facultySchema);

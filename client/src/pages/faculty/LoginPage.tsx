@@ -10,10 +10,10 @@ import {
 } from "react-router-dom";
 
 function LoginPage() {
+  const [loading, setLoading] = useState(false);
   // const {faculty, setFaculty} = useContext<any>(FacultyContext);
   const {student: faculty, setStudent: setFaculty} =
     useContext<any>(StudentContext);
-  console.log(faculty, setFaculty);
 
   const navigate = useNavigate();
   const router = useLocation();
@@ -34,28 +34,39 @@ function LoginPage() {
 
   async function handleSubmit(event: {preventDefault: () => void}) {
     event.preventDefault();
+    setLoading(true);
     const req = await fetch("http://localhost:7890/faculty/login", {
       method: "post",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        username,
+       email : username,
         password: password,
       }),
     });
     const res = await req.json();
-    console.log(res);
+   
     if (res.success) {
       setFaculty(res.data);
       if (res?.data?._id) {
-        navigate("/faculty/home");
+        setLoading(false);
+        navigate("/home");
       }
       localStorage.setItem("user", JSON.stringify(res.data));
     } else {
+      setLoading(false);
       alert(res.message);
     }
   }
+
+  useEffect(() => {
+    console.log(faculty)
+    if(faculty?._id)  {
+      navigate("/home")
+      console.log("login now")
+    }
+  }, [faculty?._id])
 
   return (
     <div className="flex justify-center items-center h-screen gr-bg">
@@ -94,11 +105,12 @@ function LoginPage() {
           />
         </div>
         <div className="flex items-center justify-between">
-          <button
+        <button
+            disabled={loading}
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 rounded-full hover:bg-blue-700 text-white  py-3 px-6 text-sm font-normal focus:outline-none focus:shadow-outline"
           >
-            Sign In
+            {loading ? "Please wait..." : " Sign In"}
           </button>
         </div>
         <div className="space-y-2 pt-4">

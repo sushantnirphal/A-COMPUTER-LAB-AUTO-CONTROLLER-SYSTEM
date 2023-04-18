@@ -3,15 +3,18 @@ import {useState, useEffect} from "react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
 import Header from "./Header";
 function EnrollPage() {
-  console.log('im here')
+  console.log("im here");
+  const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    console.log("here");
     event.preventDefault();
-    // navigate("/Login");
+    setLoading(true);
     const payload = extractFormData(event.currentTarget);
-
+    console.log(payload);
+    // return;
     const req = await fetch("http://localhost:7890/faculty/enroll", {
       method: "post",
       body: JSON.stringify({
@@ -26,35 +29,49 @@ function EnrollPage() {
       },
     });
     const res = await req.json();
+    console.log(res);
+    if (res.success) {
+      alert("Account created successfully, You can login now.");
+
+      setLoading(false);
+    } else {
+      alert(res.message);
+      setLoading(false);
+    }
   };
 
   async function handleFile(
     e: React.ChangeEvent<HTMLInputElement>,
     setter: React.Dispatch<React.SetStateAction<string>>
   ) {
-    const file = e.target.files[0];
-    if (
-      file.type !== "image/png" &&
-      file.type !== "image/jpeg" &&
-      file.type !== "image/jpg"
-    ) {
-      e.target.value = "";
-      return alert("Please upload image file (.png, .jpeg, .jpg)");
+    if(e.target.files){
+      const file = e.target.files[0];
+      if (
+        file.type !== "image/png" &&
+        file.type !== "image/jpeg" &&
+        file.type !== "image/jpg"
+      ) {
+        e.target.value = "";
+        return alert("Please upload image file (.png, .jpeg, .jpg)");
+      }
+      if (file.size / 1000 > 500) {
+        e.target.value = "";
+        return alert("Please upload file under 500kb");
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(file as File);
+      reader.onload = () => {
+        setter(reader.result as string);
+      };
     }
-    if (file.size / 1000 > 500) {
-      e.target.value = "";
-      return alert("Please upload file under 500kb");
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(file as File);
-    reader.onload = () => {
-      setter(reader.result as string);
-    };
+   
   }
   return (
     <div>
       {/* <Header /> */}
-      <main className="gr-bg py-12 text-center text-white">  Faculty enroll form
+      <main className="gr-bg py-12 text-center text-white">
+        {" "}
+        Faculty enroll form
         <form
           onSubmit={handleSubmit}
           className="gr-bg  p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
@@ -83,14 +100,13 @@ function EnrollPage() {
             />
 
             <p className="px-6 mt-auto">Choose profile picture</p>
-            
           </div>
 
           <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="fname"
-                className="block text-white font-bold mb-2 "
+                className="block text-slate-200 text-left mb-2 "
               >
                 First name:
               </label>
@@ -98,13 +114,13 @@ function EnrollPage() {
                 type="text"
                 name="fname"
                 id="fname"
-                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent "
               />
             </div>
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="lname"
-                className="block text-white font-bold mb-2"
+                className="block text-slate-200 text-left mb-2"
               >
                 Last Name:
               </label>
@@ -112,7 +128,7 @@ function EnrollPage() {
                 type="text"
                 name="lname"
                 id="lname"
-                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent "
               />
             </div>
           </section>
@@ -121,7 +137,7 @@ function EnrollPage() {
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="email"
-                className="block text-white font-bold mb-2"
+                className="block text-slate-200 text-left mb-2"
               >
                 Email:
               </label>
@@ -129,13 +145,13 @@ function EnrollPage() {
                 type="email"
                 name="email"
                 id="email"
-                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent "
               />
             </div>
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="phone"
-                className="block text-white font-bold mb-2"
+                className="block text-slate-200 text-left mb-2"
               >
                 Phone:
               </label>
@@ -143,7 +159,7 @@ function EnrollPage() {
                 type="tel"
                 name="phone"
                 id="phone"
-                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent "
               />
             </div>
           </section>
@@ -152,7 +168,7 @@ function EnrollPage() {
             <div className="mb-4 w-full md:w-auto flex-1">
               <label
                 htmlFor="username"
-                className="block text-white font-bold mb-2"
+                className="block text-slate-200 text-left mb-2"
               >
                 User Name:
               </label>
@@ -160,36 +176,37 @@ function EnrollPage() {
                 type="text"
                 name="username"
                 id="username"
-                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent "
               />
             </div>
 
             <div className="mb-4 w-full md:w-auto flex-1">
-              <label
-                htmlFor="year"
-                className="block text-white font-bold mb-2"
-              >
+              <label htmlFor="year" className="block text-slate-200 text-left mb-2">
                 Password :
               </label>
               <input
                 type="text"
                 name="password"
                 id="password"
-                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent "
               />
             </div>
           </section>
           <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              className="bg-slate-700 hover:bg-slate-800 text-white font-medium py-3 px-12 rounded-full focus:outline-none focus:shadow-outline"
-            >
-              Submit
-            </button>
+          <button
+            disabled={loading}
+            type="submit"
+            className="bg-blue-500 rounded-full hover:bg-blue-700 text-white  py-3 px-6 text-sm font-normal focus:outline-none focus:shadow-outline"
+          >
+            {loading ? "Please wait..." : "Submit"}
+          </button>
           </div>
           <span className="text-white  block cursor-pointer">
-           Login 
-            <Link to={"/login"} className="text-sky-600 underline">  here</Link>
+            Login
+            <Link to={"/login"} className="text-sky-600 underline">
+              {" "}
+              here
+            </Link>
           </span>
         </form>
       </main>
