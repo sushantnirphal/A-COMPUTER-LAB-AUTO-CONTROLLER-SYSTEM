@@ -52,9 +52,14 @@ function LoginPage() {
     }
   }
   const location = useLocation();
+  console.log(student,  "student", location.pathname)
+
   useEffect(() => {
-    location.pathname === "/login" && student?._id ? navigate("/home") : null;
-  }, [location.pathname]);
+    if(location.pathname === "/login" && student?._id)  {
+      navigate("/home")
+      console.log("login now")
+    }
+  }, [student?._id]);
 
   return (
     <div className="flex justify-center items-center h-screen gr-bg">
@@ -93,7 +98,7 @@ function LoginPage() {
           <button
             disabled={loading}
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 rounded-full hover:bg-blue-700 text-white  py-3 px-6 text-sm font-normal focus:outline-none focus:shadow-outline"
           >
             {loading ? "Please wait..." : " Sign In"}
           </button>

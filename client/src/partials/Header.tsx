@@ -71,7 +71,7 @@ const Header = () => {
               Code
             </Link>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 text-white  rounded-full font-normal text-sm py-3 px-5 focus:outline-none focus:shadow-outline"
               onClick={logout}
             >
               Logout

@@ -6,6 +6,17 @@ studentRouter.get("/", async (req, res) => {
   res.json(students);
 });
 
+
+
+studentRouter.post("/enroll", async (req, res) => {
+  const {payload} = req.body;
+  if (!payload) {
+    return res.status(400).send({success: true, message: "All fieds needed."});
+  }
+  const akg = await studentModel.create({...payload , role : "student"});
+  res.status(200).send({success: true, message: "Created", akg});
+});
+
 studentRouter.post("/login", async (req, res) => {
   const {prn, phone} = req.body;
   try {
