@@ -9,6 +9,7 @@ import {FacultyContext} from "../../Context/FacultyContex";
 
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
+  const isStudent = student?.role === "student";
   const navigate = useNavigate();
   const router = useLocation();
 
@@ -19,8 +20,8 @@ const Header = () => {
   }, [router.pathname]);
 
   useEffect(() => {
-    setStudent(JSON.parse(localStorage.getItem("user")));
-    
+    setStudent(JSON.parse(localStorage.getItem("user") as string));
+
     if (window.location.href.endsWith("/login") && student?._id) {
       navigate("/home");
       console.log(student);
@@ -46,9 +47,25 @@ const Header = () => {
               Home
             </Link>
 
-            <button onClick={() => setIsExpected(true)}>Academic</button>
-            {isExpected && <MenuItem />}
-
+            {/* <button onClick={() => setIsExpected(true)}>Academic</button>
+            {isExpected && <MenuItem />} */}
+            <select
+              className="bg-transparent px-2 text-white"
+              onChange={(e) => navigate(e.target.value)}
+            >
+              <option
+                value="practicalCources"
+                className="bg-transparent px-2 text-sky-500"
+              >
+                PracticalCources
+              </option>
+              <option
+                className="bg-transparent px-2 text-sky-500"
+                value="courseSyllabus"
+              >
+                CourseSyllabus
+              </option>
+            </select>
             <Link
               className="hover:text-slate-200 text-white"
               to={"/manualsubmission"}
@@ -61,15 +78,26 @@ const Header = () => {
             >
               Attendence
             </Link>
-            <Link className="hover:text-slate-200 text-white" to={"/practice"}>
-              Practice
-            </Link>
-            <Link className="hover:text-slate-200 text-white" to={"/courses"}>
-              Courses
-            </Link>
-            <Link className="hover:text-slate-200 text-white" to={"/code"}>
-              Code
-            </Link>
+            {isStudent ? (
+              <>
+                <Link
+                  className="hover:text-slate-200 text-white"
+                  to={"/practice"}
+                >
+                  Practice
+                </Link>
+                <Link
+                  className="hover:text-slate-200 text-white"
+                  to={"/courses"}
+                >
+                  Courses
+                </Link>
+                <Link className="hover:text-slate-200 text-white" to={"/code"}>
+                  Code
+                </Link>
+              </>
+            ) : null}
+
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white  rounded-full font-normal text-sm py-3 px-5 focus:outline-none focus:shadow-outline"
               onClick={logout}

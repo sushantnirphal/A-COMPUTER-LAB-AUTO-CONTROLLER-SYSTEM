@@ -2,10 +2,10 @@ import {StudentContext} from "../../../Context/StudentContext";
 import React, {useContext} from "react";
 
 const Welcome = () => {
-  const {student, setStudent} = useContext(StudentContext);
+  const {student, setStudent} = useContext<any>(StudentContext);
   return (
     <div className="p-6 md:p-12 h-full overflow-y-auto text-slate-100">
-      <img src={student?.photo} 
+      <img src={student?.profile} 
       className='w-36 h-36 rounded-full border border-dashed p-2 mb-3'
       alt="" />
       <h5 className="text-xl text-sky-400">Good evening</h5>
