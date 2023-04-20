@@ -37,7 +37,7 @@ const Header = () => {
   return (
     <header className="py-5 px-6 shadow-md justify-between flex fixed w-full bg-slate-700">
       <h4 className="text-xl text-sky-400 font-medium">
-        {student?.role === "student" ? "Student" : "Teacher"}
+        {student?.role === "student" ? "Student" : "Faculty"}
       </h4>
       <nav className="space-x-4 text-lg text-slate-400 ">
         {student && student?._id ? (

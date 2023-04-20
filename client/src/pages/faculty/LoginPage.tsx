@@ -51,7 +51,7 @@ function LoginPage() {
       setFaculty(res.data);
       if (res?.data?._id) {
         setLoading(false);
-        navigate("/home");
+        navigate("/homes");
       }
       localStorage.setItem("user", JSON.stringify(res.data));
     } else {
@@ -63,7 +63,7 @@ function LoginPage() {
   useEffect(() => {
     console.log(faculty)
     if(faculty?._id)  {
-      navigate("/home")
+      navigate("/homes")
       console.log("login now")
     }
   }, [faculty?._id])

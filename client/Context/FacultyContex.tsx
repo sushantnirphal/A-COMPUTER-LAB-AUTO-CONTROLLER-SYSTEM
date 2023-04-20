@@ -6,6 +6,11 @@ import {FacultyType} from "../interfaces/faculty";
     children,
   }) => {
     const [faculty, setFaculty] = useState<FacultyType>();
+    useEffect(() => {
+   
+      setFaculty(JSON.parse(localStorage.getItem("user")));
+ 
+   }, []);
     return (  
       <FacultyContext.Provider value={{faculty, setFaculty}}>
         {children}

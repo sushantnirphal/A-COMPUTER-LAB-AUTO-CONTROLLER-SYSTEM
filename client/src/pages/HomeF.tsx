@@ -1,16 +1,16 @@
-import Header from "../partials/Header";
+import Headerf from "../partials/Headerf";
 import {Link} from "react-router-dom";
-import {StudentContext} from "../../Context/StudentContext";
+import { FacultyContext } from "../../Context/FacultyContex";
 import React, {useContext, useState} from "react";
 import Welcome from "@/partials/code/Welcome";
 import Sidebar from "../partials/code/Sidebar";
 import aims from "@/partials/aims";
 const Home = () => {
-  const {student, setStudent} = useContext(StudentContext);
+  const {faculty, setFaculty} = useContext(FacultyContext);
   
   return (
     <main className=" h-screen overflow-y-auto gr-bg">
-      <Header />
+      <Headerf />
       <section className="pt-30 h-full ">
       <div className="py-12 text-slate-200 pt-20 text-xl font-serif">
         {/* <pre>{JSON.stringify(student, null, 4)}</pre> */}
@@ -20,17 +20,12 @@ const Home = () => {
       
           <img
             className="rounded-full w-40 h-40 border border-dashed p-2"
-            src={student?.profile}
+            src={faculty?.profile}
             alt=""
           />
-            <h5>Full name : {student?.name}</h5>
-            <h5>PRN : {student?.prn}</h5>
-            <h5>Email : {student?.email}</h5>
-            <h5>Phone number : {student?.phone}</h5>
-            <h5>Branch : {student?.branch}</h5>
-            <h5>Year : {student?.year}</h5>
-            <h5>Semester : {student?.semester}</h5>
-            <p>Lives at : {student?.address}</p>
+            <h5>Full name : {faculty?.name}</h5>
+            <h5>Email : {faculty?.email}</h5>
+            <h5>Phone number : {faculty?.phone}</h5>
           </div>
           <div className="flex-1 h-full flex flex-col md:flex-row ">
           {

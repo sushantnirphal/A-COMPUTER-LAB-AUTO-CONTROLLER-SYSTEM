@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import StudentContext from "../Context/StudentContext";
 import Home from "./pages/Home";
+import Homes from "./pages/HomeF";
 import Courses from "./partials/Courses";
 import Code from "./pages/Code";
 import LoginPage from "./pages/Login";
@@ -14,13 +15,18 @@ import Academic from "./pages/Academic";
 import Manualsubmission from "./pages/Manualsubmission";
 import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
+import GenerateReport from "./pages/GenerateReport";
+import ReceivedManuals from "./pages/ReceivedManuals";
+import AttendenceReport from "./pages/AttendenceReport";
 
 //  faculty
-import FacultyHome from "./pages/faculty/Home";
+import FacultyHome from "./pages/HomeF";
 import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
 import FacultyContext from "../Context/FacultyContex";
+import Report from "./pages/GenerateReport";
+import CheckAttendence from "./pages/AttendenceReport";
 const router = createHashRouter([
   {
     path: "/home",
@@ -73,6 +79,22 @@ const router = createHashRouter([
   {
     path: "/faculty/home",
     element: <FacultyHome />,
+  },
+  {
+    path:"/homes",
+    element:<Homes />,
+  },
+  {
+    path:"/generatereport",
+    element:<Report/>,
+  },
+  {
+    path:"/attendencereport",
+    element:<CheckAttendence />,
+  },
+  {
+    path:"/receivedmanuals",
+    element:<ReceivedManuals />,
   },
 ]);
 const App = () => {
