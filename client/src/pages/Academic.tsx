@@ -5,7 +5,7 @@ const Academic = () => {
   return (
     <div>
       <Header />
-      <button>Academic</button>
+      Academic
     </div>
   );
 

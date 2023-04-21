@@ -45,10 +45,9 @@ const Header = () => {
             <Link className="hover:text-slate-200 text-white" to={"/"}>
               Home
             </Link>
-
-            <button onClick={() => setIsExpected(true)}>Academic</button>
-            {isExpected && <MenuItem />}
-
+            <Link className="hover:text-slate-200 text-white" to={"/academic"}>
+              Academic
+            </Link>
             <Link
               className="hover:text-slate-200 text-white"
               to={"/manualsubmission"}

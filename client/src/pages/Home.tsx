@@ -29,7 +29,6 @@ const Home = () => {
             <h5>Phone number : {student?.phone}</h5>
             <h5>Branch : {student?.branch}</h5>
             <h5>Year : {student?.year}</h5>
-            <h5>Semester : {student?.semester}</h5>
             <p>Lives at : {student?.address}</p>
           </div>
           <div className="flex-1 h-full flex flex-col md:flex-row ">
