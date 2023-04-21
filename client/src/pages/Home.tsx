@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {StudentContext} from "../../Context/StudentContext";
 import React, {useContext} from "react";
 import Welcome from "@/partials/code/Welcome";
+import Welcomef from "@/partials/code/Welcomef";
 const Home = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
   const isStudent = student?.role === "student";
@@ -14,7 +15,7 @@ const Home = () => {
          <div className="py-12 text-slate-200 pt-20 text-xl font-serif">
               {/* <pre>{JSON.stringify(student, null, 4)}</pre> */}
         <h4 className="text-sm py-3 px-6 bg-green-600 text-white  ml-auto">
-          {student?.role === "student" ? "Student" : "Teacher"}
+          {student?.role === "student" ? "Student" : "Faculty"}
         </h4>
         <div className="w-11/12  md:p-1  flex">
           
@@ -42,11 +43,24 @@ const Home = () => {
 
            
           </div>
-          <div className="flex-1 h-full flex flex-col md:flex-row ">
-          {
-             <Welcome/>
-          }
-        </div>
+          
+          
+          {isStudent ? (
+            <>
+            <div className="flex-1 h-full flex flex-col md:flex-row ">
+            <Welcome/>
+            </div>
+            </>
+          ): null}
+          
+          {!isStudent ? (
+            <>
+             <div className="flex-1 h-full flex flex-col md:flex-row ">
+            <Welcomef/>
+            </div>
+            </>
+            ): null}
+        
         </div>
       </div>
       </section>
