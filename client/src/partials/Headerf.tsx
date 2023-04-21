@@ -30,7 +30,7 @@ const Headerf = () => {
   function logout() {
     setFaculty({});
     localStorage.removeItem("user");
-    navigate("/faculty/login");
+    navigate("/login");
   }
   const [isExpected, setIsExpected] = useState(false);
 
@@ -55,15 +55,16 @@ const Headerf = () => {
             <Link className="hover:text-slate-200 text-white" to={"/generatereport"}>
             Report
             </Link>
-            
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white  rounded-full font-normal text-sm py-3 px-5 focus:outline-none focus:shadow-outline"
-              onClick={logout}>
+              onClick={logout}
+            >
               Logout
             </button>
+           
           </>
         ) : (
-          <Link to={"/faculty/login"}>Login</Link>
+          <Link to={"/login"}>Login</Link>
         )}
       </nav>
     </header>

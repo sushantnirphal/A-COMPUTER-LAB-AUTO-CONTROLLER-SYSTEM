@@ -5,6 +5,7 @@ import React, {useContext, useState} from "react";
 import Welcome from "@/partials/code/Welcome";
 import Sidebar from "../partials/code/Sidebar";
 import aims from "@/partials/aims";
+import Welcomef from "@/partials/code/Welcomef";
 const Home = () => {
   const {faculty, setFaculty} = useContext(FacultyContext);
   
@@ -29,7 +30,7 @@ const Home = () => {
           </div>
           <div className="flex-1 h-full flex flex-col md:flex-row ">
           {
-             <Welcome/> 
+             <Welcomef/> 
           }
         </div>
         </div>
