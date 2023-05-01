@@ -21,10 +21,12 @@ import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
 import FacultyContext from "../Context/FacultyContex";
+import Error from "./pages/Error";
 const router = createHashRouter([
   {
     path: "/home",
     element: <Home />,
+    errorElement: <p>'Error page'</p>,
   },
   {
     path: "/",
@@ -73,7 +75,10 @@ const router = createHashRouter([
   {
     path: "/faculty/home",
     element: <FacultyHome />,
-  },
+  },{
+  path : '*',
+  element  :<Error/>
+  }
 ]);
 const App = () => {
   return (
@@ -81,7 +86,7 @@ const App = () => {
       {/* <Header /> */}
       <StudentContext>
         <FacultyContext>
-          <RouterProvider router={router} />
+          <RouterProvider fallbackElement={<>Error</>}  router={router} />
         </FacultyContext>
       </StudentContext>
     </>
