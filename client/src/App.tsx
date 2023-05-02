@@ -22,6 +22,7 @@ import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
 import FacultyContext from "../Context/FacultyContex";
 import Error from "./pages/Error";
+import UploadPracticals from "./pages/UploadPracticals";
 const router = createHashRouter([
   {
     path: "/home",
@@ -37,7 +38,11 @@ const router = createHashRouter([
     element: <Academic />,
   },
   {
-    path: "/manualsubmission",
+    path: "/upload-practicals",
+    element: <UploadPracticals />,
+  },
+  {
+    path: "/manual-submission",
     element: <Manualsubmission />,
   },
   {

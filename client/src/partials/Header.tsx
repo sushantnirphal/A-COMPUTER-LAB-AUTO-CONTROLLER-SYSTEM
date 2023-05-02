@@ -54,24 +54,34 @@ const Header = () => {
               onChange={(e) => navigate(e.target.value)}
             >
               <option
-                value="practicalCources"
+                // disabled
+                selected
                 className="bg-transparent px-2 text-sky-500"
               >
-                PracticalCources
+                {/* <Link to={"/uploadPracticals"}> UploadPracticals </Link> */}
+                Menu
+              </option>
+              <option
+                value="/upload-practicals"
+                className="bg-transparent px-2 text-sky-500"
+              >
+                 UploadPracticals
               </option>
               <option
                 className="bg-transparent px-2 text-sky-500"
-                value="courseSyllabus"
+                value="/course-syllabus"
               >
                 CourseSyllabus
               </option>
             </select>
+
             <Link
               className="hover:text-slate-200 text-white"
               to={"/manualsubmission"}
             >
               ManualSubmission
             </Link>
+
             <Link
               className="hover:text-slate-200 text-white"
               to={"/attendence"}

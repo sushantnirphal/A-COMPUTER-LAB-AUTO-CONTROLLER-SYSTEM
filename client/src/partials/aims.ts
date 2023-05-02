@@ -37,8 +37,8 @@ a=10</p>
     title: "To find square root of number",
   },
   {
-    title  :'To find the maximum of list of numbers',
-    desc : `
+    title: "To find the maximum of list of numbers",
+    desc: `
     <h4 class="code-line" data-line-start=0 data-line-end=1 ><a id="Find_Maximum_Value_in_List_in_Python_0"></a>Find Maximum Value in List in Python</h4>
 <p class="has-line-data" data-line-start="2" data-line-end="3">In this article, we will learn to find the maximum value in a list in Python. We will use some built-in functions, simple approaches, and some custom codes as well to understand the logic. Let’s first have a quick look over what is a list in Python and how can we find the maximum value or largest number in a list.</p>
 <h3 class="code-line" data-line-start=4 data-line-end=5 ><a id="Python_List_4"></a>Python List</h3>
@@ -58,9 +58,109 @@ Let us look at the below Python examples one by one to find the largest item in 
 <li class="has-line-data" data-line-start="17" data-line-end="18">Using sorted() function</li>
 <li class="has-line-data" data-line-start="18" data-line-end="19">By Tail Recursive algorithm</li>
 </ul>
-    `
-  }
+    `,
+  },
 ];
 
+export default aim;
 
-export default aim
+// new format
+
+export const api = [
+  {
+    aim: "Informal introduction to programming, algorithms and data structures",
+    manual: {
+      size: 1000,
+      name: "python parct-1.docx",
+      url: "/python parct-1.docx",
+      type: "docx",
+    },
+    year: 1,
+    sem: 1,
+    id: 1,
+  },
+  {
+    aim: "Downloading and installing Python, run a simple program on Python interpreter",
+    manual: {
+      size: 1000,
+      name: "python parct-2.docx",
+      url: "/python parct-2.docx",
+      type: "docx",
+    },
+    year: 1,
+    sem: 1,
+    id: 2,
+  },
+  {
+    aim: "Python Data types",
+    manual: {
+      size: 56,
+      name: "python parct-3.docx",
+      url: "/python parct-3.docx",
+      type: "docx",
+    },
+    year: 1,
+    sem: 1,
+    id: 3,
+  },
+  {
+    aim: "Write the concept of Looping in python & Write a python program for printing heart shape ",
+    manual: {
+      size: 56,
+      name: "python parct-4.docx",
+      url: "/python parct-4.docx",
+      type: "docx",
+    },
+    year: 1,
+    sem: 1,
+    id: 4,
+  },
+  {
+    aim: " Study of conditional statements, WAP to print largest of the three no.",
+    manual: {
+      size: 56,
+      name: "python parct-5.pdf",
+      url: "/python parct-5.pdf",
+      type: "pdf",
+    },
+    year: 1,
+    sem: 1,
+    id: 5,
+  },
+  {
+    aim: " Study of looping statements, WAP to print a table of the given no entered by user.",
+    manual: {
+      size: 56,
+      name: "python parct-6.pdf",
+      url: "/python parct-6.pdf",
+      type: "pdf",
+    },
+    year: 1,
+    sem: 1,
+    id: 6,
+  },
+  {
+    aim: "Write a python program for printing following shape",
+    manual: {
+      size: 56,
+      name: "python parct-7.pdf",
+      url: "/python parct-7.pdf",
+      type: "pdf",
+    },
+    year: 1,
+    sem: 1,
+    id: 7,
+  },
+  {
+    aim: "Write a python program to illustrate the concept of Dictionary",
+    manual: {
+      size: 56,
+      name: "python parct-8.pdf",
+      url: "/python parct-8.pdf",
+      type: "pdf",
+    },
+    year: 1,
+    sem: 1,
+    id: 8,
+  },
+];
