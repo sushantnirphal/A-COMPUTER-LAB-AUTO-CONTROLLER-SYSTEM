@@ -50,7 +50,11 @@ const Header = () => {
             {/* <button onClick={() => setIsExpected(true)}>Academic</button>
             {isExpected && <MenuItem />} */}
            
-           <Link
+           
+            
+            {isStudent ? (
+              <>
+              <Link
               className="hover:text-slate-200 text-white"
               to={"/coursesandsyllabus"}
             >
@@ -59,18 +63,17 @@ const Header = () => {
             
             <Link
               className="hover:text-slate-200 text-white"
-              to={"/manualsubmission"}
+              to={"/createmanual"}
             >
-              ManualSubmission
+              CreateManual
             </Link>
             <Link
               className="hover:text-slate-200 text-white"
-              to={"/attendence"}
+              to={"/submitmanual"}
             >
-              Attendence
+              SubmitManual
             </Link>
-            {isStudent ? (
-              <>
+            
                 <Link
                   className="hover:text-slate-200 text-white"
                   to={"/practice"}
@@ -86,8 +89,32 @@ const Header = () => {
                 <Link className="hover:text-slate-200 text-white" to={"/code"}>
                   Code
                 </Link>
+                <Link
+                className="hover:text-slate-200 text-white"
+                to={"/attendence"}
+                >
+                Attendence
+                </Link>
               </>
             ) : null}
+            {!isStudent ? (
+              <>
+              <Link
+              className="hover:text-slate-200 text-white"
+              to={"/receivedmanual"}
+            >
+              ReceivedManual
+            </Link>
+            <Link
+                className="hover:text-slate-200 text-white"
+                to={"/checkattendence"}
+                >
+                CheckAttendence
+            </Link>
+              </>
+            ) : null}
+
+
 
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white  rounded-full font-normal text-sm py-3 px-5 focus:outline-none focus:shadow-outline"

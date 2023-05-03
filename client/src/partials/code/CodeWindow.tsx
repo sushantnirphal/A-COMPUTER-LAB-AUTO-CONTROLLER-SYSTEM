@@ -92,7 +92,7 @@ const CodeWindow: FC<{
         className="code-window text-xl w-full flex-1 bg-transparent p-6 text-pink-500"
       ></textarea>
       <textarea onChange=
-              {(e) => setUserInput(e.target.value)}>
+        {(e) => setUserInput(e.target.value)}>
       </textarea>
       <Output
         result={result === null ? "You didnt printed anything" : result}

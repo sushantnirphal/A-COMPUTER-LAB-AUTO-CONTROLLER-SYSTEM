@@ -38,9 +38,11 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.5.0",
     "@syncfusion/ej2-react-documenteditor": "^21.1.41",
     "autoprefixer": "^10.4.13",
     "i": "^0.3.7",
+    "monaco-editor": "^0.38.0",
     "postcss": "^8.4.21",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.8.2",
