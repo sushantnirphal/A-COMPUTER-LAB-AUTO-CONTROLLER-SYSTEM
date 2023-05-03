@@ -6,7 +6,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Academic from "@/pages/Academic";
 import MenuItem from "@/pages/MenuItem";
 import {FacultyContext} from "../../Context/FacultyContex";
-
+import CoursesAndSyllabus from "@/pages/CoursesAndSyllabus";
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
   const isStudent = student?.role === "student";
@@ -49,23 +49,14 @@ const Header = () => {
 
             {/* <button onClick={() => setIsExpected(true)}>Academic</button>
             {isExpected && <MenuItem />} */}
-            <select
-              className="bg-transparent px-2 text-white"
-              onChange={(e) => navigate(e.target.value)}
+           
+           <Link
+              className="hover:text-slate-200 text-white"
+              to={"/coursesandsyllabus"}
             >
-              <option
-                value="practicalCources"
-                className="bg-transparent px-2 text-sky-500"
-              >
-                PracticalCources
-              </option>
-              <option
-                className="bg-transparent px-2 text-sky-500"
-                value="courseSyllabus"
-              >
-                CourseSyllabus
-              </option>
-            </select>
+              CoursesAndSyllabus
+            </Link>
+            
             <Link
               className="hover:text-slate-200 text-white"
               to={"/manualsubmission"}

@@ -1,7 +1,7 @@
 import extractFormData from "@/utils/Extractform";
 import {useState, useEffect} from "react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
-import Header from "./Header";
+
 function EnrollPage() {
   console.log("im here");
   const [loading, setLoading] = useState(false);

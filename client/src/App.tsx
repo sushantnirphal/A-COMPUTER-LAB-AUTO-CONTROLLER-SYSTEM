@@ -20,6 +20,7 @@ import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
 import FacultyContext from "../Context/FacultyContex";
+import CoursesAndSyllabus from "./pages/CoursesAndSyllabus";
 const router = createHashRouter([
   {
     path: "/home",
@@ -53,6 +54,11 @@ const router = createHashRouter([
     path: "/code",
     element: <Code />,
   },
+  {
+    path: "/coursesandsyllabus",
+    element:<CoursesAndSyllabus/>,
+  },
+  
   {
     path: "/login",
     element: <LoginPage />,
