@@ -17,7 +17,7 @@ export interface ItemType {
 const Manual: FC<{manual: ItemType}> = ({manual: item}) => {
   return (
     <main className="flex-1 w-full h-full relative">
-      <h4 className="p-6 py-4 z-10git checkout -b <branch_name> flex-1 backdrop-filter backdrop-blur-lg bg-slate-900/40 absolute top-0 w-full text-slate-200 text-2xl font-medium border-b ">
+      <h4 className="p-6 py-4 z-10git checkout -b <branch_name> flex-1 backdrop-filter backdrop-blur-lg bg-slate-900/40 absolute top-0 w-full text-slate-200 text-2xl font-medium border-b z-20 ">
         Aim : {item.aim}
       </h4>
       <main className="w-full pt-24 overflow-auto max-h-full">
