@@ -73,29 +73,23 @@ const Header = () => {
             >
               SubmitManual
             </Link>
+            <Link className="hover:text-slate-200 text-white" to={"/code"}>
+              Code
+            </Link>
+            <Link
+              className="hover:text-slate-200 text-white"
+              to={"/attendence"}
+            >
+            Attendence
+            </Link>
+            <Link
+              className="hover:text-slate-200 text-white"
+              to={"/practice"}
+            >
+            Practice
+            </Link>
+            </>
             
-                <Link
-                  className="hover:text-slate-200 text-white"
-                  to={"/practice"}
-                >
-                  Practice
-                </Link>
-                <Link
-                  className="hover:text-slate-200 text-white"
-                  to={"/courses"}
-                >
-                  Courses
-                </Link>
-                <Link className="hover:text-slate-200 text-white" to={"/code"}>
-                  Code
-                </Link>
-                <Link
-                className="hover:text-slate-200 text-white"
-                to={"/attendence"}
-                >
-                Attendence
-                </Link>
-              </>
             ) : null}
             {!isStudent ? (
               <>
