@@ -6,23 +6,27 @@ import {
 } from "react-router-dom";
 import StudentContext from "../Context/StudentContext";
 import Home from "./pages/Home";
-import Courses from "./partials/Courses";
 import Code from "./pages/Code";
 import LoginPage from "./pages/Login";
 import EnrollPage from "./pages/EnrollPage";
 import Academic from "./pages/Academic";
-import Manualsubmission from "./pages/Manualsubmission";
+import CreateManual from "./pages/CreateManual";
 import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
+import SubmitManual from "./pages/SubmitManual";
+
 
 //  faculty
-import FacultyHome from "./pages/faculty/Home";
 import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
 import FacultyContext from "../Context/FacultyContex";
 import Error from "./pages/Error";
 import UploadPracticals from "./pages/UploadPracticals";
+import CoursesAndSyllabus from "./pages/CoursesAndSyllabus";
+import CheckAttendence from "./pages/CheckAttendence";
+import ReceivedManual from "./pages/ReceivedManual";
+
 const router = createHashRouter([
   {
     path: "/home",
@@ -44,6 +48,13 @@ const router = createHashRouter([
   {
     path: "/manual-submission",
     element: <Manualsubmission />,
+    path: "/createmanual",
+    element: <CreateManual />,
+  },
+  {
+    path: "/submitmanual",
+    element: <SubmitManual />,
+    
   },
   {
     path: "/attendence",
@@ -51,15 +62,26 @@ const router = createHashRouter([
   },
   {
     path: "/practice",
-    element: <Practice />,
-  },
-  {
-    path: "/courses",
-    element: <Courses />,
+    element:<Practice code={""} setCode={function (value: SetStateAction<string>): void {
+      throw new Error("Function not implemented.");
+    } }/>,
   },
   {
     path: "/code",
     element: <Code />,
+  },
+  {
+    path: "/coursesandsyllabus",
+    element:<CoursesAndSyllabus/>,
+  },
+  
+  {
+    path: "/checkattendence",
+    element:<CheckAttendence/>,
+  },
+  {
+    path: "/receivedmanual",
+    element:<ReceivedManual/>,
   },
   {
     path: "/login",
