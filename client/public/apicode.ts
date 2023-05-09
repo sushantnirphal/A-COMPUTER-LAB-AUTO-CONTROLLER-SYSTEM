@@ -1,5 +1,9 @@
 const langCode = [
   {
+    label: "Python",
+    code: 5,
+  },
+  {
     label: "Javascript",
     code: 17,
   },
@@ -12,10 +16,7 @@ const langCode = [
     label: "Java",
     code: 4,
   },
-  {
-    label: "Python",
-    code: 5,
-  },
+  
   {
     label: "C (gcc)",
     code: 6,

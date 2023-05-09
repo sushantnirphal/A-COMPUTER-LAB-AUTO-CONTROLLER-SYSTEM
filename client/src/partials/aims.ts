@@ -94,7 +94,7 @@ export const api = [
   {
     aim: "Python Data types",
     manual: {
-      size: 56,
+      size: 1000,
       name: "python parct-3.docx",
       url: "/python parct-3.docx",
       type: "docx",
@@ -106,7 +106,7 @@ export const api = [
   {
     aim: "Write the concept of Looping in python & Write a python program for printing heart shape ",
     manual: {
-      size: 56,
+      size: 1000,
       name: "python parct-4.docx",
       url: "/python parct-4.docx",
       type: "docx",
@@ -118,7 +118,7 @@ export const api = [
   {
     aim: " Study of conditional statements, WAP to print largest of the three no.",
     manual: {
-      size: 56,
+      size: 1000,
       name: "python parct-5.pdf",
       url: "/python parct-5.pdf",
       type: "pdf",
@@ -130,7 +130,7 @@ export const api = [
   {
     aim: " Study of looping statements, WAP to print a table of the given no entered by user.",
     manual: {
-      size: 56,
+      size: 1000,
       name: "python parct-6.pdf",
       url: "/python parct-6.pdf",
       type: "pdf",
@@ -142,7 +142,7 @@ export const api = [
   {
     aim: "Write a python program for printing following shape",
     manual: {
-      size: 56,
+      size: 1000,
       name: "python parct-7.pdf",
       url: "/python parct-7.pdf",
       type: "pdf",
@@ -154,7 +154,7 @@ export const api = [
   {
     aim: "Write a python program to illustrate the concept of Dictionary",
     manual: {
-      size: 56,
+      size: 1000,
       name: "python parct-8.pdf",
       url: "/python parct-8.pdf",
       type: "pdf",
