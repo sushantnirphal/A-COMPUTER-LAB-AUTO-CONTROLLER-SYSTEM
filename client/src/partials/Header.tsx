@@ -6,6 +6,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Academic from "@/pages/Academic";
 import MenuItem from "@/pages/MenuItem";
 import {FacultyContext} from "../../Context/FacultyContex";
+import UploadPracticals from "@/pages/UploadPracticals";
 import CoursesAndSyllabus from "@/pages/CoursesAndSyllabus";
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
@@ -37,9 +38,9 @@ const Header = () => {
 
   return (
     <header className="py-5 px-6 shadow-md justify-between flex fixed w-full bg-slate-700">
-      <h4 className="text-xl text-sky-400 font-medium">
+      <Link to={"/"} className="text-xl text-sky-400 font-medium">
         {student?.role === "student" ? "Student" : "Faculty"}
-      </h4>
+      </Link>
       <nav className="space-x-4 text-lg text-slate-400 ">
         {student && student?._id ? (
           <>
@@ -49,80 +50,77 @@ const Header = () => {
 
             {/* <button onClick={() => setIsExpected(true)}>Academic</button>
             {isExpected && <MenuItem />} */}
-           
-           
-            
+
             {isStudent ? (
               <>
-              <Link
-              className="hover:text-slate-200 text-white"
-              to={"/coursesandsyllabus"}
-            >
-              <option
-                // disabled
-                selected
-                className="bg-transparent px-2 text-sky-500"
-              >
-                {/* <Link to={"/uploadPracticals"}> UploadPracticals </Link> */}
-                Menu
-              </option>
-              <option
-                value="/upload-practicals"
-                className="bg-transparent px-2 text-sky-500"
-              >
-                 UploadPracticals
-              </option>
-              <option
-                className="bg-transparent px-2 text-sky-500"
-                value="/course-syllabus"
-              >
-                CourseSyllabus
-              </option>
-            </select>
+                <Link className="hover:text-slate-200" to={"/coursesandsyllabus"}>
+                  Courses&Syllabus
+                </Link>
+                <Link className="hover:text-slate-200" to={"/createmanual"}>
+                  CreateManual
+                </Link>
+                <Link className="hover:text-slate-200" to={"/submitmanual"}>
+                  SubmitManual
+                </Link>
+                <Link className="hover:text-slate-200 text-white" to={"/code"}>
+                  Code
+                </Link>
 
-            <Link
-              className="hover:text-slate-200 text-white"
-              to={"/submitmanual"}
-            >
-              SubmitManual
-            </Link>
-            <Link className="hover:text-slate-200 text-white" to={"/code"}>
-              Code
-            </Link>
-
-            <Link
-              className="hover:text-slate-200 text-white"
-              to={"/attendence"}
-            >
-            Attendence
-            </Link>
-            <Link
-              className="hover:text-slate-200 text-white"
-              to={"/practice"}
-            >
-            Practice
-            </Link>
-            </>
-            
+                <Link
+                  className="hover:text-slate-200 text-white"
+                  to={"/attendence"}
+                >
+                  Attendence
+                </Link>
+                <Link
+                  className="hover:text-slate-200 text-white"
+                  to={"/practice"}
+                >
+                  Practice
+                </Link>
+              </>
             ) : null}
             {!isStudent ? (
               <>
-              <Link
-              className="hover:text-slate-200 text-white"
-              to={"/receivedmanual"}
-            >
-              ReceivedManual
-            </Link>
-            <Link
-                className="hover:text-slate-200 text-white"
-                to={"/checkattendence"}
+                <Link
+                  className="hover:text-slate-200 text-white"
+                  to={"/receivedmanual"}
                 >
-                CheckAttendence
-            </Link>
+                  ReceivedManual
+                </Link>
+                <Link
+                  className="hover:text-slate-200 text-white"
+                  to={"/checkattendence"}
+                >
+                  CheckAttendence
+                </Link>
+                <select
+                  className="border-none ring-0 outline-none bg-transparent"
+                  onChange={(e) => navigate(e.target.value)}
+                >
+                  <option
+                    // disabled
+                    selected
+                    className="bg-transparent px-2 text-sky-500"
+                  >
+                    {/* <Link to={"/uploadPracticals"}> UploadPracticals </Link> */}
+                    Menu
+                  </option>
+                  <option
+                    value="/upload-practicals"
+                    className="bg-transparent px-2 text-sky-500"
+                  >
+                    UploadPracticals
+                  </option>
+                  <option
+                    className="bg-transparent px-2 text-sky-500"
+                    value="/course-syllabus"
+                  >
+                    CourseSyllabus
+                  </option>
+                </select>
               </>
             ) : null}
-
-
 
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white  rounded-full font-normal text-sm py-3 px-5 focus:outline-none focus:shadow-outline"

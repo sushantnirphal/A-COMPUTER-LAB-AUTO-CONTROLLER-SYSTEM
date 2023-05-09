@@ -8,7 +8,7 @@ const CodeWindow: FC<{
   setCode: Dispatch<SetStateAction<string>>;
 }> = ({code, setCode}) => {
   const [result, setResult] = useState<string | null | boolean>(false);
-  const [langCode, setLangCode] = useState(0);
+  const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
   function runCode() {
     if (!code.trim()) {

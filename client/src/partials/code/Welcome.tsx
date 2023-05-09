@@ -9,7 +9,7 @@ const Welcome = () => {
       
       <h5 className="text-xl text-sky-400">Hey, Good evening</h5>
       <h4 className="text-2xl md:text-4xl lg:text-6xl py-4 text-gr bg-clip-text text-transparent font-semibold">
-        Welcome to Freaking coding platform {student?.name}
+        Welcome to   CodeX {student?.name}
       </h4>
       <p className="text-2xl">good to see you back</p>
      

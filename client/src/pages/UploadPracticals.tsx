@@ -36,7 +36,7 @@ const UploadPracticals = () => {
       reader.onload = async (e) => {
         payload.file = reader.result as string;
 
-        const req = await fetch("http://localhost:7890/api/manual/create", {
+        const req = await fetch(`${process.env.VITE_SERVER_URL}/api/manual`, {
           method: "post",
           headers: {
             "Content-type": "application/json",
@@ -45,7 +45,7 @@ const UploadPracticals = () => {
         });
         const res = await req.json();
         getManuals();
-        console.log('here' , res)
+        console.log("here", res);
         event.target.reset();
         // console.log(res);
         setLoading(false);
@@ -56,6 +56,10 @@ const UploadPracticals = () => {
     }
 
     // console.log(payload);
+  }
+
+  async function delete_manual(id: string) {
+    const req = await fetch();
   }
 
   useEffect(() => {
@@ -69,7 +73,7 @@ const UploadPracticals = () => {
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span
               className="text-4xl absolute right-4 top-4 bg-red-500 grid place-items-center z-20 rounded-full w-12 h-12 text-white cursor-pointer"
-              onClick={() => setPreview({url : '' , slug :''})}
+              onClick={() => setPreview({url: "", slug: ""})}
             >
               &times;
             </span>
@@ -167,15 +171,15 @@ const UploadPracticals = () => {
                   file: string;
                 }) => (
                   <div className="flex text-slate-800 items-center bg-white/90  px-6 py-2 rounded">
-                    <h4 className="text-lg font-semibold">{item.aim}</h4>
-                    <div className="text-sm flex space-x-2 px-5">
+                    <h4 className="text-lg w-9/12 font-semibold">{item.aim}</h4>
+                    <div className="text-sm w-max shrink-0 flex space-x-2 px-5">
                       <h4>Sem {item?.sem}</h4>
                       <span>|</span>
                       <p>Year : {item?.year}</p>
                     </div>
                     <div className="ml-auto items-center flex space-x-4">
                       <button
-                        className="ml-auto font-semibold underline text-sky-600"
+                        className="ml-auto w-max font-semibold underline text-sky-600"
                         onClick={() =>
                           setPreview({url: item.file, slug: item.slug})
                         }
@@ -183,6 +187,7 @@ const UploadPracticals = () => {
                         View Doc
                       </button>
                       <button
+                        onClick={delete_manual}
                         // className="bg-red-600 text- rounded-full px-6 py-2 text-sm "
                         className="ml-auto font-semibold underline text-red-600"
                       >

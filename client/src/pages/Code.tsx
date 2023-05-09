@@ -6,26 +6,25 @@ import CodeWindow from "../partials/code/CodeWindow";
 import Manual from "../partials/code/Manual";
 import Sidebar from "../partials/code/Sidebar";
 import Welcome from "../partials/code/Welcome";
+import {useLocation, useNavigation} from "react-router-dom";
 const Code = () => {
   const [aim, setAim] = useState<string | null | number>("");
   const [code, setCode] = useState("hello world!!!");
+  const [id, setId] = useState<string | null>(null);
 
   return (
-    <main className=" h-screen  gr-bg">
+    <main className=" h-screen w-full  gr-bg">
       <Header />
       <section className="pt-20 h-full ">
-        <div className="flex-1 h-full flex flex-col md:flex-row ">
-          <Sidebar records={api} aim={aim} setAim={setAim} />
+        <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
+          <Sidebar setter={setId} id={id} />
 
-          <div className="flex-1 h-full flex flex-col md:flex-row ">
-            {aim ? (
-              <Manual
-                aim={aim}
-                manual={api.filter((obj) => obj.id === aim)[0]}
-              />
+          <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
+            {id ? (
+              <Manual id={id}/>
             ) : null}
-            {aim ? <CodeWindow code={code} setCode={setCode} /> : null}
-            {!aim ? <Welcome /> : null}
+            {id ? <CodeWindow code={code} setCode={setCode} /> : null}
+            {!id ? <Welcome /> : null}
           </div>
         </div>
       </section>
