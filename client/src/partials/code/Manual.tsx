@@ -16,8 +16,13 @@ export interface ItemType {
 }
 
 const Manual: FC<{id: string}> = ({id}) => {
-  const [manual, setManual] = useState(null);
+  const [manual, setManual] = useState<{
+    file: string;
+    aim: string;
+    file_type: string;
+  } | null>(null);
   async function get_by_id() {
+    setManual(null);
     await fetch(`${import.meta.env.VITE_SERVER_URL}/manual/${id}` as string)
       .then((d) => d.json())
       .then((e) => setManual(e.data));
@@ -32,20 +37,20 @@ const Manual: FC<{id: string}> = ({id}) => {
       <h4 className="p-6 py-4 flex-1 backdrop-filter backdrop-blur-lg bg-slate-900/40 absolute top-0 w-full text-slate-200 text-2xl font-medium border-b z-20 ">
         Aim : {manual?.aim}
       </h4>
-     
+
       <main className="w-full pt-24 overflow-auto max-h-full">
-      {!manual && (
-        <main className="py-4">
-          <h2>Loading</h2>
-        </main>
-      )}
-        {/* <FileViewer key={id} fileType={"pdf"} filePath={manual?.file} /> */}
-        {/* <div
-        className="overflow-y-scroll pt-20  h-full flex-1 p-6 text-slate-200 font-mono manual-window space-y-4"
-        dangerouslySetInnerHTML={{
-          __html: aims.filter(({title}) => title === aim)[0].desc,
-        }}
-      /> */}
+        {!manual && (
+          <main className="py-4 text-white px-6 ">
+            <h2>Loading...</h2>
+          </main>
+        )}
+        {manual ? (
+          <FileViewer
+            key={id}
+            fileType={manual?.file_type || "pdf"}
+            filePath={manual?.file || ""}
+          />
+        ) : null}
       </main>
     </main>
   );

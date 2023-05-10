@@ -17,7 +17,8 @@ const Sidebar: FC<{
     get_ids();
   }, []);
   return (
-    <div className="resize-x h-full border-r  w-64">
+    <div className="resize-x h-full border-r  w-40
+    ">
       {id}
       <ul className="text-lg font-medium space-y-4 text-slate-400  p-6">
         {ids.map(({_id}, index) => (

@@ -3,6 +3,7 @@ import Output from "./Output";
 import CustomInput from "./CustomInput";
 import Codemirror from '@uiw/react-codemirror';
 import langcode from "../../../public/apicode";
+import ReverseTimer from "../../partials/code/ReverseTimer";
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
@@ -10,6 +11,10 @@ const CodeWindow: FC<{
   const [result, setResult] = useState<string | null | boolean>(false);
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
+
+  // funtion runTestCases(){
+
+  // }
   function runCode() {
     if (!code.trim()) {
       alert("Empty code is not allowed");
@@ -73,7 +78,12 @@ const CodeWindow: FC<{
             );
           })}
         </select>
+        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-4 rounded-full">Timer-<ReverseTimer/></div>
         <div className="space-x-4 px-4">
+
+          
+
+
           <button
             onClick={runCode}
             className="bg-green-500 text-slate-100 py-2 px-6 rounded-full"

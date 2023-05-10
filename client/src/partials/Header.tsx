@@ -94,31 +94,12 @@ const Header = () => {
                 >
                   CheckAttendence
                 </Link>
-                <select
-                  className="border-none ring-0 outline-none bg-transparent"
-                  onChange={(e) => navigate(e.target.value)}
-                >
-                  <option
-                    // disabled
-                    selected
-                    className="bg-transparent px-2 text-sky-500"
-                  >
-                    {/* <Link to={"/uploadPracticals"}> UploadPracticals </Link> */}
-                    Menu
-                  </option>
-                  <option
-                    value="/upload-practicals"
-                    className="bg-transparent px-2 text-sky-500"
-                  >
-                    UploadPracticals
-                  </option>
-                  <option
-                    className="bg-transparent px-2 text-sky-500"
-                    value="/course-syllabus"
-                  >
-                    CourseSyllabus
-                  </option>
-                </select>
+                <Link className="hover:text-slate-200 text-white"
+                 to={"/upload-practicals"}
+                 > 
+                 UploadPracticals 
+                 </Link>
+              
               </>
             ) : null}
 
