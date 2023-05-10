@@ -45,6 +45,7 @@ const router = createHashRouter([
     element: <UploadPracticals />,
   },
   {
+
     path: "/createmanual",
     element: <CreateManual />,
   },
