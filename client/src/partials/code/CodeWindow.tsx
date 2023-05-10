@@ -10,6 +10,10 @@ const CodeWindow: FC<{
   const [result, setResult] = useState<string | null | boolean>(false);
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
+
+  // funtion runTestCases(){
+
+  // }
   function runCode() {
     if (!code.trim()) {
       alert("Empty code is not allowed");

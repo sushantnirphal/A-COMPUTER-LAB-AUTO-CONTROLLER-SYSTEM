@@ -52,12 +52,12 @@ function LoginPage() {
     }
   }
   const location = useLocation();
-  console.log(student,  "student", location.pathname)
+  // console.log(student,  "student", location.pathname)
 
   useEffect(() => {
     if(location.pathname === "/login" && student?._id)  {
       navigate("/home")
-      console.log("login now")
+      // console.log("login now")
     }
   }, [student?._id]);
 

@@ -26,6 +26,10 @@ const manualSchema = new Schema(
       type: Number,
       required: true,
     },
+    file_type: {
+      type: String,
+      required: true,
+    },
   },
   {timestamps: true}
 );
