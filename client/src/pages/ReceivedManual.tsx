@@ -1,24 +1,30 @@
-import Header from "@/partials/Header";
-import React, { useState, useRef } from 'react';
-import { useReactToPrint } from "react-to-print";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { Button } from "semantic-ui-react";
-import {useNavigate} from "react-router-dom";
-
-
-
+import React, {useState} from "react";
+import Header from "../partials/Header";
+import {api} from "../partials/aims";
+import Output from "../partials/code/Output";
+import Manual from "../partials/code/Manual";
+import Sidebar from "../partials/code/Sidebar";
+import {useLocation, useNavigation} from "react-router-dom";
 
 const ReceivedManual = () => {
-  
+  const [aim, setAim] = useState<string | null | number>("");
+  const [id, setId] = useState<string | null>(null);
+
   return (
-    
-    <div className="h-screen gr-bg">
+    <main className=" h-screen w-full  gr-bg">
       <Header />
-      <div className="p-12 md:p-32 h-full  overflow-y-auto text-slate-100">
-      
-      </div>
-    </div>
+      <section className="pt-20 h-full ">
+        <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
+          <Sidebar setter={setId} id={id} />
+
+          <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
+            {id ? (
+              <Manual id={id}/>
+            ) : null}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 };
 
