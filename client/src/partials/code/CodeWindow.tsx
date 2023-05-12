@@ -26,7 +26,8 @@ const CodeWindow: FC<{
     }
     setResult("Compiling, please wait...");
     const encodedParams = new URLSearchParams();
-    encodedParams.append("LanguageChoice", `${langCode}`);
+    encodedParams.append("LanguageChoice", `${langCode}`);+
+    
     encodedParams.append("Program", `${code}`);
     encodedParams.append("Input",`${customInput}`);
     

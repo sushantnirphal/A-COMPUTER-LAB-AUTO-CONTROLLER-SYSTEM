@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from "react";
 
 function ReverseTimer() {
-  const [timeLeft, setTimeLeft] = useState(7200); // 2 hours in seconds
+  const [time, setTime] = useState(2*60*60); // 2 hours in seconds
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
-    }, 1000);
+    const intervalId = setInterval(() => {
+      setTime((prevTime) => prevTime - 1);
+    }, 1000); // runs every 1 second
 
-    return () => clearInterval(timer);
+    // clear interval after 2 hours
+    setTimeout(() => {
+      clearInterval(intervalId);
+    },  2*60*60* 1000);
+
+    return () => clearInterval(intervalId); // clean up
   }, []);
 
-  const hours = Math.floor(timeLeft / 3600);
-  const minutes = Math.floor((timeLeft % 3600) / 60);
-  const seconds = timeLeft % 60;
+  const formatTime = (time) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
 
   return (
     <div>
-      
-      <div>
-        {hours < 10 ? "0" + hours : hours}:
-        {minutes < 10 ? "0" + minutes : minutes}:
-        {seconds < 10 ? "0" + seconds : seconds}
-      </div>
+      <p>{formatTime(time)}</p>
     </div>
   );
 }
 
-export default ReverseTimer;
+export default ReverseTimer;

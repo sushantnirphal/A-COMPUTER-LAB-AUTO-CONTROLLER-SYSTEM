@@ -83,10 +83,10 @@ const UploadPracticals = () => {
     getManuals();
   }, []);
   return (
-    <div className="gr-bg min-h-screen ">
+    <div className="gr-bg min-h-screen w-full ">
       <Header />
       {preview   && (
-        <section className="w-screen py-8 h-screen fixed inset-0 bg-black/60 ">
+        <section className=" py-8 h-screen fixed inset-0 bg-black/60 ">
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span
               className="text-4xl absolute right-4 top-4 bg-red-500 grid place-items-center z-20 rounded-full w-12 h-12 text-white cursor-pointer"
@@ -99,7 +99,7 @@ const UploadPracticals = () => {
         </section>
       )}
       <main className="pt-20 flex flex-wrap h-screen">
-        <section className="p-8 w-full md:w-1/2 text-white">
+        <section className="p-8 w-1/2 md:w-1/2 text-white">
           <div>
             <h1 className="text-lg font-semibold bg-sky-700 p-4 ">
               Upload Practical
@@ -165,7 +165,7 @@ const UploadPracticals = () => {
             </form>
           </div>
         </section>
-        <section className="w-full p-8 text-white md:w-1/2 min-h-full border-l">
+        <section className="w-1/2  p-8 text-white md:w-1/2 h-full overflow-y-scroll border-l">
           <h1 className="text-lg font-semibold bg-white text-sky-700 p-4 ">
             Uploaded Practical
           </h1>
