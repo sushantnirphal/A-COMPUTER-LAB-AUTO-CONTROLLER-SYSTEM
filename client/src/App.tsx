@@ -13,7 +13,7 @@ import Academic from "./pages/Academic";
 import CreateManual from "./pages/CreateManual";
 import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
-import SubmitManual from "./pages/SubmitManual";
+import UploadManual from "./pages/UploadManual";
 
 //  faculty
 import FacultyLogin from "./pages/faculty/LoginPage";
@@ -49,8 +49,8 @@ const router = createHashRouter([
     element: <CreateManual />,
   },
   {
-    path: "/submitmanual",
-    element: <SubmitManual />,
+    path: "/uploadmanual",
+    element: <UploadManual />,
   },
   {
     path: "/attendence",

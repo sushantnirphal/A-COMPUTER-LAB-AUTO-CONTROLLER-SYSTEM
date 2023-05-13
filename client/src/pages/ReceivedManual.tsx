@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import Header from "../partials/Header";
-import {api} from "../partials/aims";
-import Output from "../partials/code/Output";
-import Manual from "../partials/code/Manual";
-import Sidebar from "../partials/code/Sidebar";
+import CodeWindow from "../partials/code/CodeWindow";
+import UploadManual from "../pages/UploadManual";
+import Sidebarf from "../partials/code/Sidebar";
+import SubmitManual from "../partials/code/SubmitManual";
+import Welcome from "../partials/code/Welcome";
 import {useLocation, useNavigation} from "react-router-dom";
 
 const ReceivedManual = () => {
-  const [aim, setAim] = useState<string | null | number>("");
   const [id, setId] = useState<string | null>(null);
 
   return (
@@ -15,14 +15,14 @@ const ReceivedManual = () => {
       <Header />
       <section className="pt-20 h-full ">
         <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
-          <Sidebar setter={setId} id={id} />
+          <Sidebarf setter={setId} id={id} />
 
           <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
-            {id ? (
-              <Manual id={id}/>
+          {id ? (
+              <SubmitManual id={id}/>
             ) : null}
           </div>
-        </div>
+        </div>                                                                                                                                                                                                                                            
       </section>
     </main>
   );

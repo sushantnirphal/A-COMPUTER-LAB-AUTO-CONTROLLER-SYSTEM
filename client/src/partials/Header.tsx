@@ -59,8 +59,8 @@ const Header = () => {
                 <Link className="hover:text-slate-200" to={"/createmanual"}>
                   CreateManual
                 </Link>
-                <Link className="hover:text-slate-200" to={"/submitmanual"}>
-                  SubmitManual
+                <Link className="hover:text-slate-200" to={"/uploadmanual"}>
+                  UploadManual
                 </Link>
                 <Link className="hover:text-slate-200 text-white" to={"/code"}>
                   Code
