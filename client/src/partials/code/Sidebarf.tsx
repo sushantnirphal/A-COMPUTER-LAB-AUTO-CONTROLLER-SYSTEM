@@ -1,15 +1,15 @@
 import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
 import {AimType} from "../aims";
 import {api} from "../aims";
-import {ItemType} from "./Manual";
-const Sidebar: FC<{
+import {ItemType} from "./SubmitManual";
+const Sidebarf: FC<{
   id: string | null;
   setter: Dispatch<SetStateAction<string | null >>;
  
 }> = ({setter, id}) => {
   const [ids, setIDs] = useState([]);
   async function get_ids() {
-    await fetch(`${import.meta.env.VITE_SERVER_URL}/manual/all_id` as string)
+    await fetch(`${import.meta.env.VITE_SERVER_URL}/submitmanual/all_id` as string)
       .then((d) => d.json())
       .then((e) => setIDs(e.data));
   }
@@ -37,4 +37,4 @@ const Sidebar: FC<{
   );
 };
 
-export default Sidebar;
+export default Sidebarf;

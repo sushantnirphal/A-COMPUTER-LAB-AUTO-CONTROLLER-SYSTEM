@@ -1,13 +1,20 @@
 import React, {Dispatch, FC, SetStateAction, useState} from "react";
 import Output from "./Output";
+import CustomInput from "./CustomInput";
+import Codemirror from '@uiw/react-codemirror';
 import langcode from "../../../public/apicode";
+import ReverseTimer from "../../partials/code/ReverseTimer";
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
 }> = ({code, setCode}) => {
   const [result, setResult] = useState<string | null | boolean>(false);
-  const [langCode, setLangCode] = useState(0);
-  const [userInput, setUserInput] = useState("");
+  const [langCode, setLangCode] = useState(5);
+  const [customInput, setCustomInput] = useState("");
+
+  // funtion runTestCases(){
+
+  // }
   function runCode() {
     if (!code.trim()) {
       alert("Empty code is not allowed");
@@ -21,7 +28,8 @@ const CodeWindow: FC<{
     const encodedParams = new URLSearchParams();
     encodedParams.append("LanguageChoice", `${langCode}`);
     encodedParams.append("Program", `${code}`);
-
+    encodedParams.append("Input",`${customInput}`);
+    
     const options = {
       method: "POST",
       headers: {
@@ -70,7 +78,12 @@ const CodeWindow: FC<{
             );
           })}
         </select>
+        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-4 rounded-full">Timer-<ReverseTimer/></div>
         <div className="space-x-4 px-4">
+
+          
+
+
           <button
             onClick={runCode}
             className="bg-green-500 text-slate-100 py-2 px-6 rounded-full"
@@ -85,15 +98,19 @@ const CodeWindow: FC<{
           </button>
         </div>
       </div>
-      <textarea
+      <Codemirror
+        height="55vh"
+        width="75vh"
         value={code}
-        onChange={(e) => setCode(e.target.value)}
-        name="code"
-        className="code-window text-xl w-full flex-1 bg-transparent p-6 text-pink-500"
-      ></textarea>
-      <textarea onChange=
-              {(e) => setUserInput(e.target.value)}>
-      </textarea>
+        onChange={setCode}
+        theme="light"
+        className="code-window  w-full flex-1 bg-transparent text-pink-500"/>
+       
+      <CustomInput
+          customInput={customInput}
+          setCustomInput={setCustomInput}
+      />
+
       <Output
         result={result === null ? "You didnt printed anything" : result}
         setResult={setResult}
@@ -101,7 +118,5 @@ const CodeWindow: FC<{
     </div>
   );
 };
-
-
 
 export default CodeWindow;

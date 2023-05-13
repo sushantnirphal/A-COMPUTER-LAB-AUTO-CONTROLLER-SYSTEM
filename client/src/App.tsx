@@ -6,22 +6,26 @@ import {
 } from "react-router-dom";
 import StudentContext from "../Context/StudentContext";
 import Home from "./pages/Home";
-import Courses from "./partials/Courses";
 import Code from "./pages/Code";
 import LoginPage from "./pages/Login";
 import EnrollPage from "./pages/EnrollPage";
 import Academic from "./pages/Academic";
-import Manualsubmission from "./pages/Manualsubmission";
+import CreateManual from "./pages/CreateManual";
 import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
+import UploadManual from "./pages/UploadManual";
 
 //  faculty
-import FacultyHome from "./pages/faculty/Home";
 import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
 import FacultyContext from "../Context/FacultyContex";
 import Error from "./pages/Error";
+import UploadPracticals from "./pages/UploadPracticals";
+import CoursesAndSyllabus from "./pages/CoursesAndSyllabus";
+import CheckAttendence from "./pages/CheckAttendence";
+import ReceivedManual from "./pages/ReceivedManual";
+// import FacultyHome from './p'
 const router = createHashRouter([
   {
     path: "/home",
@@ -37,8 +41,16 @@ const router = createHashRouter([
     element: <Academic />,
   },
   {
-    path: "/manualsubmission",
-    element: <Manualsubmission />,
+    path: "/upload-practicals",
+    element: <UploadPracticals />,
+  },
+  {
+   path: "/createmanual",
+    element: <CreateManual />,
+  },
+  {
+    path: "/uploadmanual",
+    element: <UploadManual />,
   },
   {
     path: "/attendence",
@@ -46,15 +58,29 @@ const router = createHashRouter([
   },
   {
     path: "/practice",
-    element: <Practice />,
-  },
-  {
-    path: "/courses",
-    element: <Courses />,
+    element: (
+      <Practice
+        code={""}
+        setCode={function (value: SetStateAction<string>): void {}}
+      />
+    ),
   },
   {
     path: "/code",
     element: <Code />,
+  },
+  {
+    path: "/coursesandsyllabus",
+    element: <CoursesAndSyllabus />,
+  },
+
+  {
+    path: "/checkattendence",
+    element: <CheckAttendence />,
+  },
+  {
+    path: "/receivedmanual",
+    element: <ReceivedManual />,
   },
   {
     path: "/login",
@@ -74,22 +100,23 @@ const router = createHashRouter([
   },
   {
     path: "/faculty/home",
-    element: <FacultyHome />,
-  },{
-  path : '*',
-  element  :<Error/>
-  }
+    // element: <FacultyHome />,
+  },
+  {
+    path: "*",
+    element: <Error />,
+  },
 ]);
 const App = () => {
   return (
-    <>
+    <section className="w-full">
       {/* <Header /> */}
       <StudentContext>
         <FacultyContext>
-          <RouterProvider fallbackElement={<>Error</>}  router={router} />
+          <RouterProvider fallbackElement={<>Error</>} router={router} />
         </FacultyContext>
       </StudentContext>
-    </>
+    </section>
   );
 };
 
