@@ -4,9 +4,10 @@ import FileViewer from "react-file-viewer";
 const File_Viewer = ({id}: {id: string}) => {
   const [file, setFile] = useState<{file_type: string; url: string} | any>({});
   async function get_file_by_id() {
-    const file = fetch(
+    const file =await fetch(
       `${import.meta.env.VITE_SERVER_URL}/manual/file/${id}`
     ).then((a) => a.json());
+    console.log(file)
     setFile(file.data);
   }
 

@@ -14,7 +14,9 @@ const UploadManual = () => {
   const [submitmanual, setManuals] = useState([]);
   const reader = new FileReader();
   async function getManuals() {
-    const req = await fetch("http://localhost:7890/api/submitmanual/all_id");
+    const req = await fetch(
+      import.meta.env.VITE_SERVER_URL + "/submitmanual/all_id"
+    );
     const res = await req.json();
     setManuals(res.data);
     setFetching(false);
@@ -45,13 +47,16 @@ const UploadManual = () => {
       reader.onload = async (e) => {
         payload.file = reader.result as string;
 
-        const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/submitmanual`, {
-          method: "post",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
+        const req = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}/submitmanual`,
+          {
+            method: "post",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
         const res = await req.json();
         getManuals();
         console.log("here", res);
@@ -85,7 +90,7 @@ const UploadManual = () => {
   return (
     <div className="gr-bg min-h-screen ">
       <Header />
-      {preview   && (
+      {preview && (
         <section className="w-screen py-8 h-screen fixed inset-0 bg-black/60 ">
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span

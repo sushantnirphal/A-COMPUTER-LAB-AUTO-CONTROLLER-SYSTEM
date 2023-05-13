@@ -50,6 +50,7 @@ SubmitManualRouter.get("/all_id", async (req, res) => {
 // get manual ids
 SubmitManualRouter.get("/file/:id", async (req, res) => {
   const {id} = req.params;
+  console.log("here", id);
   try {
     const akg = await submitmanualModel.findOne(
       {_id: id},
@@ -58,11 +59,11 @@ SubmitManualRouter.get("/file/:id", async (req, res) => {
         file_type: 1,
       }
     );
+    console.log(akg);
     res
       .status(200)
       .send({success: true, message: "Manual fetched successfully", data: akg});
   } catch (error) {
-   
     res
       .status(400)
       .send({success: false, message: "Something went wrong.", data: error});
