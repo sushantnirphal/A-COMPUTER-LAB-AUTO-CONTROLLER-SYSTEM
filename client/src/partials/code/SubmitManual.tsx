@@ -3,21 +3,23 @@ import Header from "@/partials/Header";
 import {Link} from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
 import FileViewer from "react-file-viewer";
-const SubmitManual = () => {
-  const [preview, setPreview] = useState({url: "", slug: ""});
+import {toast} from "react-toastify";
+import File_Viewer from "@/partials/File_Viewer";
 
+const UploadManual = () => {
+  const [preview, setPreview] = useState("");
   const [file, setFile] = useState<Blob>();
   const [fetching, setFetching] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [manual, setManuals] = useState([]);
+  const [submitmanual, setManuals] = useState([]);
   const reader = new FileReader();
   async function getManuals() {
-    const req = await fetch("http://localhost:7890/api/manual");
+    const req = await fetch("http://localhost:7890/api/submitmanual/all_id");
     const res = await req.json();
     setManuals(res.data);
     setFetching(false);
   }
-  async function handleSubmit(event: ChangeEvent<HTMLFormElement>) {
+  async function handleUpload(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
     if (
       ![
@@ -29,14 +31,21 @@ const SubmitManual = () => {
       return;
     }
 
-    const payload = extractFormData(event.target);
+    const payload: {[k: string]: string | null | number} = extractFormData(
+      event.target
+    );
+    payload.file_type =
+      file?.type ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ? "docx"
+        : "pdf";
     if (file) {
       setLoading(true);
       reader.readAsDataURL(file);
       reader.onload = async (e) => {
         payload.file = reader.result as string;
 
-        const req = await fetch(`${process.env.VITE_SERVER_URL}/api/manual`, {
+        const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/submitmanual`, {
           method: "post",
           headers: {
             "Content-type": "application/json",
@@ -59,7 +68,15 @@ const SubmitManual = () => {
   }
 
   async function delete_manual(id: string) {
-    const req = await fetch();
+    const res = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/submitmanual/delete/${id}`,
+      {
+        method: "post",
+      }
+    ).then((a) => a.json());
+
+    toast(res.message);
+    getManuals();
   }
 
   useEffect(() => {
@@ -68,21 +85,15 @@ const SubmitManual = () => {
   return (
     <div className="gr-bg min-h-screen ">
       <Header />
-      {preview.url && (
+      {preview   && (
         <section className="w-screen py-8 h-screen fixed inset-0 bg-black/60 ">
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span
               className="text-4xl absolute right-4 top-4 bg-red-500 grid place-items-center z-20 rounded-full w-12 h-12 text-white cursor-pointer"
-              onClick={() => setPreview({url: "", slug: ""})}
-            >
+              onClick={() => setPreview("")}>
               &times;
             </span>
-            <FileViewer
-              key={preview.slug}
-              fileType={"docx"}
-              // fileType={"pdf"}
-              filePath={preview.url}
-            />
+            {preview && <File_Viewer id={preview} />}
           </div>
         </section>
       )}
@@ -90,11 +101,11 @@ const SubmitManual = () => {
         <section className="p-8 w-full md:w-1/2 text-white">
           <div>
             <h1 className="text-lg font-semibold bg-sky-700 p-4 ">
-              Submit Practical
+              submit Practical
             </h1>
           </div>
           <div className="p-2">
-            <form className="max-w-[400px] mt-8" onSubmit={handleSubmit}>
+            <form className="max-w-[400px] mt-8" onSubmit={handleUpload}>
               <label htmlFor="">Subject</label>
               <br />
               <input
@@ -155,13 +166,13 @@ const SubmitManual = () => {
         </section>
         <section className="w-full p-8 text-white md:w-1/2 min-h-full border-l">
           <h1 className="text-lg font-semibold bg-white text-sky-700 p-4 ">
-            Submitted Practical
+            Submitted Practicals
           </h1>
           {fetching ? (
             <h6 className="py-4 text-center w-full"> Loading...</h6>
           ) : (
             <main className="py-8 space-y-6">
-              {manual.map(
+              {submitmanual.map(
                 (item: {
                   _id: string;
                   aim: string;
@@ -169,8 +180,12 @@ const SubmitManual = () => {
                   year: number;
                   slug: string;
                   file: string;
+                  file_type: string;
                 }) => (
-                  <div className="flex text-slate-800 items-center bg-white/90  px-6 py-2 rounded">
+                  <div
+                    key={item?._id}
+                    className="flex text-slate-800 items-center bg-white/90  px-6 py-2 rounded"
+                  >
                     <h4 className="text-lg w-9/12 font-semibold">{item.aim}</h4>
                     <div className="text-sm w-max shrink-0 flex space-x-2 px-5">
                       <h4>Sem {item?.sem}</h4>
@@ -180,14 +195,12 @@ const SubmitManual = () => {
                     <div className="ml-auto items-center flex space-x-4">
                       <button
                         className="ml-auto w-max font-semibold underline text-sky-600"
-                        onClick={() =>
-                          setPreview({url: item.file, slug: item.slug})
-                        }
+                        onClick={() => setPreview(item?._id)}
                       >
                         View Doc
                       </button>
                       <button
-                        onClick={delete_manual}
+                        onClick={() => delete_manual(item?._id)}
                         // className="bg-red-600 text- rounded-full px-6 py-2 text-sm "
                         className="ml-auto font-semibold underline text-red-600"
                       >
@@ -205,4 +218,4 @@ const SubmitManual = () => {
   );
 };
 
-export default SubmitManual;
+export default UploadManual;
