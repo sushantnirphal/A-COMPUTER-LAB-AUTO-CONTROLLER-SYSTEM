@@ -118,7 +118,7 @@ const CodeWindow: FC<{
       </div>
       <Codemirror
         height="55vh"
-        width="75vh"
+        width="85vh"
         value={code}
         onChange={setCode}
         theme="light"
