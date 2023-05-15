@@ -79,7 +79,7 @@ const CodeWindow: FC<{
             );
           })}
         </select>
-        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-4 rounded-full">Timer-<ReverseTimer/></div>
+        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-3 rounded-full">Timer-<ReverseTimer/></div>
         <div className="space-x-4 px-4">
 
           
@@ -87,13 +87,19 @@ const CodeWindow: FC<{
 
           <button
             onClick={runCode}
-            className="bg-green-500 text-slate-100 py-2 px-6 rounded-full"
+            className="bg-green-500 text-slate-100 py-2 px-4 rounded-full"
           >
             Run
           </button>
           <button
+            onClick={runCode}
+            className="bg-red-500 text-slate-200 py-2 px-3 rounded-full"
+          >
+            Testcase
+          </button>
+          <button
             onClick={() => setCode("")}
-            className="bg-red-500 text-slate-200 py-2 px-6 rounded-full"
+            className="bg-red-500 text-slate-200 py-2 px-3 rounded-full"
           >
             Reset code
           </button>

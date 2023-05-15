@@ -13,6 +13,7 @@ const UploadPracticals = () => {
   const [loading, setLoading] = useState(false);
   const [manual, setManuals] = useState([]);
   const reader = new FileReader();
+  
   async function getManuals() {
     const req = await fetch("http://localhost:7890/api/manual/all_id");
     const res = await req.json();
@@ -160,7 +161,7 @@ const UploadPracticals = () => {
                 disabled={loading}
                 className="p-2 px-6 text-white my-6 rounded-full bg-green-600"
               >
-                {loading ? "Please wait..." : "Upload"}
+                {loading ? "Please wait..." : "Upload"} 
               </button>
             </form>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 function ReverseTimer() {
-  const [time, setTime] = useState(2*60*60); // 2 hours in seconds
+  const [time, setTime] = useState(7200); // 2 hours in seconds
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -11,7 +11,7 @@ function ReverseTimer() {
     // clear interval after 2 hours
     setTimeout(() => {
       clearInterval(intervalId);
-    },  2*60*60* 1000);
+    },  7200* 1000);
 
     return () => clearInterval(intervalId); // clean up
   }, []);
