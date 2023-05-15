@@ -9,6 +9,11 @@ const Practcode: FC<{
 }> = ({code, setCode}) => {
   const [result, setResult] = useState<string | null | boolean>(false);
   const [langCode, setLangCode] = useState(0);
+
+
+  
+
+
   function runCode() {
     if (!code.trim()) {
       alert("Empty code is not allowed");
@@ -19,6 +24,9 @@ const Practcode: FC<{
       return;
     }
     setResult("Compiling, please wait...");
+
+
+
     const encodedParams = new URLSearchParams();
     encodedParams.append("LanguageChoice", `${langCode}`);
     encodedParams.append("Program", `${code}`);
