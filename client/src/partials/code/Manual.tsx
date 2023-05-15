@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from "react";
 import aims from "../aims";
-import FileViewer from "react-file-viewer";
+import FileViewer from "react-file-viewer"; 
 
 export interface ItemType {
   aim: string | number;

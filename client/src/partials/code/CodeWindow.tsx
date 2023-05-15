@@ -12,9 +12,26 @@ const CodeWindow: FC<{
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
 
-  // funtion runTestCases(){
+  const [manual, setManual] = useState<{
+    file: string;
+    aim: string;
+    file_type: string;
+    testcases: string;
+  } | null>(null);
+  async function get_by_id() {
+    setManual(null);
+    await fetch(`${import.meta.env.VITE_SERVER_URL}/manual/${id}` as string)
+      .then((d) => d.json())
+      .then((e) => setManual(e.data));
+  }
 
-  // }
+// funtion runTestCases(){
+  
+
+
+//   }
+
+
   function runCode() {
     if (!code.trim()) {
       alert("Empty code is not allowed");
@@ -107,7 +124,7 @@ const CodeWindow: FC<{
       </div>
       <Codemirror
         height="55vh"
-        width="75vh"
+        width="85vh"
         value={code}
         onChange={setCode}
         theme="light"
@@ -119,7 +136,7 @@ const CodeWindow: FC<{
       />
 
       <Output
-        result={result === null ? "You didnt printed anything" : result}
+        result={result === null ? "You did'nt print anything" : result}
         setResult={setResult}
       />
     </div>

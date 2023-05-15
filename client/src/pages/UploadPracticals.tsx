@@ -100,7 +100,7 @@ const UploadPracticals = () => {
         </section>
       )}
       <main className="pt-20 flex flex-wrap h-screen">
-        <section className="p-8 w-1/2 md:w-1/2 text-white">
+        <section className="p-8 w-1/2 md:w-1/2 h-full overflow-y-scroll border-l text-white">
           <div>
             <h1 className="text-lg font-semibold bg-sky-700 p-4 ">
               Upload Practical
@@ -157,6 +157,92 @@ const UploadPracticals = () => {
                 className="border-2"
               ></input>
               <br />
+              <label>TestCase1</label>
+              <br />
+              <input
+                required
+                placeholder="input"
+                name="testCase1"
+                type="text"
+                className="border-2"
+              ></input>
+              <input
+              placeholder="output"
+                required
+                name="testCase1"
+                type="text"
+                className="border-2"
+              ></input>
+              <br />
+              <label>TestCase2</label>
+              <br />
+              <input
+                required
+                placeholder="input"
+                name="testCase2"
+                type="text"
+                className="border-2"
+              ></input>
+              <input
+                required
+                placeholder="output"
+                name="testCase2"
+                type="text"
+                className="border-2"
+              ></input>
+              <br />
+              <label>TestCase3</label>
+              <br />
+              <input
+                required
+                placeholder="input"
+                name="testCase3"
+                type="text"
+                className="border-2"
+              ></input>
+              <input
+                required
+                placeholder="output"
+                name="testCase3"
+                type="text"
+                className="border-2"
+              ></input>
+              <br />
+              <label>TestCase4</label>
+              <br />
+              <input
+                required
+                placeholder="input"
+                name="testCase4"
+                type="text"
+                className="border-2"
+              ></input>
+              <input
+                required
+                placeholder="output"
+                name="testCase4"
+                type="text"
+                className="border-2"
+              ></input>
+              <br />
+              <label>TestCase5</label>
+              <br />
+              <input
+                required
+                placeholder="input"
+                name="testCase5"
+                type="text"
+                className="border-2"
+              ></input>
+              <input
+                required
+                placeholder="output"
+                name="testCase5"
+                type="text"
+                className="border-2"
+              ></input>
+              <br />
+              
               <button
                 disabled={loading}
                 className="p-2 px-6 text-white my-6 rounded-full bg-green-600"
