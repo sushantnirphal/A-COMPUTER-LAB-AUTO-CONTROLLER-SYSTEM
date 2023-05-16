@@ -99,6 +99,11 @@ const Header = () => {
                  > 
                  UploadPracticals 
                  </Link>
+                <Link className="hover:text-slate-200 text-white"
+                 to={"/set-time"}
+                 > 
+                 SetTime
+                 </Link>
               
               </>
             ) : null}

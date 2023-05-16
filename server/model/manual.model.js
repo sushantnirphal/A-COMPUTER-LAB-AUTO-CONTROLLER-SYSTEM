@@ -39,7 +39,7 @@ const manualSchema = new Schema(
         output: {
           type: String,
           required: true,
-        }
+        },
       },
     ],
   },

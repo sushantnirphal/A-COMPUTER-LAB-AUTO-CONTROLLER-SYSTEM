@@ -174,7 +174,7 @@ const UploadPracticals = () => {
                 className="border-2"
               ></input>
               <br />
-              <label>TestCase2</label>
+              {/* <label>TestCase2</label>
               <br />
               <input
                 required
@@ -241,7 +241,7 @@ const UploadPracticals = () => {
                 type="text"
                 className="border-2"
               ></input>
-              <br />
+              <br /> */}
               
               <button
                 disabled={loading}
