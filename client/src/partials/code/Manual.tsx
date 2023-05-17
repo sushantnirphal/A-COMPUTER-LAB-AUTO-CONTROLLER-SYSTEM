@@ -1,5 +1,6 @@
 import React, {FC, useEffect, useState} from "react";
 import aims from "../aims";
+import Welcome from "./Welcome";
 import FileViewer from "react-file-viewer"; 
 
 export interface ItemType {

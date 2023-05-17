@@ -32,6 +32,7 @@ ManualRouter.get("/all_id", async (req, res) => {
         file_type: 1,
         sem: 1,
         year: 1,
+        
       }
     );
 

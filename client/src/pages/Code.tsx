@@ -26,6 +26,7 @@ const Code = () => {
             {id ? <CodeWindow code={code} setCode={setCode} /> : null}
             {!id ? <Welcome /> : null}
           </div>
+          
         </div>
       </section>
     </main>

@@ -157,24 +157,9 @@ const UploadPracticals = () => {
                 className="border-2"
               ></input>
               <br />
-              <label>TestCase1</label>
-              <br />
-              <input
-                required
-                placeholder="input"
-                name="testCase1"
-                type="text"
-                className="border-2"
-              ></input>
-              <input
-              placeholder="output"
-                required
-                name="testCase1"
-                type="text"
-                className="border-2"
-              ></input>
-              <br />
-              <label>TestCase2</label>
+              
+             
+              {/* <label>TestCase2</label>
               <br />
               <input
                 required
@@ -241,7 +226,7 @@ const UploadPracticals = () => {
                 type="text"
                 className="border-2"
               ></input>
-              <br />
+              <br /> */}
               
               <button
                 disabled={loading}
