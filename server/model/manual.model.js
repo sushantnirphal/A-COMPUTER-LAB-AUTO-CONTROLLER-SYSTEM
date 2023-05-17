@@ -30,16 +30,19 @@ const manualSchema = new Schema(
       type: String,
       required: true,
     },
-    input: {
-      type: String,
-      required: true,
-    },
-    output: {
-      type: String,
-      required: true,
-    },
-      
- },
+    test_case: [
+      {
+        input: {
+          type: String,
+          required: true,
+        },
+        output: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
   {timestamps: true}
 );
 

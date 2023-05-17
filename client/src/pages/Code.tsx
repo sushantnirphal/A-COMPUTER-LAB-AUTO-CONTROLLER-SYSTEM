@@ -23,7 +23,7 @@ const Code = () => {
             {id ? (
               <Manual id={id}/>
             ) : null}
-            {id ? <CodeWindow code={code} setCode={setCode} /> : null}
+            {id ? <CodeWindow id={id} code={code} setCode={setCode} /> : null}
             {!id ? <Welcome /> : null}
           </div>
           
