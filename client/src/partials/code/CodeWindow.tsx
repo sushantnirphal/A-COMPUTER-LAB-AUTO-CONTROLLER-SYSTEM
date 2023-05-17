@@ -110,7 +110,14 @@ const CodeWindow: FC<{
           >
             Run
           </button>
-         
+
+          <button
+            onClick={runCode}
+            className="bg-red-500 text-slate-200 py-2 px-3 rounded-full"
+          > /
+            Testcase
+          </button>
+
           <button
             onClick={() => setCode("")}
             className="bg-red-500 text-slate-200 py-2 px-3 rounded-full"
