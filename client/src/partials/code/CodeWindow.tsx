@@ -1,56 +1,59 @@
-import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
+import React, {Dispatch, FC, SetStateAction, useState} from "react";
 import Output from "./Output";
 import CustomInput from "./CustomInput";
-import Codemirror from "@uiw/react-codemirror";
+import Codemirror from '@uiw/react-codemirror';
 import langcode from "../../../public/apicode";
 import ReverseTimer from "../../partials/code/ReverseTimer";
 import UploadPracticals from "@/pages/UploadPracticals";
 import TestCasesF from "./TestCasesF";
 
+
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
-  id: string;
-}> = ({code, setCode, id}) => {
-  const [result, setResult] = useState<string | null | boolean>("");
+}> = ({code, setCode}) => {
+  const [result, setResult] = useState<string | null | boolean>(false);
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
-  const [input, setInput] = useState("");
-  const [expectedOutput, setExpectedOutput] = useState("");
-  const [testcases, setTestcases] = useState<{input: string; output: string}[]>(
-    []
-  );
+  const [input, setInput] = useState('');
+  const [expectedOutput, setExpectedOutput] = useState('');
 
-  // get test cases by id
-  async function get_test_cases_by_id() {
-    await fetch(
-      `${import.meta.env.VITE_SERVER_URL}/manual/test-cases/${id}` as string,
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((d) => d.json())
-      .then((e) => setTestcases(e.data));
-  }
-
-  // handle test cases
+  
   const handleCheckTests = () => {
-    setResult(null);
-    console.log(testcases);
-    const res = testcases.map(async (testcase) => {
-      console.log(testcase);
-      await runCode(code, testcase.input, langCode.toString());
-      console.log(result);
-      return result == testcase.output;
-    });
-  };
+     
+    console.log(expectedOutput, result);
 
-  async function runCode(code: string, customInput: string, langCode: string) {
-    console.log(typeof code, code);
-    if (!(code && code.trim())) {
+    if ( customInput === input && result === expectedOutput) {
+      console.log("Passed");
+    }else{
+      console.log("Not Passed");
+    }
+    
+    
+  };
+  
+  const [manual, setManual] = useState<{
+    file: string;
+    aim: string;
+    file_type: string;
+    testcases: string;
+  } | null>(null);
+  async function get_by_id() {
+    setManual(null);
+    await fetch(`${import.meta.env.VITE_SERVER_URL}/manual/${id}` as string)
+      .then((d) => d.json())
+      .then((e) => setManual(e.data));
+  }
+  
+// funtion runTestCases(){
+  
+
+
+//   }
+
+
+  function runCode() {
+    if (!code.trim()) {
       alert("Empty code is not allowed");
       return;
     }
@@ -60,10 +63,11 @@ const CodeWindow: FC<{
     }
     setResult("Compiling, please wait...");
     const encodedParams = new URLSearchParams();
-    encodedParams.append("LanguageChoice", `${langCode}`);
-    +encodedParams.append("Program", `${code}`);
-    encodedParams.append("Input", `${customInput}`);
-
+    encodedParams.append("LanguageChoice", `${langCode}`);+
+    
+    encodedParams.append("Program", `${code}`);
+    encodedParams.append("Input",`${customInput}`);
+    
     const options = {
       method: "POST",
       headers: {
@@ -74,9 +78,12 @@ const CodeWindow: FC<{
       body: encodedParams,
     };
 
-    const req = await fetch("https://code-compiler.p.rapidapi.com/v2", options);
-    const response: {Errors: string; Result: string} = await req.json();
-    setResult(response.Errors ? response.Errors : response.Result);
+    fetch("https://code-compiler.p.rapidapi.com/v2", options)
+      .then((response) => response.json())
+      .then((response) => {
+        setResult(response.Errors ? response.Errors : response.Result);
+      })
+      .catch((err) => console.error(err));
   }
   //   {
   //     "Errors": null,
@@ -84,18 +91,13 @@ const CodeWindow: FC<{
   //     "Stats": "No Status Available",
   //     "Files": null
   // }
-
-  useEffect(() => {
-    get_test_cases_by_id();
-    console.log(testcases);
-  }, [id]);
   return (
     <div className="resize-x  flex-1 border-r flex flex-col">
       <div className="bg-slate-900 py-3 px-4 flex justify-between">
         <select
           name="lang"
           onChange={(e) => {
-            setLangCode(Number(e.target.value || 0));
+            setLangCode(Number(e.target.value || 0) );
             console.log(e.target.value);
           }}
           className="w-max bg-transparent text-white text-xl cursor-pointer"
@@ -114,13 +116,10 @@ const CodeWindow: FC<{
             );
           })}
         </select>
-        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-3 rounded-full">
-          Timer-
-          <ReverseTimer />
-        </div>
+        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-3 rounded-full">Timer-<ReverseTimer/></div>
         <div className="space-x-4 px-4">
           <button
-            onClick={() => runCode(code, customInput, langCode.toString())}
+            onClick={runCode}
             className="bg-green-500 text-slate-100 py-2 px-4 rounded-full"
           >
             Run
@@ -140,21 +139,20 @@ const CodeWindow: FC<{
         value={code}
         onChange={setCode}
         theme="light"
-        className="code-window  w-full flex-1 bg-transparent text-pink-500"
-      />
-      <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
-      <button
-        className="bg-sky-600 text-white rounded-full px-5 py-2"
-        onClick={handleCheckTests}
-      >
-        Check Tests
-      </button>
-
+        className="code-window  w-full flex-1 bg-transparent text-pink-500"/>
+        <CustomInput
+          customInput={customInput}
+          setCustomInput={setCustomInput}
+        />
+        <button onClick={handleCheckTests}>Check Tests</button>
+       
       <Output
         result={result === null ? "You did'nt print anything" : result}
         setResult={setResult}
       />
-      <div></div>
+      <div>
+      
+      </div>
     </div>
   );
 };

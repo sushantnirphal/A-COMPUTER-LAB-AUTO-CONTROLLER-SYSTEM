@@ -164,7 +164,7 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
                 className="border-2"
               ></input>
               <br />
-              <div> <h2>TestCase</h2>
+              <div> 
           <div><TestCasesF/></div>
       </div>
               {/* <label>TestCase2</label>
