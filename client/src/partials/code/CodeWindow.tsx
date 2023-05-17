@@ -4,6 +4,10 @@ import CustomInput from "./CustomInput";
 import Codemirror from '@uiw/react-codemirror';
 import langcode from "../../../public/apicode";
 import ReverseTimer from "../../partials/code/ReverseTimer";
+import UploadPracticals from "@/pages/UploadPracticals";
+import TestCasesF from "./TestCasesF";
+
+
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
@@ -11,7 +15,23 @@ const CodeWindow: FC<{
   const [result, setResult] = useState<string | null | boolean>(false);
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
-  const [passedTests, setPassedTests] = useState(0);
+  const [input, setInput] = useState('');
+  const [expectedOutput, setExpectedOutput] = useState('');
+
+  
+  const handleCheckTests = () => {
+     
+    console.log(expectedOutput, result);
+    
+    if ( customInput === input && result === expectedOutput) {
+      console.log("Passed");
+    }else{
+      console.log("Not Passed");
+    }
+    
+    
+  };
+  
 
 
   const [manual, setManual] = useState<{
@@ -26,7 +46,7 @@ const CodeWindow: FC<{
       .then((d) => d.json())
       .then((e) => setManual(e.data));
   }
-
+  
 // funtion runTestCases(){
   
 
@@ -100,22 +120,11 @@ const CodeWindow: FC<{
         </select>
         <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-3 rounded-full">Timer-<ReverseTimer/></div>
         <div className="space-x-4 px-4">
-
-          
-
-
           <button
             onClick={runCode}
             className="bg-green-500 text-slate-100 py-2 px-4 rounded-full"
           >
             Run
-          </button>
-
-          <button
-            onClick={runCode}
-            className="bg-red-500 text-slate-200 py-2 px-3 rounded-full"
-          > /
-            Testcase
           </button>
 
           <button
@@ -133,16 +142,19 @@ const CodeWindow: FC<{
         onChange={setCode}
         theme="light"
         className="code-window  w-full flex-1 bg-transparent text-pink-500"/>
-       
-      <CustomInput
+        <CustomInput
           customInput={customInput}
           setCustomInput={setCustomInput}
-      />
-
+        />
+        <button onClick={handleCheckTests}>Check Tests</button>
+       
       <Output
         result={result === null ? "You did'nt print anything" : result}
         setResult={setResult}
       />
+      <div>
+      
+      </div>
     </div>
   );
 };
