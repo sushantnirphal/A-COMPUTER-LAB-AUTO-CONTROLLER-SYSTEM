@@ -95,7 +95,7 @@ const Header = () => {
                 >
                   CheckAttendence
                 </Link>
-                <Link className="hover:text-slate-200 text-white"
+                <Link className="hover:text-slate-200 text-white "
                  to={"/upload-practicals"}
                  > 
                  UploadPracticals 

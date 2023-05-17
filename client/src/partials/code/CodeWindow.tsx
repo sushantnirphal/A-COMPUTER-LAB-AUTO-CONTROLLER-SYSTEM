@@ -17,6 +17,7 @@ const CodeWindow: FC<{
   const [customInput, setCustomInput] = useState("");
   const [input, setInput] = useState("");
   const [expectedOutput, setExpectedOutput] = useState("");
+  const [test_result, set_test_result] = useState<boolean[]>([]);
   const [testcases, setTestcases] = useState<{input: string; output: string}[]>(
     []
   );
@@ -33,18 +34,41 @@ const CodeWindow: FC<{
       }
     )
       .then((d) => d.json())
-      .then((e) => setTestcases(e.data));
+      .then((e) => {
+        setTestcases(e.data);
+        console.log(e.data);
+      });
   }
 
   // handle test cases
   const handleCheckTests = () => {
-    setResult(null);
     console.log(testcases);
-    const res = testcases.map(async (testcase) => {
-      console.log(testcase);
-      await runCode(code, testcase.input, langCode.toString());
-      console.log(result);
-      return result == testcase.output;
+    set_test_result([]);
+    const tests: any = [];
+    testcases.forEach(async (testcase) => {
+      const encodedParams = new URLSearchParams();
+      encodedParams.append("LanguageChoice", `${langCode}`);
+      encodedParams.append("Program", `${code}`);
+      encodedParams.append("Input", `${testcase.input}`);
+
+      const options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          "X-RapidAPI-Key":
+            "5c77346bcdmsh42c7871be9b2910p136d8djsn050adb52544a",
+          "X-RapidAPI-Host": "code-compiler.p.rapidapi.com",
+        },
+        body: encodedParams,
+      };
+
+      const req = await fetch(
+        "https://code-compiler.p.rapidapi.com/v2",
+        options
+      );
+      const res = await req.json();
+      console.log(res.Result.trim(), testcase.output);
+      set_test_result([...test_result, res.Result.trim() == testcase.output]);
     });
   };
 
@@ -61,7 +85,7 @@ const CodeWindow: FC<{
     setResult("Compiling, please wait...");
     const encodedParams = new URLSearchParams();
     encodedParams.append("LanguageChoice", `${langCode}`);
-    +encodedParams.append("Program", `${code}`);
+    encodedParams.append("Program", `${code}`);
     encodedParams.append("Input", `${customInput}`);
 
     const options = {
@@ -89,8 +113,26 @@ const CodeWindow: FC<{
     get_test_cases_by_id();
     console.log(testcases);
   }, [id]);
+
+  useEffect(() => {
+    set_test_result([]);
+  }, [code]);
   return (
-    <div className="resize-x  flex-1 border-r flex flex-col">
+    <div className="resize-x relative flex-1 border-r flex flex-col">
+      <section className="fixed z-40 right-0 top-44">
+        {test_result.map((item, index) => (
+          <div
+            className={`${
+              item ? "bg-green-500" : "bg-red-500"
+            } text-white py-2 px-4 rounded-md mb-4`}
+          >
+            <h1>
+              test case {index + 1}
+              {item ? " Passed" : " Failed"}
+            </h1>
+          </div>
+        ))}
+      </section>
       <div className="bg-slate-900 py-3 px-4 flex justify-between">
         <select
           name="lang"
