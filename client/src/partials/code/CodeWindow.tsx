@@ -15,6 +15,7 @@ const CodeWindow: FC<{
   const [result, setResult] = useState<string | null | boolean>(false);
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
+<<<<<<< HEAD
   const [input, setInput] = useState('');
   const [expectedOutput, setExpectedOutput] = useState('');
 
@@ -22,6 +23,14 @@ const CodeWindow: FC<{
   const handleCheckTests = () => {
      
     console.log(expectedOutput, result);
+=======
+  const [input, setInput] = useState("");
+  const [expectedOutput, setExpectedOutput] = useState("");
+  const [test_result, set_test_result] = useState<boolean[]>([]);
+  const [testcases, setTestcases] = useState<{input: string; output: string}[]>(
+    []
+  );
+>>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
 
     if ( customInput === input && result === expectedOutput) {
       console.log("Passed");
@@ -42,12 +51,53 @@ const CodeWindow: FC<{
     setManual(null);
     await fetch(`${import.meta.env.VITE_SERVER_URL}/manual/${id}` as string)
       .then((d) => d.json())
+<<<<<<< HEAD
       .then((e) => setManual(e.data));
+=======
+      .then((e) => {
+        setTestcases(e.data);
+        console.log(e.data);
+      });
+>>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
   }
   
 // funtion runTestCases(){
   
 
+<<<<<<< HEAD
+=======
+  // handle test cases
+  const handleCheckTests = () => {
+    console.log(testcases);
+    set_test_result([]);
+    const tests: any = [];
+    testcases.forEach(async (testcase) => {
+      const encodedParams = new URLSearchParams();
+      encodedParams.append("LanguageChoice", `${langCode}`);
+      encodedParams.append("Program", `${code}`);
+      encodedParams.append("Input", `${testcase.input}`);
+
+      const options = {
+        method: "POST",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          "X-RapidAPI-Key":
+            "5c77346bcdmsh42c7871be9b2910p136d8djsn050adb52544a",
+          "X-RapidAPI-Host": "code-compiler.p.rapidapi.com",
+        },
+        body: encodedParams,
+      };
+
+      const req = await fetch(
+        "https://code-compiler.p.rapidapi.com/v2",
+        options
+      );
+      const res = await req.json();
+      console.log(res.Result.trim(), testcase.output);
+      set_test_result([...test_result, res.Result.trim() == testcase.output]);
+    });
+  };
+>>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
 
 //   }
 
@@ -63,11 +113,18 @@ const CodeWindow: FC<{
     }
     setResult("Compiling, please wait...");
     const encodedParams = new URLSearchParams();
+<<<<<<< HEAD
     encodedParams.append("LanguageChoice", `${langCode}`);+
     
     encodedParams.append("Program", `${code}`);
     encodedParams.append("Input",`${customInput}`);
     
+=======
+    encodedParams.append("LanguageChoice", `${langCode}`);
+    encodedParams.append("Program", `${code}`);
+    encodedParams.append("Input", `${customInput}`);
+
+>>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
     const options = {
       method: "POST",
       headers: {
@@ -91,8 +148,34 @@ const CodeWindow: FC<{
   //     "Stats": "No Status Available",
   //     "Files": null
   // }
+<<<<<<< HEAD
+=======
+
+  useEffect(() => {
+    get_test_cases_by_id();
+    console.log(testcases);
+  }, [id]);
+
+  useEffect(() => {
+    set_test_result([]);
+  }, [code]);
+>>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
   return (
-    <div className="resize-x  flex-1 border-r flex flex-col">
+    <div className="resize-x relative flex-1 border-r flex flex-col">
+      <section className="fixed z-40 right-0 top-44">
+        {test_result.map((item, index) => (
+          <div
+            className={`${
+              item ? "bg-green-500" : "bg-red-500"
+            } text-white py-2 px-4 rounded-md mb-4`}
+          >
+            <h1>
+              test case {index + 1}
+              {item ? " Passed" : " Failed"}
+            </h1>
+          </div>
+        ))}
+      </section>
       <div className="bg-slate-900 py-3 px-4 flex justify-between">
         <select
           name="lang"
