@@ -54,7 +54,7 @@ const ReceivedManual = () => {
       </section> */}
          <section className="w-full pt-28 p-8 text-white md:w-1/2 min-h-full border-l">
           <h1 className="text-lg font-semibold bg-white text-sky-700 p-4 ">
-            Submitted Practicals
+            Received Manuals
           </h1>
           {fetching ? (
             <h6 className="py-4 text-center w-full"> Loading...</h6>

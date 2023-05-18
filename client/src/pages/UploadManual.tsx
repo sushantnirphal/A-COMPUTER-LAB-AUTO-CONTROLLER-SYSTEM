@@ -105,13 +105,26 @@ const UploadManual = () => {
       )}
       <main className="pt-20 flex flex-wrap h-screen">
         <section className="p-8 w-full md:w-1/2 text-white">
-          <div>
-            <h1 className="text-lg font-semibold bg-sky-700 p-4 ">
-              Submit Practical
-            </h1>
-          </div>
           <div className="p-2">
             <form className="max-w-[400px] mt-8" onSubmit={handleUpload}>
+            <label htmlFor="">Name</label>
+              <br />
+              <input
+                required
+                name="name"
+                type="text"
+                className="border-2"
+              ></input>
+              <br />
+              <label>PRN</label>
+              <br />
+              <input
+                required
+                name="prn"
+                type="number"
+                className="border-2"
+              ></input>
+              <br />
               <label htmlFor="">Subject</label>
               <br />
               <input
@@ -139,28 +152,14 @@ const UploadManual = () => {
                 onChange={(e) => setFile(e.target.files[0])}
                 type="file"
               ></input>
-              <br />
-
-              <label>Year</label>
-              <br />
-              <input
-                name="year"
-                required
-                type="number"
-                className="border-2"
-              ></input>
-
-              <br />
-
+              
               <label>Sem</label>
-              <br />
               <input
                 required
                 name="sem"
                 type="number"
                 className="border-2"
               ></input>
-              <br />
               <button
                 disabled={loading}
                 className="p-2 px-6 text-white my-6 rounded-full bg-green-600"
@@ -187,6 +186,8 @@ const UploadManual = () => {
                   slug: string;
                   file: string;
                   file_type: string;
+                  name : string;
+                  prn : number;
                 }) => (
                   <div
                     key={item?._id}
@@ -194,6 +195,7 @@ const UploadManual = () => {
                   >
                     <h4 className="text-lg w-9/12 font-semibold">{item.aim}</h4>
                     <div className="text-sm w-max shrink-0 flex space-x-2 px-5">
+                     
                       <h4>Sem {item?.sem}</h4>
                       <span>|</span>
                       <p>Year : {item?.year}</p>

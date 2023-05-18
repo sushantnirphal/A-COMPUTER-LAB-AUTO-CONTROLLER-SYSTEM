@@ -2,6 +2,14 @@ import {model, Schema} from "mongoose";
 
 const submitmanualSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
+    prn: {
+      type: Number,
+      required: true,
+    },
     subject: {
       type: String,
       required: true,
@@ -16,10 +24,6 @@ const submitmanualSchema = new Schema(
     },
     file: {
       type: String,
-      required: true,
-    },
-    year: {
-      type: Number,
       required: true,
     },
     sem: {

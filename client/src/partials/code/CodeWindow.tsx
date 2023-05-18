@@ -1,71 +1,45 @@
-import React, {Dispatch, FC, SetStateAction, useState} from "react";
+import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
 import Output from "./Output";
 import CustomInput from "./CustomInput";
-import Codemirror from '@uiw/react-codemirror';
+import Codemirror from "@uiw/react-codemirror";
 import langcode from "../../../public/apicode";
 import ReverseTimer from "../../partials/code/ReverseTimer";
 import UploadPracticals from "@/pages/UploadPracticals";
 import TestCasesF from "./TestCasesF";
 
-
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
-}> = ({code, setCode}) => {
-  const [result, setResult] = useState<string | null | boolean>(false);
+  id: string;
+}> = ({code, setCode, id}) => {
+  const [result, setResult] = useState<string | null | boolean>("");
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
-<<<<<<< HEAD
-  const [input, setInput] = useState('');
-  const [expectedOutput, setExpectedOutput] = useState('');
-
-  
-  const handleCheckTests = () => {
-     
-    console.log(expectedOutput, result);
-=======
   const [input, setInput] = useState("");
   const [expectedOutput, setExpectedOutput] = useState("");
   const [test_result, set_test_result] = useState<boolean[]>([]);
   const [testcases, setTestcases] = useState<{input: string; output: string}[]>(
     []
   );
->>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
 
-    if ( customInput === input && result === expectedOutput) {
-      console.log("Passed");
-    }else{
-      console.log("Not Passed");
-    }
-    
-    
-  };
-  
-  const [manual, setManual] = useState<{
-    file: string;
-    aim: string;
-    file_type: string;
-    testcases: string;
-  } | null>(null);
-  async function get_by_id() {
-    setManual(null);
-    await fetch(`${import.meta.env.VITE_SERVER_URL}/manual/${id}` as string)
+  // get test cases by id
+  async function get_test_cases_by_id() {
+    await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/manual/test-cases/${id}` as string,
+      {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((d) => d.json())
-<<<<<<< HEAD
-      .then((e) => setManual(e.data));
-=======
       .then((e) => {
         setTestcases(e.data);
         console.log(e.data);
       });
->>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
   }
-  
-// funtion runTestCases(){
-  
 
-<<<<<<< HEAD
-=======
   // handle test cases
   const handleCheckTests = () => {
     console.log(testcases);
@@ -97,13 +71,10 @@ const CodeWindow: FC<{
       set_test_result([...test_result, res.Result.trim() == testcase.output]);
     });
   };
->>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
 
-//   }
-
-
-  function runCode() {
-    if (!code.trim()) {
+  async function runCode(code: string, customInput: string, langCode: string) {
+    console.log(typeof code, code);
+    if (!(code && code.trim())) {
       alert("Empty code is not allowed");
       return;
     }
@@ -113,18 +84,10 @@ const CodeWindow: FC<{
     }
     setResult("Compiling, please wait...");
     const encodedParams = new URLSearchParams();
-<<<<<<< HEAD
-    encodedParams.append("LanguageChoice", `${langCode}`);+
-    
-    encodedParams.append("Program", `${code}`);
-    encodedParams.append("Input",`${customInput}`);
-    
-=======
     encodedParams.append("LanguageChoice", `${langCode}`);
     encodedParams.append("Program", `${code}`);
     encodedParams.append("Input", `${customInput}`);
 
->>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
     const options = {
       method: "POST",
       headers: {
@@ -135,12 +98,9 @@ const CodeWindow: FC<{
       body: encodedParams,
     };
 
-    fetch("https://code-compiler.p.rapidapi.com/v2", options)
-      .then((response) => response.json())
-      .then((response) => {
-        setResult(response.Errors ? response.Errors : response.Result);
-      })
-      .catch((err) => console.error(err));
+    const req = await fetch("https://code-compiler.p.rapidapi.com/v2", options);
+    const response: {Errors: string; Result: string} = await req.json();
+    setResult(response.Errors ? response.Errors : response.Result);
   }
   //   {
   //     "Errors": null,
@@ -148,8 +108,6 @@ const CodeWindow: FC<{
   //     "Stats": "No Status Available",
   //     "Files": null
   // }
-<<<<<<< HEAD
-=======
 
   useEffect(() => {
     get_test_cases_by_id();
@@ -159,7 +117,6 @@ const CodeWindow: FC<{
   useEffect(() => {
     set_test_result([]);
   }, [code]);
->>>>>>> 5ae84bdb104f19e10fb4831d6de4580a6dac0500
   return (
     <div className="resize-x relative flex-1 border-r flex flex-col">
       <section className="fixed z-40 right-0 top-44">
@@ -180,7 +137,7 @@ const CodeWindow: FC<{
         <select
           name="lang"
           onChange={(e) => {
-            setLangCode(Number(e.target.value || 0) );
+            setLangCode(Number(e.target.value || 0));
             console.log(e.target.value);
           }}
           className="w-max bg-transparent text-white text-xl cursor-pointer"
@@ -199,10 +156,13 @@ const CodeWindow: FC<{
             );
           })}
         </select>
-        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-3 rounded-full">Timer-<ReverseTimer/></div>
+        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-3 rounded-full">
+          Timer-
+          <ReverseTimer />
+        </div>
         <div className="space-x-4 px-4">
           <button
-            onClick={runCode}
+            onClick={() => runCode(code, customInput, langCode.toString())}
             className="bg-green-500 text-slate-100 py-2 px-4 rounded-full"
           >
             Run
@@ -222,20 +182,21 @@ const CodeWindow: FC<{
         value={code}
         onChange={setCode}
         theme="light"
-        className="code-window  w-full flex-1 bg-transparent text-pink-500"/>
-        <CustomInput
-          customInput={customInput}
-          setCustomInput={setCustomInput}
-        />
-        <button onClick={handleCheckTests}>Check Tests</button>
-       
+        className="code-window  w-full flex-1 bg-transparent text-pink-500"
+      />
+      <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
+      <button
+        className="bg-sky-600 text-white rounded-full px-5 py-2"
+        onClick={handleCheckTests}
+      >
+        Check Tests
+      </button>
+
       <Output
         result={result === null ? "You did'nt print anything" : result}
         setResult={setResult}
       />
-      <div>
-      
-      </div>
+      <div></div>
     </div>
   );
 };

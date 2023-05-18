@@ -8,7 +8,6 @@ import MenuItem from "@/pages/MenuItem";
 import {FacultyContext} from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
 import CoursesAndSyllabus from "@/pages/CoursesAndSyllabus";
-import Settime from "@/pages/Settime";
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
   const isStudent = student?.role === "student";
@@ -54,13 +53,13 @@ const Header = () => {
 
             {isStudent ? (
               <>
-                <Link className="hover:text-slate-200" to={"/coursesandsyllabus"}>
+                <Link className="hover:text-slate-200 text-white" to={"/coursesandsyllabus"}>
                   Courses&Syllabus
                 </Link>
-                <Link className="hover:text-slate-200" to={"/createmanual"}>
+                <Link className="hover:text-slate-200 text-white" to={"/createmanual"}>
                   CreateManual
                 </Link>
-                <Link className="hover:text-slate-200" to={"/uploadmanual"}>
+                <Link className="hover:text-slate-200 text-white" to={"/uploadmanual"}>
                   UploadManual
                 </Link>
                 <Link className="hover:text-slate-200 text-white" to={"/code"}>

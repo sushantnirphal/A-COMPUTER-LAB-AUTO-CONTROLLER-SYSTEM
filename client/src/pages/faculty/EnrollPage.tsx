@@ -70,8 +70,10 @@ function EnrollPage() {
     <div>
       {/* <Header /> */}
       <main className="gr-bg py-12 text-center text-white">
-        {" "}
-        Faculty enroll form
+      <h2 className="text-xl  font-semibold text-white py- text-center">
+      Faculty enroll form
+          </h2>
+        
         <form
           onSubmit={handleSubmit}
           className="gr-bg  p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"

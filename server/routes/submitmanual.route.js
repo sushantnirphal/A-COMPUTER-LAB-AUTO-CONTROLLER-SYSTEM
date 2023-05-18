@@ -31,7 +31,8 @@ SubmitManualRouter.get("/all_id", async (req, res) => {
         createdAt: 1,
         file_type: 1,
         sem: 1,
-        year: 1,
+        name: 1,
+        prn: 1,
       }
     );
 
