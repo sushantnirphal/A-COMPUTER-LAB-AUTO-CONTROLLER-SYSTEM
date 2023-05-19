@@ -1,8 +1,6 @@
 import Header from "@/partials/Header";
 import React, { useState, useRef } from 'react';
 import { useReactToPrint } from "react-to-print";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import { Button } from "semantic-ui-react";
 import {useNavigate} from "react-router-dom";
 

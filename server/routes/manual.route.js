@@ -33,7 +33,7 @@ ManualRouter.get("/all_id", async (req, res) => {
         sem: 1,
         year: 1,
         input: 1,
-        output: 1,
+        output: 2,
         
       }
     );

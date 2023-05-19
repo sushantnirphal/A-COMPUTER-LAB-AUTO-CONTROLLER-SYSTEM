@@ -5,7 +5,6 @@ import extractFormData from "@/utils/Extractform";
 import FileViewer from "react-file-viewer";
 import {toast} from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
-import TestCasesF from "@/partials/code/TestCasesF";
 //import TestCasesF from "@/partials/code/TestCasesF";
 const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
   const [preview, setPreview] = useState("");
@@ -165,7 +164,6 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
               ></input>
               <br />
               <div> 
-          <div><TestCasesF/></div>
       </div>
               {/* <label>TestCase2</label>
               <br />
