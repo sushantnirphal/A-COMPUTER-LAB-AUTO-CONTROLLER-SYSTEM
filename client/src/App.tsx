@@ -25,6 +25,7 @@ import UploadPracticals from "./pages/UploadPracticals";
 import CoursesAndSyllabus from "./pages/CoursesAndSyllabus";
 import CheckAttendence from "./pages/CheckAttendence";
 import ReceivedManual from "./pages/ReceivedManual";
+import Settime from "./pages/Settime";
 // import FacultyHome from './p'
 const router = createHashRouter([
   {
@@ -98,6 +99,12 @@ const router = createHashRouter([
     path: "/faculty/login",
     element: <FacultyLogin />,
   },
+  
+  {
+    path: "/settime",
+    element: <Settime />,
+  },
+  
   {
     path: "/faculty/home",
     // element: <FacultyHome />,

@@ -30,7 +30,7 @@ const manualSchema = new Schema(
       type: String,
       required: true,
     },
-    testcases: [
+    test_case: [
       {
         input: {
           type: String,

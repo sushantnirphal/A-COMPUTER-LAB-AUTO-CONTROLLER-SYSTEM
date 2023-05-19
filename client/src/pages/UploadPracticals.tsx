@@ -5,7 +5,9 @@ import extractFormData from "@/utils/Extractform";
 import FileViewer from "react-file-viewer";
 import {toast} from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
-const UploadPracticals = () => {
+import TestCasesF from "@/partials/code/TestCasesF";
+//import TestCasesF from "@/partials/code/TestCasesF";
+const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
   const [preview, setPreview] = useState("");
 
   const [file, setFile] = useState<Blob>();
@@ -13,7 +15,12 @@ const UploadPracticals = () => {
   const [loading, setLoading] = useState(false);
   const [manual, setManuals] = useState([]);
   const reader = new FileReader();
+
   
+  const [input, setInput] = useState('');
+  const [expectedOutput, setExpectedOutput] = useState('');
+
+    
   async function getManuals() {
     const req = await fetch("http://localhost:7890/api/manual/all_id");
     const res = await req.json();
@@ -157,23 +164,9 @@ const UploadPracticals = () => {
                 className="border-2"
               ></input>
               <br />
-              <label>TestCase1</label>
-              <br />
-              <input
-                required
-                placeholder="input"
-                name="testCase1"
-                type="text"
-                className="border-2"
-              ></input>
-              <input
-              placeholder="output"
-                required
-                name="testCase1"
-                type="text"
-                className="border-2"
-              ></input>
-              <br />
+              <div> <h2>TestCase</h2>
+          <div><TestCasesF/></div>
+      </div>
               {/* <label>TestCase2</label>
               <br />
               <input
