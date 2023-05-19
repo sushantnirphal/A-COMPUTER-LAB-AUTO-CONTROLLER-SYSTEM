@@ -44,7 +44,7 @@ const Header = () => {
       <nav className="space-x-4 text-lg text-slate-400 ">
         {student && student?._id ? (
           <>
-            <Link className="hover:text-slate-200 text-white" to={"/"}>
+            <Link className="hover:text-slate-200 " to={"/"}>
               Home
             </Link>
 
@@ -62,18 +62,18 @@ const Header = () => {
                 <Link className="hover:text-slate-200 text-white" to={"/uploadmanual"}>
                   UploadManual
                 </Link>
-                <Link className="hover:text-slate-200 text-white" to={"/code"}>
+                <Link className="hover:text-slate-200 " to={"/code"}>
                   Code
                 </Link>
 
                 <Link
-                  className="hover:text-slate-200 text-white"
+                  className="hover:text-slate-200 "
                   to={"/attendence"}
                 >
                   Attendence
                 </Link>
                 <Link
-                  className="hover:text-slate-200 text-white"
+                  className="hover:text-slate-200 "
                   to={"/practice"}
                 >
                   Practice
@@ -89,17 +89,17 @@ const Header = () => {
                   ReceivedManual
                 </Link>
                 <Link
-                  className="hover:text-slate-200 text-white"
+                  className="hover:text-slate-200 "
                   to={"/checkattendence"}
                 >
                   CheckAttendence
                 </Link>
-                <Link className="hover:text-slate-200 text-white "
+                <Link className="hover:text-slate-200  "
                  to={"/upload-practicals"}
                  > 
                  UploadPracticals 
                  </Link>
-                <Link className="hover:text-slate-200 text-white"
+                <Link className="hover:text-slate-200 "
                  to={"/settime"}
                  > 
                  SetTime

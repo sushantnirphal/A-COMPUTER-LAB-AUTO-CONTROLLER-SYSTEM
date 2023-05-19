@@ -6,6 +6,8 @@ const Attendence = () => {
     <div className="h-screen gr-bg">
       <Header />
       Attendence
+
+      
     </div>
   );
 };
