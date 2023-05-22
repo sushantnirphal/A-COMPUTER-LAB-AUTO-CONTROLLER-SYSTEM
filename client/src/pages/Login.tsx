@@ -111,6 +111,13 @@ function LoginPage() {
               Enroll here
             </Link>
           </span>
+          <span className="text-white  block cursor-pointer">
+            Forgot Password
+            <Link to={"/passwordreset"} className="text-sky-600 underline">
+              {" "}
+              Click here
+            </Link>
+          </span>
 
           <span className="text-white  block cursor-pointer">
             Faculty

@@ -23,9 +23,9 @@ function SelectPage() {
   return (
     <div className="flex justify-center items-center h-screen gr-bg">
       <div>
-        <h2
-        className="text-xl font-semibold text-white py-8"
-        >Choose login option</h2>
+      <h4 className="text-2xl md:text-2xl lg:text-2xl py-4 text-gr bg-clip-text text-transparent font-semibold">
+      Choose Profile Option
+      </h4>
         <section className="w-full space-x-12 max-w-sm flex items-center justify-center">
           <Link
             to={"/login"}

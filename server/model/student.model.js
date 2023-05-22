@@ -21,6 +21,7 @@ const studentSchema = Schema({
   },
   semester: {
     type: Number,
+    required: true,
   },
   dob: {
     type: Date,
