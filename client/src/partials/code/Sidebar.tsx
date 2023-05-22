@@ -4,8 +4,7 @@ import {api} from "../aims";
 import {ItemType} from "./Manual";
 const Sidebar: FC<{
   id: string | null;
-  setter: Dispatch<SetStateAction<string | null >>;
- 
+  setter: Dispatch<SetStateAction<string | null>>;
 }> = ({setter, id}) => {
   const [ids, setIDs] = useState([]);
   async function get_ids() {
@@ -17,14 +16,19 @@ const Sidebar: FC<{
     get_ids();
   }, []);
   return (
-    <div className="resize-x h-full border-r   w-40
-    ">
+    <div
+      className="resize-x h-full border-r   w-40
+    "
+    >
       {id}
       <ul className="text-lg font-medium space-y-4 text-slate-400  p-6">
         {ids.map(({_id}, index) => (
           <li
             key={_id}
-            onClick={() => setter(_id)}
+            onClick={() => {
+              setter(_id);
+              localStorage.setItem("open_id", _id);
+            }}
             className={`hover:text-sky-100 cursor-pointer ${
               id === _id ? "text-slate-100" : "text-slate-400"
             }`}

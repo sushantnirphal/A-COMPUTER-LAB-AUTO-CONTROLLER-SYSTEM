@@ -9,6 +9,7 @@ import {FacultyContext} from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
 import CoursesAndSyllabus from "@/pages/CoursesAndSyllabus";
 import Settime from "@/pages/Settime";
+
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
   const isStudent = student?.role === "student";
