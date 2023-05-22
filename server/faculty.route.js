@@ -46,9 +46,10 @@ facultyRouter.post("/login", async (req, res) => {
       );
       // User found, return success response
       return res
-        .setHeader("Set-Cookie", `token=${token}; Secure; HttpOnly`)
-        .status(200)
-        .json({success: true, message: "User found", data: faculty});
+      .set("Set-Cookie", `token=${token}; Secure; HttpOnly`)
+      .status(200)
+      .json({success: true, message: "User found", data: faculty});
+
     } else {
       // User not found, return error response
       return res
@@ -67,24 +68,44 @@ facultyRouter.post("/sendpasswordlink", async (req, res) => {
   // Implement your email sending logic here
   const {email} = req.body;
 
-  if(!email){
-      res.status(401).json({status:401,message:"Enter Your Email"})
+  if (email === null || email === undefined) {
+    res.status(401).json({ status: 401, message: "Enter Your Email" });
   }
+  
 
   try {
       const userfind = await facultyModel.findOne({email:email});
 
-      // token generate for reset password
-      const token=jwt.sign({_id:userfind._id},keysecret,{
+      const token = jwt.sign({_id:userfind._id},keysecret,{
         expiresIn:"120s"
-      })
-      const setusertoken=await facultyModel.findByIdAndUpdate({_id:userfind._id},{verifytoken:token})
-      console.log("setusertoken",setusertoken)
-     } catch (error) {
+    });
+    
+    const setusertoken = await facultyModel.findByIdAndUpdate({_id:userfind._id},{verifytoken:token},{new:true});
+
+
+    if(setusertoken){
+        const mailOptions = {
+            from:"malikarpriyanka@gmail.com",
+            to:email,
+            subject:"Sending Email For password Reset",
+            text:`This Link Valid For 2 MINUTES http://localhost:7890/forgotpassword/${userfind.id}/${setusertoken.verifytoken}`
+        }
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log("error", error);
+            return res.status(401).json({ status: 401, message: "Email not sent" });
+          }
+          console.log("Email sent", info.response);
+          return res.status(201).json({ status: 201, message: "Email sent successfully" });
+        });
+        
     }
+
+} catch (error) {
+    res.status(401).json({status:401,message:"invalid user"})
+}
 
 });
 
-
- 
 export default facultyRouter;
