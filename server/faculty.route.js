@@ -1,7 +1,18 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-
 import facultyModel from "./model/faculty.model.js";
+import nodemailer from "nodemailer";
+const keysecret = process.env.SECRET_KEY
+
+const transporter = nodemailer.createTransport({
+  service:"gmail",
+  auth:{
+      user:"malikarpriyanka@gmail.com",
+      pass:"1234567"
+  }
+}) 
+
+
 const facultyRouter = express.Router();
 facultyRouter.get("/", async (req, res) => {
   const faculties = await facultyModel.find();
@@ -50,4 +61,30 @@ facultyRouter.post("/login", async (req, res) => {
     return res.status(500).json({success: false, message: "Server error"});
   }
 });
+//send email link for reset password
+facultyRouter.post("/sendpasswordlink", async (req, res) => {
+  console.log(req.body);
+  // Implement your email sending logic here
+  const {email} = req.body;
+
+  if(!email){
+      res.status(401).json({status:401,message:"Enter Your Email"})
+  }
+
+  try {
+      const userfind = await facultyModel.findOne({email:email});
+
+      // token generate for reset password
+      const token=jwt.sign({_id:userfind._id},keysecret,{
+        expiresIn:"120s"
+      })
+      const setusertoken=await facultyModel.findByIdAndUpdate({_id:userfind._id},{verifytoken:token})
+      console.log("setusertoken",setusertoken)
+     } catch (error) {
+    }
+
+});
+
+
+ 
 export default facultyRouter;

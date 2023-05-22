@@ -1,4 +1,8 @@
-import {model, Schema} from "mongoose";
+import { model, Schema } from "mongoose";
+import validator from "validator";
+import jwt from "jsonwebtoken";
+
+const keysecret = process.env.SECRET_KEY;
 
 const facultySchema = Schema({
   name: {
@@ -9,6 +13,11 @@ const facultySchema = Schema({
     type: String,
     required: true,
     unique: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error("Invalid email");
+      }
+    },
   },
   password: String,
   profile: {
@@ -19,7 +28,33 @@ const facultySchema = Schema({
     type: String,
     required: true,
   },
-  role: String,
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  verifytoken: {
+    type: String,
+  },
 });
+
+// Generate authentication token
+facultySchema.methods.generateAuthToken = async function () {
+  try {
+    const token = jwt.sign({ _id: this._id.toString() }, keysecret, {
+      expiresIn: "1d",
+    });
+
+    this.tokens = this.tokens.concat({ token });
+    await this.save();
+
+    return token;
+  } catch (error) {
+    throw new Error("Failed to generate authentication token");
+  }
+};
 
 export default model("faculty", facultySchema);
