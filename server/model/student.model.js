@@ -8,12 +8,12 @@ const studentSchema = Schema({
   email: {
     type: String,
     required: true,
-    unique : true
+    unique: true,
   },
   prn: {
     type: String,
     required: true,
-    unique : true
+    unique: true,
   },
   year: {
     type: Number,
@@ -43,6 +43,17 @@ const studentSchema = Schema({
     required: true,
   },
   role: String,
+  practical_completed: [
+    {
+      aim: String,
+      pid: String,
+      status: String,
+      date: Date,
+      marks: Number,
+      test_cases_passed: Number,
+      attendence_status: String,
+    },
+  ],
 });
 
 export default model("student", studentSchema);
