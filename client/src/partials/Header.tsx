@@ -8,6 +8,10 @@ import MenuItem from "@/pages/MenuItem";
 import {FacultyContext} from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
 import CoursesAndSyllabus from "@/pages/CoursesAndSyllabus";
+<<<<<<< HEAD
+=======
+import Settime from "@/pages/Settime";
+>>>>>>> origin/test-case-feat
 
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);

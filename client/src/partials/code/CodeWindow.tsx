@@ -41,10 +41,15 @@ const CodeWindow: FC<{
   }
 
   // handle test cases
+  let result_cases: boolean[] = [];
   const handleCheckTests = () => {
-    console.log(testcases);
+    const section = document.querySelector(".test-cases-section");
+    if (section) {
+      section?.innerHTML;
+    }
+
     set_test_result([]);
-    const tests: any = [];
+    result_cases = [];
     testcases.forEach(async (testcase) => {
       const encodedParams = new URLSearchParams();
       encodedParams.append("LanguageChoice", `${langCode}`);
@@ -62,13 +67,21 @@ const CodeWindow: FC<{
         body: encodedParams,
       };
 
-      const req = await fetch(
-        "https://code-compiler.p.rapidapi.com/v2",
-        options
-      );
-      const res = await req.json();
-      console.log(res.Result.trim(), testcase.output);
-      set_test_result([...test_result, res.Result.trim() == testcase.output]);
+      fetch("https://code-compiler.p.rapidapi.com/v2", options)
+        .then((a) => a.json())
+        .then((a) => {
+          result_cases.push(a.Result.trim() == testcase.output);
+          let b = result_cases.map((item, index) => {
+            return `<button
+            className=' py-2 px-4 rounded-md mb-4 ${
+              item ? "bg-green-500" : "bg-red-500"
+            }'
+            >test case ${index + 1} ${item ? "passed" : "failed"}<button>`;
+          });
+          if (section) {
+            section.innerHTML = b.join("<br/> ");
+          }
+        });
     });
   };
 
@@ -102,35 +115,42 @@ const CodeWindow: FC<{
     const response: {Errors: string; Result: string} = await req.json();
     setResult(response.Errors ? response.Errors : response.Result);
   }
-  //   {
-  //     "Errors": null,
-  //     "Result": null,
-  //     "Stats": "No Status Available",
-  //     "Files": null
-  // }
 
   useEffect(() => {
     get_test_cases_by_id();
+
     console.log(testcases);
   }, [id]);
 
   useEffect(() => {
-    set_test_result([]);
+    const timeout_id = setTimeout(() => {
+      localStorage.setItem(id + "_code", code);
+    }, 500);
+
+    return () => {
+      clearTimeout(timeout_id);
+    };
   }, [code]);
+
   return (
-    <div className="resize-x relative flex-1 border-r flex flex-col">
-      <section className="fixed z-40 right-0 top-44">
+    <div className="resize-x relative flex-1 border-l flex flex-col">
+      <section className="fixed test-cases-section z-40 right-0 top-44">
         {test_result.map((item, index) => (
-          <div
+          <button
+            onClick={() => {
+              set_test_result([]);
+              result_cases = [];
+            }}
+            key={index}
             className={`${
               item ? "bg-green-500" : "bg-red-500"
             } text-white py-2 px-4 rounded-md mb-4`}
           >
             <h1>
-              test case {index + 1}
-              {item ? " Passed" : " Failed"}
+              Test case {index + 1}
+              {item ? " passed" : " failed"}
             </h1>
-          </div>
+          </button>
         ))}
       </section>
       <div className="bg-slate-900 py-3 px-4 flex justify-between">
@@ -160,6 +180,13 @@ const CodeWindow: FC<{
           Timer-
           <ReverseTimer />
         </div>
+        <button
+          title="Button will be enable after 1.5 hours of starting code."
+          className="bg-sky-600 text-white rounded-full px-5 py-2"
+          onClick={handleCheckTests}
+        >
+          Check Tests
+        </button>
         <div className="space-x-4 px-4">
           <button
             onClick={() => runCode(code, customInput, langCode.toString())}
@@ -177,25 +204,16 @@ const CodeWindow: FC<{
         </div>
       </div>
       <Codemirror
-        height="55vh"
-        width="77vh"
         value={code}
         onChange={setCode}
-        theme="light"
-        className="code-window  w-full flex-1 bg-transparent text-pink-500"
+        theme="dark"
+        height="100%"
+        className="code-window  border bg-gray-800 border-slate-600 rounded-md overflow-hidden  w-full flex-1 bg-transparent text-slate-100"
       />
       <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
-      <button
-        className="bg-sky-600 text-white rounded-full px-5 py-2"
-        onClick={handleCheckTests}
-      >
-        Check Tests
-      </button>
-
-      <Output
-        result={result === null ? "You did'nt print anything" : result}
-        setResult={setResult}
-      />
+      {result && (
+        <Output result={result ? result : null} setResult={setResult} />
+      )}
       <div></div>
     </div>
   );

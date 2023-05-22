@@ -96,7 +96,6 @@ ManualRouter.post("/test-cases/:id", async (req, res) => {
     const akg = await manualModel.findOne({_id: id} , {
       test_case: 1,
     });
-    console.log(akg)
     res
       .status(200)
       .send({success: true, message: "Manual fetched successfully", data: akg.test_case});
