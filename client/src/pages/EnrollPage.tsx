@@ -75,12 +75,11 @@ function EnrollPage() {
           <div className="mb-4 flex-1  flex-wrap flex py-6">
             <label
               htmlFor="profile-image"
-              className="block shrink-0 border-slate-700 overflow-hidden border rounded-full w-44 h-44"
+              className="block shrink-0  overflow-hidden border rounded-full w-44 h-44"
             >
               <img
                 src={profile || "/profile-placeholder.jpg"}
-                alt="profile"
-                className="w-full h-full object-cover  border"
+                className="w-full h-full object-cover  "
               />
             </label>
 
@@ -102,7 +101,7 @@ function EnrollPage() {
                 htmlFor="fname"
                 className="block text-gray-300 font-bold mb-2"
               >
-                First name:
+                First name
               </label>
               <input
                 type="text"
@@ -116,7 +115,7 @@ function EnrollPage() {
                 htmlFor="lname"
                 className="block text-gray-300 font-bold mb-2"
               >
-                Last Name:
+                Last Name
               </label>
               <input
                 type="text"
@@ -133,7 +132,7 @@ function EnrollPage() {
                 htmlFor="email"
                 className="block text-gray-300 font-bold mb-2"
               >
-                Email:
+                Email
               </label>
               <input
                 type="email"
@@ -147,7 +146,7 @@ function EnrollPage() {
                 htmlFor="phone"
                 className="block text-gray-300 font-bold mb-2"
               >
-                Phone:
+                Phone
               </label>
               <input
                 type="tel"
@@ -164,7 +163,7 @@ function EnrollPage() {
                 htmlFor="branch"
                 className="block text-gray-300 font-bold mb-2"
               >
-                Branch:
+                Branch 
               </label>
               <input
                 list="branch-list"
@@ -185,7 +184,7 @@ function EnrollPage() {
                 htmlFor="year"
                 className="block text-gray-300 font-bold mb-2"
               >
-                Year:
+                Year 
               </label>
               <input
                 list="year-list"
@@ -201,6 +200,31 @@ function EnrollPage() {
                 <option value="4"></option>
               </datalist>
             </div>
+            <div className="mb-4 w-full md:w-auto flex-1">
+              <label
+                htmlFor="semester"
+                className="block text-gray-300 font-bold mb-2"
+              >
+                Semester 
+              </label>
+              <input
+                list="semester-list"
+                type="text"
+                name="semester"
+                id="semester"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
+              />
+              <datalist id="semester-list">
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+                <option value="6"></option>
+                <option value="7"></option>
+                <option value="8"></option>
+              </datalist>
+            </div>
           </section>
 
           <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
@@ -209,7 +233,7 @@ function EnrollPage() {
                 htmlFor="prn"
                 className="block text-gray-300 font-bold mb-2"
               >
-                PRN:
+                PRN
               </label>
               <input
                 type="text"
@@ -224,7 +248,7 @@ function EnrollPage() {
                 htmlFor="dob"
                 className="block text-gray-300 font-bold mb-2"
               >
-                DOB:
+                DOB
               </label>
               <input
                 type="date"
@@ -239,7 +263,7 @@ function EnrollPage() {
           <section className="flex items-center space-x-0 md:space-x-4">
             <div className="mb-4 w-full md:w-auto flex-1">
               <label className="block text-gray-300 font-bold mb-2">
-                Address:
+                Address
               </label>
               <textarea
                 placeholder="Enter address..."

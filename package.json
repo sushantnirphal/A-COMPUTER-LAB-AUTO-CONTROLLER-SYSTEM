@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@mui/material": "^5.13.1",
     "npm": "^9.6.6"
   }
 }

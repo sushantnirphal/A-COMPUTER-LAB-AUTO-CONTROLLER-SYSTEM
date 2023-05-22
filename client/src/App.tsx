@@ -13,6 +13,8 @@ import Academic from "./pages/Academic";
 import CreateManual from "./pages/CreateManual";
 import Attendence from "./pages/Attendence";
 import Practice from "./pages/Practice";
+import PasswordReset from "./pages/PasswordReset";
+import ForgotPassword from "./pages/ForgotPassword";
 import UploadManual from "./pages/UploadManual";
 
 //  faculty
@@ -25,7 +27,7 @@ import UploadPracticals from "./pages/UploadPracticals";
 import CoursesAndSyllabus from "./pages/CoursesAndSyllabus";
 import CheckAttendence from "./pages/CheckAttendence";
 import ReceivedManual from "./pages/ReceivedManual";
-import Settime from "./pages/Settime";
+
 // import FacultyHome from './p'
 const router = createHashRouter([
   {
@@ -41,10 +43,21 @@ const router = createHashRouter([
     path: "/academic",
     element: <Academic />,
   },
-  {
-    path: "/upload-practicals",
-    element: <UploadPracticals />,
+  { 
+    path: "/forgotpassword/:id/:token",
+    element: <ForgotPassword />,
+
   },
+  { 
+    path: "/passwordreset",
+    element: <PasswordReset />,
+
+  },
+
+ {
+  path:"/uploadpracticals",
+  element: <UploadPracticals onSaveTestCases={undefined}/>,
+ },
   {
    path: "/createmanual",
     element: <CreateManual />,
@@ -98,11 +111,6 @@ const router = createHashRouter([
   {
     path: "/faculty/login",
     element: <FacultyLogin />,
-  },
-  
-  {
-    path: "/settime",
-    element: <Settime />,
   },
   
   {

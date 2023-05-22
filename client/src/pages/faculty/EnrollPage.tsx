@@ -69,9 +69,13 @@ function EnrollPage() {
   return (
     <div>
       {/* <Header /> */}
+     
+
       <main className="gr-bg py-12 text-center text-white">
         {" "}
-        Faculty enroll form
+         <h2 className="text-xl  font-semibold text-white py- text-center">
+      Faculty enroll form
+          </h2>
         <form
           onSubmit={handleSubmit}
           className="gr-bg  p-12 rounded-lg mb-4 w-11/12 max-w-[700px] mx-auto"
@@ -80,12 +84,11 @@ function EnrollPage() {
           <div className="mb-4 flex-1  flex-wrap flex py-6">
             <label
               htmlFor="profile-image"
-              className="block shrink-0 border-slate-700 overflow-hidden border rounded-full w-44 h-44"
+              className="block shrink-0  overflow-hidden border rounded-full w-44 h-44"
             >
               <img
                 src={profile || "/profile-placeholder.jpg"}
-                alt="profile"
-                className="w-full h-full object-cover  border"
+                className="w-full h-full object-cover  "
               />
             </label>
 
@@ -98,8 +101,7 @@ function EnrollPage() {
               accept=".jpg,.jpeg,.png"
               onChange={(e) => handleFile(e, setProfile)}
             />
-
-            <p className="px-6 mt-auto">Choose profile picture</p>
+            <label htmlFor="profile-image" className="px-6 cursor-pointer mt-auto text-white">Choose profile picture</label>
           </div>
 
           <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
