@@ -97,7 +97,7 @@ const Header = () => {
                   CheckAttendence
                 </Link>
                 <Link className="hover:text-slate-200  "
-                 to={"/upload-practicals"}
+                 to={"/uploadpracticals"}
                  > 
                  UploadPracticals 
                  </Link>
