@@ -15,16 +15,13 @@ const Code = () => {
   const [code, setCode] = useState(localStorage.getItem(id + "_code") || "");
 
   useEffect(() => {
-    window.addEventListener("beforeunload", (e) => {
-      e.preventDefault();
-      alert("Leave window");
-    });
+    return () => {
+    
+    };
   }, []);
 
   useEffect(() => {
-    
     setCode(localStorage.getItem(id + "_code") || "");
-
   }, [id]);
   return (
     <main className=" h-screen w-full  gr-bg">
@@ -33,7 +30,7 @@ const Code = () => {
         <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
           <Sidebar setter={setId} id={id} />
 
-          <div className="flex-1 w-full h-full flex flex-col md:flex-row ">
+          <div className="flex-1 full-screen-window w-full h-full flex flex-col md:flex-row ">
             {id ? <Manual id={id} /> : null}
             {id ? <CodeWindow id={id} code={code} setCode={setCode} /> : null}
             {!id ? <Welcome /> : null}

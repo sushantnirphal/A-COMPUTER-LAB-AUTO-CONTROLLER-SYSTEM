@@ -1,4 +1,11 @@
-import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import Output from "./Output";
 import CustomInput from "./CustomInput";
 import Codemirror from "@uiw/react-codemirror";
@@ -6,13 +13,17 @@ import langcode from "../../../public/apicode";
 import ReverseTimer from "../../partials/code/ReverseTimer";
 import UploadPracticals from "@/pages/UploadPracticals";
 import TestCasesF from "./TestCasesF";
+import {StudentContext} from "../../../Context/StudentContext";
 
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
   id: string;
+
 }> = ({code, setCode, id}) => {
   const [result, setResult] = useState<string | null | boolean>("");
+  const {student} = useContext(StudentContext) as {student: any};
+
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
   const [input, setInput] = useState("");
@@ -133,7 +144,7 @@ const CodeWindow: FC<{
   }, [code]);
 
   return (
-    <div className="resize-x relative flex-1 border-l flex flex-col">
+    <div className=" resize-x relative flex-1 border-l flex flex-col">
       <section className="fixed test-cases-section z-40 right-0 top-44">
         {test_result.map((item, index) => (
           <button
@@ -176,10 +187,13 @@ const CodeWindow: FC<{
             );
           })}
         </select>
-        <div className="bg-amber-400 flex content-center  text-slate-100 py-2 px-3 rounded-full">
-          Timer-
-          <ReverseTimer />
-        </div>
+
+        <ReverseTimer
+          id={id} 
+          elem={document.querySelector(".full-screen-window")}
+          student={student?._id}
+        />
+
         <button
           title="Button will be enable after 1.5 hours of starting code."
           className="bg-sky-600 text-white rounded-full px-5 py-2"
@@ -208,7 +222,7 @@ const CodeWindow: FC<{
         onChange={setCode}
         theme="dark"
         height="100%"
-        className="code-window  border bg-gray-800 border-slate-600 rounded-md overflow-hidden  w-full flex-1 bg-transparent text-slate-100"
+        className="code-window border bg-gray-800 border-slate-600 rounded-md overflow-hidden  w-full flex-1 bg-transparent text-slate-100"
       />
       <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
       {result && (
