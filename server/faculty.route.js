@@ -61,6 +61,7 @@ facultyRouter.post("/login", async (req, res) => {
     return res.status(500).json({success: false, message: "Server error"});
   }
 });
+
 //send email link for reset password
 facultyRouter.post("/sendpasswordlink", async (req, res) => {
   console.log(req.body);
