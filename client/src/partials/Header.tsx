@@ -8,10 +8,8 @@ import MenuItem from "@/pages/MenuItem";
 import {FacultyContext} from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
 import CoursesAndSyllabus from "@/pages/CoursesAndSyllabus";
-<<<<<<< HEAD
-=======
 import Settime from "@/pages/Settime";
->>>>>>> origin/test-case-feat
+
 
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
@@ -100,14 +98,14 @@ const Header = () => {
                   CheckAttendence
                 </Link>
                 <Link className="hover:text-slate-200  "
-                 to={"/upload-practicals"}
+                 to={"/uploadpracticals"}
                  > 
                  UploadPracticals 
                  </Link>
                 <Link className="hover:text-slate-200 "
                  to={"/settime"}
                  > 
-                 SetTime
+                 Settime
                  </Link>
               
               </>
