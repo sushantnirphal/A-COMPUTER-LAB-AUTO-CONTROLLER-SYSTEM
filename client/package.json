@@ -38,20 +38,20 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "dependencies": {
+    "@mui/material": "^5.13.1",
     "@syncfusion/ej2-react-documenteditor": "^21.1.41",
     "@uiw/react-codemirror": "^4.19.16",
     "autoprefixer": "^10.4.13",
     "codemirror": "^6.0.1",
     "i": "^0.3.7",
     "monaco-editor": "^0.38.0",
+    "nodemailer": "^6.7.8",
     "postcss": "^8.4.21",
     "react-file-viewer": "^1.2.1",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.8.2",
     "react-select": "^5.7.3",
     "react-to-print": "^2.14.12",
-    "nodemailer": "^6.7.8",
-    "@mui/material": "^5.13.1",
     "react-toastify": "^9.1.2",
     "semantic-ui-react": "^2.1.4",
     "tailwindcss": "^3.2.7"
