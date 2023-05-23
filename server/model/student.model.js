@@ -47,7 +47,7 @@ const studentSchema = Schema({
   practical_completed: [
     {
       aim: String,
-      pid: String,
+      pid: {type: String, unique: true},
       status: String,
       date: Date,
       marks: Number,
