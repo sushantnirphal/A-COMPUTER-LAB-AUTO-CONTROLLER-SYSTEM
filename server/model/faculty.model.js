@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import {model, Schema} from "mongoose";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 
@@ -19,6 +19,8 @@ const facultySchema = Schema({
       }
     },
   },
+  year: Number,
+  semester: Number,
   password: String,
   profile: {
     type: String,
@@ -44,11 +46,11 @@ const facultySchema = Schema({
 // Generate authentication token
 facultySchema.methods.generateAuthToken = async function () {
   try {
-    const token = jwt.sign({ _id: this._id.toString() }, keysecret, {
+    const token = jwt.sign({_id: this._id.toString()}, keysecret, {
       expiresIn: "1d",
     });
 
-    this.tokens = this.tokens.concat({ token });
+    this.tokens = this.tokens.concat({token});
     await this.save();
 
     return token;

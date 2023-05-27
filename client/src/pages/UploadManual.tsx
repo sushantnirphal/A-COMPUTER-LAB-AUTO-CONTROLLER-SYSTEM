@@ -2,7 +2,6 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import Header from "@/partials/Header";
 import {Link} from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
-import FileViewer from "react-file-viewer";
 import {toast} from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
 const UploadManual = () => {

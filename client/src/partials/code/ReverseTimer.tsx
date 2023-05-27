@@ -10,10 +10,11 @@ function ReverseTimer({
   student: string;
 }) {
   const initialtime = 30;
-  const attendence_time = initialtime-20;
+  const attendence_time = initialtime - 20;
 
-  const [time, setTime] = useState(initialtime); // 2 hours in seconds
+  const [time, setTime] = useState<string | number>(initialtime); // 2 hours in seconds
   const [start, setStart] = useState(false);
+  const [attendence, setAttendence] = useState(""); // 2 hours in seconds
   let intervalId: any;
   let timeoutid: any;
   useEffect(() => {
@@ -38,6 +39,7 @@ function ReverseTimer({
               .then((a) => {
                 if (a.success) {
                   alert("Attendence marked");
+                  setAttendence("Present");
                 }
               });
             elem.requestFullscreen();
@@ -55,6 +57,8 @@ function ReverseTimer({
     }, time * 1000);
   }
   const formatTime = (time: number) => {
+    if (typeof time === "string") return time;
+
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
@@ -77,6 +81,9 @@ function ReverseTimer({
     //   }
     // }
     // setStart(false);
+    setTime(initialtime);
+    setAttendence("");
+    setStart(false);
   }, [id]);
   return (
     <div>
@@ -84,7 +91,10 @@ function ReverseTimer({
         onClick={start_timer}
         className=" flex content-center  text-slate-100 py-2 px-3 rounded-full"
       >
-        {start ? formatTime(time) : "Start timer"}
+
+        {attendence ? attendence : null}
+        {!attendence ? (start ? formatTime(time) : "Start timer") : null}
+
       </button>
     </div>
   );
