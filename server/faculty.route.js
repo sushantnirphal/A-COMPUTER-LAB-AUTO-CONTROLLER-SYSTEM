@@ -73,18 +73,44 @@ facultyRouter.post("/sendpasswordlink", async (req, res) => {
   }
 
   try {
-      const userfind = await facultyModel.findOne({email:email});
+    const userfind = await facultyModel.findOne({email:email});
+    // console.log("userfind",userfind)
+    // token generate for reset password
+    const token = jwt.sign({_id:userfind._id},keysecret,{
+      expiresIn:"120s"
+  });
+  
+    const setusertoken = await facultyModel.findByIdAndUpdate({_id:userfind._id},{verifytoken:token},{new:true});
 
-      // token generate for reset password
-      const token=jwt.sign({_id:userfind._id},keysecret,{
-        expiresIn:"120s"
-      })
-      const setusertoken=await facultyModel.findByIdAndUpdate({_id:userfind._id},{verifytoken:token})
-      console.log("setusertoken",setusertoken)
-     } catch (error) {
+
+    if(setusertoken){
+        const mailOptions = {
+            from:"malikarpriyanka@gmail.com",
+            to:email,
+            subject:"Sending Email For password Reset",
+            text:`This Link Valid For 2 MINUTES http://localhost:7890/forgotpassword/${userfind.id}/${setusertoken.verifytoken}`
+        }
+
+        transporter.sendMail(mailOptions,(error,info)=>{
+            if(error){
+                console.log("error",error);
+                res.status(401).json({status:401,message:"email not send"})
+            }else{
+                console.log("Email sent",info.response);
+                res.status(201).json({status:201,message:"Email sent Succsfully"})
+            }
+        })
+
     }
 
+} catch (error) {
+    res.status(401).json({status:401,message:"invalid user"})
+}
+
 });
+
+
+
 
 
  
