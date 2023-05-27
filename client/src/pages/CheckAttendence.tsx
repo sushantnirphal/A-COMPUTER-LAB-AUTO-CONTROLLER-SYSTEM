@@ -18,10 +18,10 @@ interface PracticalType {
 }
 
 const CheckAttendence = () => {
-  
+
   const numner_of_practicals = 10;
 
-  const [Attendence, setAttendence] = useState<any[]>([]);
+  const [Attendence, setAttendence] = useState<any[]>([]);        
   const {student, setStudent} = useContext<any>(StudentContext);
 
   async function getAttendence() {
