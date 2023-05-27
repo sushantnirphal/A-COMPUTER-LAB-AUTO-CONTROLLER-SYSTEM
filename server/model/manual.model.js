@@ -22,7 +22,7 @@ const manualSchema = new Schema(
       type: Number,
       required: true,
     },
-    sem: {
+    semester: {
       type: Number,
       required: true,
     },
@@ -48,5 +48,3 @@ const manualSchema = new Schema(
 );
 
 export default model("manual", manualSchema);
-
-

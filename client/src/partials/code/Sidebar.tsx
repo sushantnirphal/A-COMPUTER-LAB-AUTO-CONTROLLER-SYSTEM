@@ -1,20 +1,36 @@
-import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import {AimType} from "../aims";
 import {api} from "../aims";
 import {ItemType} from "./Manual";
+import {StudentContext} from "../../../Context/StudentContext";
+
 const Sidebar: FC<{
   id: string | null;
   setter: Dispatch<SetStateAction<string | null>>;
 }> = ({setter, id}) => {
+  const {student} = useContext<{student: any}>(StudentContext);
+  const {semester :sem, year} = student || {semester: 0, year: 0};
+  console.log(year, sem);
   const [ids, setIDs] = useState([]);
   async function get_ids() {
-    await fetch(`${import.meta.env.VITE_SERVER_URL}/manual/all_id` as string)
+    await fetch(
+      `${
+        import.meta.env.VITE_SERVER_URL
+      }/manual/all_id/${year}/${sem}` as string
+    )
       .then((d) => d.json())
       .then((e) => setIDs(e.data));
   }
   useEffect(() => {
     get_ids();
-  }, []);
+  }, [year, sem]);
   return (
     <div
       className="resize-x h-full border-r   w-40

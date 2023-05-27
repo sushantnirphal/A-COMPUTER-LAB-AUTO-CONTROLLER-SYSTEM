@@ -58,7 +58,10 @@ studentRouter.post("/attendence/:id/:pid", async (req, res) => {
   const {id, pid} = req.params;
 
   try {
-    const {aim} = await manualModel.findOne({_id: pid}, {aim: 1});
+    const {aim, practical_no} = await manualModel.findOne(
+      {_id: pid},
+      {aim: 1, practical_no: 1}
+    );
     const student = await studentModel.updateOne(
       {_id: id},
       {
@@ -68,6 +71,7 @@ studentRouter.post("/attendence/:id/:pid", async (req, res) => {
             attendence_status: "present",
             date: Date.now(),
             aim,
+            practical_no,
             status: null,
             marks: 0,
             test_cases_passed: 0,
@@ -82,6 +86,26 @@ studentRouter.post("/attendence/:id/:pid", async (req, res) => {
     });
   } catch (error) {
     // Handle any errors
+    console.error(error);
+    return res.status(500).json({success: false, message: "Server error"});
+  }
+});
+
+// check attendence router
+studentRouter.get("/check-attendence/:id/:pid", async (req, res) => {
+  const {id, pid} = req.params;
+  try {
+    const data = await studentModel.findOne({
+      _id: id,
+      practical_completed: {$elemMatch: {pid: pid}},
+    });
+    console.log(data);
+
+    return res.status(200).json({
+      success: data ? true : false,
+      message:data ?  "Attendence marked" : "Attendence not marked",
+    });
+  } catch (error) {
     console.error(error);
     return res.status(500).json({success: false, message: "Server error"});
   }

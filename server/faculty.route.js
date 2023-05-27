@@ -2,16 +2,16 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import facultyModel from "./model/faculty.model.js";
 import nodemailer from "nodemailer";
-const keysecret = process.env.SECRET_KEY
+import studentModel from "./model/student.model.js";
+const keysecret = process.env.SECRET_KEY;
 
 const transporter = nodemailer.createTransport({
-  service:"gmail",
-  auth:{
-      user:"malikarpriyanka@gmail.com",
-      pass:"1234567"
-  }
-}) 
-
+  service: "gmail",
+  auth: {
+    user: "malikarpriyanka@gmail.com",
+    pass: "1234567",
+  },
+});
 
 const facultyRouter = express.Router();
 facultyRouter.get("/", async (req, res) => {
@@ -68,50 +68,69 @@ facultyRouter.post("/sendpasswordlink", async (req, res) => {
   // Implement your email sending logic here
   const {email} = req.body;
 
-  if(!email){
-      res.status(401).json({status:401,message:"Enter Your Email"})
+  if (!email) {
+    res.status(401).json({status: 401, message: "Enter Your Email"});
   }
 
   try {
-    const userfind = await facultyModel.findOne({email:email});
+    const userfind = await facultyModel.findOne({email: email});
     // console.log("userfind",userfind)
     // token generate for reset password
-    const token = jwt.sign({_id:userfind._id},keysecret,{
-      expiresIn:"120s"
-  });
-  
-    const setusertoken = await facultyModel.findByIdAndUpdate({_id:userfind._id},{verifytoken:token},{new:true});
+    const token = jwt.sign({_id: userfind._id}, keysecret, {
+      expiresIn: "120s",
+    });
 
+    const setusertoken = await facultyModel.findByIdAndUpdate(
+      {_id: userfind._id},
+      {verifytoken: token},
+      {new: true}
+    );
 
-    if(setusertoken){
-        const mailOptions = {
-            from:"malikarpriyanka@gmail.com",
-            to:email,
-            subject:"Sending Email For password Reset",
-            text:`This Link Valid For 2 MINUTES http://localhost:7890/forgotpassword/${userfind.id}/${setusertoken.verifytoken}`
+    if (setusertoken) {
+      const mailOptions = {
+        from: "malikarpriyanka@gmail.com",
+        to: email,
+        subject: "Sending Email For password Reset",
+        text: `This Link Valid For 2 MINUTES http://localhost:7890/forgotpassword/${userfind.id}/${setusertoken.verifytoken}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log("error", error);
+          res.status(401).json({status: 401, message: "email not send"});
+        } else {
+          console.log("Email sent", info.response);
+          res.status(201).json({status: 201, message: "Email sent Succsfully"});
         }
-
-        transporter.sendMail(mailOptions,(error,info)=>{
-            if(error){
-                console.log("error",error);
-                res.status(401).json({status:401,message:"email not send"})
-            }else{
-                console.log("Email sent",info.response);
-                res.status(201).json({status:201,message:"Email sent Succsfully"})
-            }
-        })
-
+      });
     }
-
-} catch (error) {
-    res.status(401).json({status:401,message:"invalid user"})
-}
-
+  } catch (error) {
+    res.status(401).json({status: 401, message: "invalid user"});
+  }
 });
 
+facultyRouter.get("/get-attendance/:year/:semester", async (req, res) => {
+  const {year, semester} = req.params;
+  console.log(year, semester);
+  try {
+    const attendance = await studentModel.find(
+      {year : Number(year), semester : Number(semester)},
+      {
+        name: 1,
+        prn: 1,
+        year: 1,
+        semester: 1,
+        practical_completed: 1,
+      }
+    );
 
+    res
+      .status(200)
+      .json({error: false, message: "Attendance", data: attendance});
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({error: true, message: "Somethong went wrong"});
+  }
+});
 
-
-
- 
 export default facultyRouter;
