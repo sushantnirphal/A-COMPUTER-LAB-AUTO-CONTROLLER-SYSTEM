@@ -11,9 +11,12 @@ studentRouter.get("/", async (req, res) => {
   res.json(students);
 });
 
-
 studentRouter.get("/no-photo", async (req, res) => {
-  const students = await studentModel.find({} , {profile: 0});
+  const students = await studentModel.find({}, {profile: 0});
+  res.json(students);
+});
+studentRouter.get("/:id", async (req, res) => {
+  const students = await studentModel.find({_id: req.params.id}, {profile: 0});
   res.json(students);
 });
 
@@ -55,7 +58,7 @@ studentRouter.post("/attendence/:id/:pid", async (req, res) => {
   const {id, pid} = req.params;
 
   try {
-    const {aim} =await manualModel.findOne({_id: pid}, {aim: 1});
+    const {aim} = await manualModel.findOne({_id: pid}, {aim: 1});
     const student = await studentModel.updateOne(
       {_id: id},
       {

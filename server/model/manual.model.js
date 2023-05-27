@@ -1,6 +1,5 @@
 import {model, Schema} from "mongoose";
 
-
 const manualSchema = new Schema(
   {
     subject: {
@@ -31,6 +30,7 @@ const manualSchema = new Schema(
       type: String,
       required: true,
     },
+    practical_no: Number,
     test_case: [
       {
         input: {
@@ -48,3 +48,5 @@ const manualSchema = new Schema(
 );
 
 export default model("manual", manualSchema);
+
+
