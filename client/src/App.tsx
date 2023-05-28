@@ -16,6 +16,8 @@ import Practice from "./pages/Practice";
 import PasswordReset from "./pages/PasswordReset";
 import ForgotPassword from "./pages/ForgotPassword";
 import UploadManual from "./pages/UploadManual";
+import UploadSyllabus from "./pages/UploadSyllabus";
+import CourseSyllabus from "./pages/CourseSyllabus";
 
 //  faculty
 import FacultyLogin from "./pages/faculty/LoginPage";
@@ -24,7 +26,6 @@ import SelectPage from "./pages/SelectPage";
 import FacultyContext from "../Context/FacultyContex";
 import Error from "./pages/Error";
 import UploadPracticals from "./pages/UploadPracticals";
-import CoursesAndSyllabus from "./pages/CoursesAndSyllabus";
 import CheckAttendence from "./pages/CheckAttendence";
 import ReceivedManual from "./pages/ReceivedManual";
 
@@ -58,6 +59,10 @@ const router = createHashRouter([
   path:"/uploadpracticals",
   element: <UploadPracticals onSaveTestCases={undefined}/>,
  },
+ {
+  path:"/coursesyllabus",
+  element:<CourseSyllabus/>,
+ },
   {
    path: "/createmanual",
     element: <CreateManual />,
@@ -84,11 +89,6 @@ const router = createHashRouter([
     element: <Code />,
   },
   {
-    path: "/coursesandsyllabus",
-    element: <CoursesAndSyllabus />,
-  },
-
-  {
     path: "/checkattendence",
     element: <CheckAttendence />,
   },
@@ -96,6 +96,11 @@ const router = createHashRouter([
     path: "/receivedmanual",
     element: <ReceivedManual />,
   },
+  {
+    path: "/uploadsyllabus",
+    element:<UploadSyllabus/>,
+  },
+  
   {
     path: "/login",
     element: <LoginPage />,
