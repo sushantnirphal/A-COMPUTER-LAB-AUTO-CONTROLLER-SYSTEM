@@ -86,23 +86,6 @@ SyllabusRouter.get("/:id", async (req, res) => {
 });
 
 
-// get testcases by id
-SyllabusRouter.post("/test-cases/:id", async (req, res) => {
-  const {id} = req.params;
-  try {
-    const akg = await syllabusModel.findOne({_id: id} , {
-      test_case: 1,
-    });
-    res
-      .status(200)
-      .send({success: true, message: "Syllabus fetched successfully", data: akg.test_case});
-  } catch (error) {
-  
-    res
-      .status(400)
-      .send({success: false, message: "Something went wrong.", data: error});
-  }
-});
 
 SyllabusRouter.post("/", async (req, res) => {
   const payload = req.body;

@@ -21,6 +21,37 @@ ManualRouter.get("/", async (req, res) => {
 });
 
 // get manual ids
+ManualRouter.get("/all_id", async (req, res) => {
+  try {
+    const akg = await manualModel.find(
+      {
+        
+      },
+      {
+        _id: 1,
+        aim: 1,
+        createdAt: 1,
+        file_type: 1,
+        sem: 1,
+        year: 1,
+        input: 1,
+        output: 1,
+        
+      }
+    );
+
+    res
+      .status(200)
+      .send({success: true, message: "Manual fetched successfully", data: akg});
+  } catch (error) {
+    
+    res
+      .status(400)
+      .send({success: false, message: "Something went wrong.", data: error});
+  }
+});
+
+// get manual ids
 ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
   try {
     const akg = await manualModel.find(
@@ -45,7 +76,7 @@ ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
       .status(200)
       .send({success: true, message: "Manual fetched successfully", data: akg});
   } catch (error) {
-   
+    const akg = await manualModel.create(payload);
 
     res
       .status(400)

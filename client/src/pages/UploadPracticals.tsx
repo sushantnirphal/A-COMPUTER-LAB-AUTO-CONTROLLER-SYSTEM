@@ -2,6 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import Header from "@/partials/Header";
 import {Link} from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
+import FileViewer from "react-file-viewer";
 import {toast} from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
 import TestCasesF from "@/partials/code/TestCasesF";
@@ -92,12 +93,12 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
   return (
     <div className="gr-bg min-h-screen w-full ">
       <Header />
-      {preview && (
-        <section className="py-8 h-screen fixed inset-0 bg-black/60">
+      {preview   && (
+        <section className=" py-8 h-screen fixed inset-0 bg-black/60 ">
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span
               className="text-4xl absolute right-4 top-4 bg-red-500 grid place-items-center z-20 rounded-full w-12 h-12 text-white cursor-pointer"
-              onClick={() => setPreview(null)}
+              onClick={() => setPreview("")}
             >
               &times;
             </span>
