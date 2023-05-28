@@ -50,6 +50,7 @@ const studentSchema = Schema({
       pid: {type: String, unique: true},
       status: String,
       date: Date,
+      practical_no : Number,
       marks: Number,
       test_cases_passed: Number,
       attendence_status: String,
