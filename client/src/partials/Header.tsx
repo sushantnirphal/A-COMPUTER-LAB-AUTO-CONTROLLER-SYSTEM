@@ -7,8 +7,8 @@ import Academic from "@/pages/Academic";
 import MenuItem from "@/pages/MenuItem";
 import {FacultyContext} from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
-import CoursesAndSyllabus from "@/pages/CoursesAndSyllabus";
 import Settime from "@/pages/Settime";
+import UploadSyllabus from "@/pages/UploadSyllabus";
 
 const Header = () => {
   const {student, setStudent} = useContext<any>(StudentContext);
@@ -55,8 +55,8 @@ const Header = () => {
 
             {isStudent ? (
               <>
-                <Link className="hover:text-slate-200" to={"/coursesandsyllabus"}>
-                  Courses&Syllabus
+                <Link className="hover:text-slate-200" to={"/coursesyllabus"}>
+                CourseSyllabus
                 </Link>
                 <Link className="hover:text-slate-200" to={"/createmanual"}>
                   CreateManual
@@ -105,6 +105,11 @@ const Header = () => {
                  to={"/settime"}
                  > 
                  SetTime
+                 </Link>
+                 <Link className="hover:text-slate-200  "
+                 to={"/uploadsyllabus"}
+                 > 
+                 UploadSyllabus
                  </Link>
               
               </>

@@ -6,6 +6,7 @@ import studentRouter from "./routes/student.route.js";
 import facultyRouter from "./faculty.route.js";
 import ManualRouter from "./routes/manual.route.js";
 import SubmitManualRouter from "./routes/submitmanual.route.js";
+import SyllabusRouter from "./routes/syllabus.route.js";
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.use("/student", studentRouter);
 app.use('/faculty', facultyRouter);
 app.use('/api/manual', ManualRouter);
 app.use('/api/submitmanual', SubmitManualRouter);
+app.use('/api/syllabus',SyllabusRouter);
 
 
 try {
