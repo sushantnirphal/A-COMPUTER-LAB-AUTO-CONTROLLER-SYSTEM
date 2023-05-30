@@ -40,6 +40,9 @@ const Home = () => {
 
             <h5>Email : {student?.email}</h5>
             <h5>Phone number : {student?.phone}</h5>
+            <h5>Year : {student?.year}</h5>
+            <h5>Sem : {student?.sem}</h5>
+
 
            
           </div>

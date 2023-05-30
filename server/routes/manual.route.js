@@ -84,6 +84,8 @@ ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
       .status(200)
       .send({success: true, message: "Manual fetched successfully", data: akg});
   } catch (error) {
+    const akg = await manualModel.create(payload);
+
     res
       .status(400)
       .send({success: false, message: "Something went wrong.", data: error});
