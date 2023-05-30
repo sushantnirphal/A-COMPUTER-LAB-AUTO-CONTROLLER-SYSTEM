@@ -189,8 +189,7 @@ const UploadManual = () => {
                 }) => (
                   <div
                     key={item?._id}
-                    className="flex text-slate-800 items-center bg-white/90  px-6 py-2 rounded"
-                  >
+                    className="flex text-slate-800 items-center bg-white/90  px-6 py-2 rounded">
                     <h4 className="text-lg w-9/12 font-semibold">{item.aim}</h4>
                     <div className="text-sm w-max shrink-0 flex space-x-2 px-5">
                       <h4>Sem {item?.sem}</h4>

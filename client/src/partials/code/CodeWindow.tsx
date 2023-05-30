@@ -226,6 +226,7 @@ const CodeWindow: FC<{
       />
       <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
       {result && (
+        
         <Output result={result ? result : null} setResult={setResult} />
       )}
       <div></div>

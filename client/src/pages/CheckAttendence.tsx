@@ -39,7 +39,6 @@ const CheckAttendence = () => {
   }, []);
 
   // Array.prototype.sortPresenty = function (this: any[]) {
-
   //   for (let i = 0; i < this.length; ++i) {
   //     if (this[i].practical_no) {
   //       [this[this[i].practical_no - 1], this[i]] = [
@@ -48,9 +47,7 @@ const CheckAttendence = () => {
   //       ];
   //     }
   //   }
-
   // };
-
   // }
 
   const sortPresenty = (arr: PracticalType[]) => {

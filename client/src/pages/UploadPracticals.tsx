@@ -1,10 +1,11 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useContext, useEffect, useState} from "react";
 import Header from "@/partials/Header";
 import {Link} from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
 import {toast} from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
 import TestCasesF from "@/partials/code/TestCasesF";
+import { StudentContext } from "../../Context/StudentContext";
 //import TestCasesF from "@/partials/code/TestCasesF";
 const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
   const [preview, setPreview] = useState("");
@@ -13,6 +14,7 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
   const [fetching, setFetching] = useState(true);
   const [loading, setLoading] = useState(false);
   const [manual, setManuals] = useState([]);
+  const {student, setStudent} = useContext<any>(StudentContext);
   const reader = new FileReader();
 
   
@@ -21,7 +23,7 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
 
     
   async function getManuals() {
-    const req = await fetch("http://localhost:7890/api/manual/all_id");
+    const req = await fetch(`http://localhost:7890/api/manual/all_id/${student?.year}/${student?.semester}`);
     const res = await req.json();
     setManuals(res.data);
     setFetching(false);
@@ -87,7 +89,7 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
   }
 
   useEffect(() => {
-    getManuals();
+   student?.year && getManuals();
   }, []);
   return (
     <div className="gr-bg min-h-screen w-full ">
@@ -158,7 +160,7 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
               <br />
               <input
                 required
-                name="sem"
+                name="semester"
                 type="number"
                 className="border-2"
               ></input>
@@ -252,7 +254,7 @@ const UploadPracticals = ({onSaveTestCases}:{onSaveTestCases:any}) => {
             <h6 className="py-4 text-center w-full"> Loading...</h6>
           ) : (
             <main className="py-8 space-y-6">
-              {manual.map(
+              {manual && manual.map(
                 (item: {
                   _id: string;
                   aim: string;

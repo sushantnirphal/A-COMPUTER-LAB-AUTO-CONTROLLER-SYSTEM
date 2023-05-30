@@ -9,8 +9,8 @@ function ReverseTimer({
   elem: HTMLDivElement | null;
   student: string;
 }) {
-  const initialtime = 30;
-  const attendence_time = initialtime - 20;
+  const initialtime = 60;
+  const attendence_time = initialtime - 40;
 
   const [time, setTime] = useState<string | number>(initialtime); // 2 hours in seconds
   const [start, setStart] = useState(false);
@@ -89,12 +89,10 @@ function ReverseTimer({
     <div>
       <button
         onClick={start_timer}
-        className=" flex content-center  text-slate-100 py-2 px-3 rounded-full"
+        className="flex content-center  text-slate-100 py-2 px-3 rounded-full"
       >
-
         {attendence ? attendence : null}
         {!attendence ? (start ? formatTime(time) : "Start timer") : null}
-
       </button>
     </div>
   );

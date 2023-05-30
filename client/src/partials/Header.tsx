@@ -85,7 +85,7 @@ const Header = () => {
             {!isStudent ? (
               <>
                 <Link
-                  className="hover:text-slate-200 text-white"
+                  className="hover:text-slate-200"
                   to={"/receivedmanual"}
                 >
                   ReceivedManual
@@ -101,11 +101,11 @@ const Header = () => {
                  > 
                  UploadPracticals 
                  </Link>
-                <Link className="hover:text-slate-200 "
+                {/* <Link className="hover:text-slate-200 "
                  to={"/settime"}
                  > 
                  SetTime
-                 </Link>
+                 </Link> */}
                  <Link className="hover:text-slate-200  "
                  to={"/uploadsyllabus"}
                  > 
