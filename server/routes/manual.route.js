@@ -21,7 +21,12 @@ ManualRouter.get("/", async (req, res) => {
 });
 
 // get manual ids
-ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
+ManualRouter.get("/all_id", async (req, res) => {
+
+  if (!req.params.year || !req.params.semester) {
+    return res.status(400).send({success: false, message: "All fieds needed."});
+  }
+
   try {
     const akg = await manualModel.find(
       {
@@ -37,7 +42,6 @@ ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
         year: 1,
         input: 1,
         output: 1,
-        
       }
     );
 
@@ -45,8 +49,41 @@ ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
       .status(200)
       .send({success: true, message: "Manual fetched successfully", data: akg});
   } catch (error) {
-   
+    res
+      .status(400)
+      .send({success: false, message: "Something went wrong.", data: error});
+  }
+});
 
+// get manual ids
+ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
+
+  if (!req.params.year || !req.params.semester) {
+    return res.status(400).send({success: false, message: "All fieds needed."});
+  }
+
+  try {
+    const akg = await manualModel.find(
+      {
+        year: req.params.year,
+        semester: req.params.semester,
+      },
+      {
+        _id: 1,
+        aim: 1,
+        createdAt: 1,
+        file_type: 1,
+        sem: 1,
+        year: 1,
+        input: 1,
+        output: 1,
+      }
+    );
+
+    res
+      .status(200)
+      .send({success: true, message: "Manual fetched successfully", data: akg});
+  } catch (error) {
     res
       .status(400)
       .send({success: false, message: "Something went wrong.", data: error});
@@ -68,7 +105,6 @@ ManualRouter.get("/file/:id", async (req, res) => {
       .status(200)
       .send({success: true, message: "Manual fetched successfully", data: akg});
   } catch (error) {
-   
     res
       .status(400)
       .send({success: false, message: "Something went wrong.", data: error});
@@ -78,32 +114,37 @@ ManualRouter.get("/file/:id", async (req, res) => {
 // get manual by id
 ManualRouter.get("/:id", async (req, res) => {
   const {id} = req.params;
+  
   try {
     const akg = await manualModel.findOne({_id: id});
     res
       .status(200)
       .send({success: true, message: "Manual fetched successfully", data: akg});
   } catch (error) {
-  
     res
       .status(400)
       .send({success: false, message: "Something went wrong.", data: error});
   }
 });
 
-
 // get testcases by id
 ManualRouter.post("/test-cases/:id", async (req, res) => {
   const {id} = req.params;
   try {
-    const akg = await manualModel.findOne({_id: id} , {
-      test_case: 1,
-    });
+    const akg = await manualModel.findOne(
+      {_id: id},
+      {
+        test_case: 1,
+      }
+    );
     res
       .status(200)
-      .send({success: true, message: "Manual fetched successfully", data: akg.test_case});
+      .send({
+        success: true,
+        message: "Manual fetched successfully",
+        data: akg.test_case,
+      });
   } catch (error) {
-  
     res
       .status(400)
       .send({success: false, message: "Something went wrong.", data: error});

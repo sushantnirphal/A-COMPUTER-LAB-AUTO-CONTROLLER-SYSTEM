@@ -102,8 +102,37 @@ studentRouter.get("/check-attendence/:id/:pid", async (req, res) => {
     console.log(data);
 
     return res.status(200).json({
-      success: data ? true : false,
-      message:data ?  "Attendence marked" : "Attendence not marked",
+      success: !!data,
+      message: data ? "Attendence marked" : "Attendence not marked",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({success: false, message: "Server error"});
+  }
+});
+
+// Attendence status router
+studentRouter.get("/attendence-status/:id", async (req, res) => {
+  const {id} = req.params;
+  try {
+    const data = await studentModel.findOne(
+      {prn: id},
+      {
+        _id: 0,
+        practical_completed: {
+          aim: 1,
+          practical_no: 1,
+          marks: 1,
+          attendence_status: 1,
+          status: 1,
+        },
+      }
+    );
+    console.log(data);
+    return res.status(200).json({
+      success: !!data,
+      message: "Attendence featched",
+      data: data.practical_completed || [],
     });
   } catch (error) {
     console.error(error);
