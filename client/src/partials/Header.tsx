@@ -1,17 +1,18 @@
-import {StudentContext} from "../../Context/StudentContext";
-import {StudentType} from "interfaces/student";
-import React, {useContext, useEffect, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { StudentContext } from "../../Context/StudentContext";
+import { StudentType } from "interfaces/student";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Academic from "@/pages/Academic";
 import MenuItem from "@/pages/MenuItem";
-import {FacultyContext} from "../../Context/FacultyContex";
+import { FacultyContext } from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
-import Settime from "@/pages/Settime";
 import UploadSyllabus from "@/pages/UploadSyllabus";
 
+import { HiHome, HiCode, HiClipboardCheck, HiLogout, HiBookOpen, HiUpload, HiViewList, HiBeaker, HiDocument } from 'react-icons/hi'
+
 const Header = () => {
-  const {student, setStudent} = useContext<any>(StudentContext);
+  const { student, setStudent } = useContext<any>(StudentContext);
   const isStudent = student?.role === "student";
   const navigate = useNavigate();
   const router = useLocation();
@@ -39,93 +40,164 @@ const Header = () => {
   const [isExpected, setIsExpected] = useState(false);
 
   return (
-    <header className="py-5 px-6 shadow-md justify-between flex fixed w-full bg-slate-700">
-      <Link to={"/"} className="text-xl text-sky-400 font-medium">
-        {student?.role === "student" ? "Student" : "Faculty"}
-      </Link>
-      <nav className="space-x-4 text-lg text-slate-400 ">
+    <header className="shadow-md flex flex-col w-full h-full bg-dark-400">
+      <main
+        className="border-b  bg-purple_pri-500/20 w-11/12 mx-auto mt-3 rounded-md overflow-hidden shadow-lg border-dark-200 pt-4 mb-4"
+      >
+        <img
+          className="w-6/12 mx-auto rounded-full border-2 bg-dark-400"
+          src={student?.profile} alt={student?.name}
+        />
+        <div
+        className="w-full text-center pt-4"
+        >
+
+          <Link
+            to={'/profile'}
+            className="text-white px-4 w-full text-center capitalize pt-2 underline"
+          >
+            {student?.name}
+          </Link>
+        </div>
+        <h4 className="text-xs uppercase font-semibold mt-4 py-1  px-6 bg-purple_pri-500 text-white">
+          {student?.role === "student" ? "Student" : "Faculty"}
+        </h4>
+      </main>
+      <nav className="space-y-2 px-3 py-8 flex-col flex text-gray-400">
         {student && student?._id ? (
           <>
-            <Link className="hover:text-slate-200 " to={"/"}>
-              Home
-            </Link>
-
-            {/* <button onClick={() => setIsExpected(true)}>Academic</button>
-            {isExpected && <MenuItem />} */}
 
             {isStudent ? (
               <>
-                <Link className="hover:text-slate-200" to={"/coursesyllabus"}>
-                CourseSyllabus
-                </Link>
-                <Link className="hover:text-slate-200" to={"/createmanual"}>
-                  CreateManual
-                </Link>
-                <Link className="hover:text-slate-200" to={"/uploadmanual"}>
-                  UploadManual
-                </Link>
-                <Link className="hover:text-slate-200 " to={"/code"}>
-                  Code
-                </Link>
+                {
+                  [
+                    {
+                      title: 'Home',
+                      link: '/home',
+                      icon: <HiHome />,
+                    },
+                    {
+                      title: 'Course Syllabus',
+                      link: '/coursesyllabus',
+                      icon: <HiBookOpen />,
+                    },
 
-                <Link
-                  className="hover:text-slate-200 "
-                  to={"/attendence"}
-                >
-                  Attendence
-                </Link>
-                <Link
-                  className="hover:text-slate-200 "
-                  to={"/practice"}
-                >
-                  Practice
-                </Link>
+                    {
+                      title: 'Code',
+                      link: '/code',
+                      icon: <HiCode />,
+                    },
+                    {
+                      title: 'Attendence',
+                      link: '/attendence',
+                      icon: <HiDocument />,
+                    },
+                    {
+                      title: 'Create Manual',
+                      link: '/createmanual',
+                      icon: <HiClipboardCheck />,
+                    },
+                    {
+                      title: 'Upload Manual',
+                      link: '/uploadmanual',
+                      icon: <HiUpload />,
+                    },
+                    {
+                      title: 'Practice',
+                      link: '/practice',
+                      icon: <HiBeaker />,
+                    },
+                  ].map(({ link, title, icon }) => {
+
+                    return (
+                      <NavLink
+                        key={title}
+                        className={({ isActive }) => ` ${isActive ? 'bg-gradient-to-tr to-cyan_pri from-purple_pri-700 text-white' : 'bg-dark-200 hover:bg-dark-300'} flex items-center space-x-2 py-2 px-4 rounded-md text-sm`}
+                        to={link}
+                      >
+                        {icon}
+                        <p>
+                          {title}
+                        </p>
+                      </NavLink>)
+                  })
+                }
               </>
             ) : null}
             {!isStudent ? (
               <>
-                <Link
-                  className="hover:text-slate-200"
-                  to={"/receivedmanual"}
-                >
-                  ReceivedManual
-                </Link>
-                <Link
-                  className="hover:text-slate-200 "
-                  to={"/checkattendence"}
-                >
-                  CheckAttendence
-                </Link>
-                <Link className="hover:text-slate-200  "
-                 to={"/uploadpracticals"}
-                 > 
-                 UploadPracticals 
-                 </Link>
-                {/* <Link className="hover:text-slate-200 "
-                 to={"/settime"}
-                 > 
-                 SetTime
-                 </Link> */}
-                 <Link className="hover:text-slate-200  "
-                 to={"/uploadsyllabus"}
-                 > 
-                 UploadSyllabus
-                 </Link>
-              
+
+                {
+                  [
+                    {
+                      title: 'Home',
+                      link: '/home',
+                      icon: <HiHome />,
+                    },
+                    {
+                      title: 'Received Manual',
+                      link: '/receivedmanual',
+                      icon: <HiBookOpen />,
+                    },
+                    {
+                      title: 'Check Attendence',
+                      link: '/checkattendence',
+                      icon: <HiClipboardCheck />,
+                    },
+                    {
+                      title: 'Upload Practicals',
+                      link: '/uploadpracticals',
+                      icon: <HiUpload />,
+                    },
+                    {
+                      title: 'Upload Syllabus',
+                      link: '/uploadsyllabus',
+                      icon: <HiCode />,
+                    },
+
+                  ].map(({ link, title, icon }) => {
+
+                    return (
+                      <NavLink
+                        key={title}
+                        className={({ isActive }) => ` ${isActive ? 'bg-gradient-to-tr to-cyan_pri from-purple_pri-700 text-white' : 'bg-dark-200 hover:bg-dark-300'} flex items-center space-x-2 py-2 px-4 rounded-md text-sm`}
+                        to={link}
+                      >
+                        {icon}
+                        <p>
+                          {title}
+                        </p>
+                      </NavLink>)
+                  })
+                }
               </>
             ) : null}
 
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white  rounded-full font-normal text-sm py-3 px-5 focus:outline-none focus:shadow-outline"
-              onClick={logout}
-            >
-              Logout
-            </button>
+
           </>
         ) : (
           <Link to={"/login"}>Login</Link>
         )}
+
       </nav>
+      <main
+        className="mt-auto p-4 pb-4 w-full"
+      >
+        <p
+          className="bg-purple_pri-500 flex items-center space-x-2 cursor-pointer w-full hover:bg-purple_pri-700 text-white  rounded-lg font-normal text-sm py-2 px-4 focus:outline-none focus:shadow-outline"
+          onClick={logout}
+        >
+          <HiLogout />
+          <span>
+            Logout
+          </span>
+        </p>
+        <p
+          className="text-white text-xs pt-3 text-right px-2"
+        >
+          v1.0.0
+        </p>
+      </main>
     </header>
   );
 };

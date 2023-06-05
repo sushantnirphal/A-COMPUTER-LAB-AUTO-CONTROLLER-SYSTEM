@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
 import {toast} from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
+import RootLayout from "@/partials/Layout";
 
 const UploadSyllabus = () => {
   const [preview, setPreview] = useState("");
@@ -84,8 +85,7 @@ const UploadSyllabus = () => {
     getSyllabus();
   }, []);
   return (
-    <div className="gr-bg min-h-screen w-full ">
-      <Header />
+    <RootLayout>
       {preview && (
         <section className="py-8 h-screen fixed inset-0 bg-black/60">
           <div className="h-full overflow-auto relative mx-auto w-full">
@@ -194,7 +194,7 @@ const UploadSyllabus = () => {
           )}
         </section>
       </main>
-    </div>
+    </RootLayout>
   );
 };
 

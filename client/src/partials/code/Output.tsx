@@ -1,12 +1,14 @@
-import React, {Dispatch, FC, SetStateAction} from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 
 const Output: FC<{
-  result: string |true | null;
+  result: string | boolean | null;
   setResult: Dispatch<SetStateAction<string | boolean | null>>;
-}> = ({result, setResult}) => {
+}> = ({ result, setResult }) => {
   return (
     <>
-      <div className="min-h-52 font-mono font-medium resize-y relative mt-auto text-green-400 rounded-md overflow-hidden border border-slate-400 p-6 bg-gray-900">
+      <div
+        className="min-h-52 font-mono font-medium resize-y relative mt-auto text-green-400 rounded-md overflow-hidden border border-dark-200 p-6 bg-dark-300"
+      >
         <button
           onClick={() => setResult(null)}
           className="p-3 text-red-500 top-0 right-0 absolute text-2xl"

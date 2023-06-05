@@ -83,7 +83,8 @@ ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
         semester: 1,
         year: 1,
         practical_no: 1,
-        test_case :1,
+        input: 1,
+        output: 1,
       }
     );
 

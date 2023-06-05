@@ -13,23 +13,25 @@ import langcode from "../../../public/apicode";
 import ReverseTimer from "../../partials/code/ReverseTimer";
 import UploadPracticals from "@/pages/UploadPracticals";
 import TestCasesF from "./TestCasesF";
-import {StudentContext} from "../../../Context/StudentContext";
+import { StudentContext, StudentContextType } from "../../../Context/StudentContext";
+import { HiBeaker, HiCode, HiTrash } from "react-icons/hi";
+import { toast } from "react-toastify";
 
 const CodeWindow: FC<{
   code: string;
   setCode: Dispatch<SetStateAction<string>>;
   id: string;
 
-}> = ({code, setCode, id}) => {
+}> = ({ code, setCode, id }) => {
   const [result, setResult] = useState<string | null | boolean>("");
-  const {student} = useContext(StudentContext) as {student: any};
+  const { student, update_student } = useContext(StudentContext) as StudentContextType;
 
   const [langCode, setLangCode] = useState(5);
   const [customInput, setCustomInput] = useState("");
   const [input, setInput] = useState("");
   const [expectedOutput, setExpectedOutput] = useState("");
   const [test_result, set_test_result] = useState<boolean[]>([]);
-  const [testcases, setTestcases] = useState<{input: string; output: string}[]>(
+  const [testcases, setTestcases] = useState<{ input: string; output: string }[]>(
     []
   );
 
@@ -84,9 +86,8 @@ const CodeWindow: FC<{
           result_cases.push(a.Result.trim() == testcase.output);
           let b = result_cases.map((item, index) => {
             return `<button
-            className=' py-2 px-4 rounded-md mb-4 ${
-              item ? "bg-green-500" : "bg-red-500"
-            }'
+            className=' py-2 px-4 rounded-md mb-4 ${item ? "bg-green-500" : "bg-red-500"
+              }'
             >test case ${index + 1} ${item ? "passed" : "failed"}<button>`;
           });
           if (section) {
@@ -123,7 +124,7 @@ const CodeWindow: FC<{
     };
 
     const req = await fetch("https://code-compiler.p.rapidapi.com/v2", options);
-    const response: {Errors: string; Result: string} = await req.json();
+    const response: { Errors: string; Result: string } = await req.json();
     setResult(response.Errors ? response.Errors : response.Result);
   }
 
@@ -144,7 +145,7 @@ const CodeWindow: FC<{
   }, [code]);
 
   return (
-    <div className=" resize-x relative flex-1 border-l flex flex-col">
+    <div className=" resize-x relative flex-1 border-l border-dark-200 flex flex-col">
       <section className="fixed test-cases-section z-40 right-0 top-44">
         {test_result.map((item, index) => (
           <button
@@ -153,9 +154,8 @@ const CodeWindow: FC<{
               result_cases = [];
             }}
             key={index}
-            className={`${
-              item ? "bg-green-500" : "bg-red-500"
-            } text-white py-2 px-4 rounded-md mb-4`}
+            className={`${item ? "bg-green-500" : "bg-red-500"
+              } text-white py-2 px-4 rounded-md mb-4`}
           >
             <h1>
               Test case {index + 1}
@@ -164,56 +164,58 @@ const CodeWindow: FC<{
           </button>
         ))}
       </section>
-      <div className="bg-slate-900 py-3 px-4 flex justify-between">
+      <div className="bg-dark-400 text-sm py-3 px-4 flex justify-between">
         <select
           name="lang"
           onChange={(e) => {
             setLangCode(Number(e.target.value || 0));
             console.log(e.target.value);
           }}
-          className="w-max bg-transparent text-white text-xl cursor-pointer"
+          className="w-max  text-white text-sm bg-dark-200 rounded-full px-2 cursor-pointer"
         >
-          {/* <option value="c" className="text-slate-900">
-            C
+          <option value={''} className="text-purple_pri-500 bg-dark-500 px-4">
+            Choose lang...
           </option>
-          <option value="js" className="text-slate-900">
-            Javascript
-          </option> */}
-          {langcode.map(({code, label}) => {
+          {langcode.map(({ code, label }) => {
             return (
-              <option key={label} value={code} className="text-slate-900">
+              <option key={label} value={code} className="text-purple_pri-500 bg-dark-500 px-4">
                 {label}
               </option>
             );
           })}
         </select>
 
-        <ReverseTimer
-          id={id} 
-          elem={document.querySelector(".full-screen-window")}
-          student={student?._id}
-        />
 
-        <button
-          title="Button will be enable after 1.5 hours of starting code."
-          className="bg-sky-600 text-white rounded-full px-5 py-2"
-          onClick={handleCheckTests}
-        >
-          Check Tests
-        </button>
-        <div className="space-x-4 px-4">
+
+
+        <div className="space-x-2 flex px-4">
+          <ReverseTimer
+            id={id}
+            elem={document.querySelector(".full-screen-window")}
+            student={student?._id}
+            toast={toast}
+            update_student={update_student}
+          />
+          <button
+            title="Button will be enable after 1.5 hours of starting code."
+            className="bg-purple_pri-500 flex items-center space-x-2 text-white rounded-full px-4 py-2"
+            onClick={handleCheckTests}
+          >
+            <p> Test case</p> <HiBeaker />
+          </button>
           <button
             onClick={() => runCode(code, customInput, langCode.toString())}
-            className="bg-green-500 text-slate-100 py-2 px-4 rounded-full"
+            className="bg-green-600 flex items-center space-x-2 text-slate-100 py-2 px-4 rounded-full"
           >
-            Run
+            <p>Run</p> <HiCode />
           </button>
 
           <button
+            title="Reset code"
             onClick={() => setCode("")}
-            className="bg-red-500 text-slate-200 py-2 px-3 rounded-full"
+            className="bg-red-700 text-slate-200 py-2 px-3 rounded-full"
           >
-            Reset code
+            <HiTrash />
           </button>
         </div>
       </div>
@@ -226,7 +228,7 @@ const CodeWindow: FC<{
       />
       <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
       {result && (
-        
+
         <Output result={result ? result : null} setResult={setResult} />
       )}
       <div></div>

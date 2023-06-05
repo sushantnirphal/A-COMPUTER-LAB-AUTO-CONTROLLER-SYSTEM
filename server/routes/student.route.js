@@ -4,35 +4,72 @@ import manualModel from "../model/manual.model.js";
 
 const studentRouter = express.Router();
 
-//email config
-
 studentRouter.get("/", async (req, res) => {
   const students = await studentModel.find();
   res.json(students);
 });
 
+studentRouter.get("/:year/:semester", async (req, res) => {
+  const { semester, year } = req.params;
+  if (!year || !semester) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Please enter valid year and semester." });
+  }
+  try {
+    const students = await studentModel.find(
+      {
+        year,
+        semester,
+      },
+      {
+        profile: 0,
+      }
+    );
+    res.json(students);
+  } catch (error) {
+    res.status(400).json({
+      error: true,
+      message: "Error in fetching attendence.",
+    });
+  }
+});
+
 studentRouter.get("/no-photo", async (req, res) => {
-  const students = await studentModel.find({}, {profile: 0});
+  const students = await studentModel.find({}, { profile: 0 });
   res.json(students);
 });
+
 studentRouter.get("/:id", async (req, res) => {
-  const students = await studentModel.find({_id: req.params.id}, {profile: 0});
-  res.json(students);
+  const { all } = req.query;
+  try {
+    const students = await studentModel
+      .findOne({ _id: req.params.id })
+      .select(!all ? "-profile" : "");
+
+    res.status(200).json(students);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: true, message: "Error while getting student profile." });
+  }
 });
 
 studentRouter.post("/enroll", async (req, res) => {
-  const {payload} = req.body;
+  const { payload } = req.body;
   if (!payload) {
-    return res.status(400).send({success: true, message: "All fields needed."});
+    return res
+      .status(400)
+      .send({ success: true, message: "All fields needed." });
   }
-  const akg = await studentModel.create({...payload, role: "student"});
-  res.status(200).send({success: true, message: "Created", akg});
+  const akg = await studentModel.create({ ...payload, role: "student" });
+  res.status(200).send({ success: true, message: "Created", akg });
 });
 
 studentRouter.post("/login", async (req, res) => {
-  const {prn, phone} = req.body;
+  const { prn, phone } = req.body;
   try {
-    const student = await studentModel.findOne({prn, phone});
+    const student = await studentModel.findOne({ prn, phone });
 
     if (student) {
       student.role = "student";
@@ -44,26 +81,28 @@ studentRouter.post("/login", async (req, res) => {
       });
     } else {
       // User not found, return error response
-      return res.status(404).json({success: false, message: "User not found"});
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
   } catch (error) {
     // Handle any errors
     console.error(error);
-    return res.status(500).json({success: false, message: "Server error"});
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
 // attendence router
 studentRouter.post("/attendence/:id/:pid", async (req, res) => {
-  const {id, pid} = req.params;
+  const { id, pid } = req.params;
 
   try {
-    const {aim, practical_no} = await manualModel.findOne(
-      {_id: pid},
-      {aim: 1, practical_no: 1}
+    const { aim, practical_no } = await manualModel.findOne(
+      { _id: pid },
+      { aim: 1, practical_no: 1 }
     );
     const student = await studentModel.updateOne(
-      {_id: id},
+      { _id: id },
       {
         $push: {
           practical_completed: {
@@ -87,17 +126,17 @@ studentRouter.post("/attendence/:id/:pid", async (req, res) => {
   } catch (error) {
     // Handle any errors
     console.error(error);
-    return res.status(500).json({success: false, message: "Server error"});
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
 // check attendence router
-studentRouter.get("/check-attendence/:id/:pid", async (req, res) => {
-  const {id, pid} = req.params;
+studentRouter.get("/check/attendence/:id/:pid", async (req, res) => {
+  const { id, pid } = req.params;
   try {
     const data = await studentModel.findOne({
       _id: id,
-      practical_completed: {$elemMatch: {pid: pid}},
+      practical_completed: { $elemMatch: { pid: pid } },
     });
     console.log(data);
 
@@ -107,16 +146,16 @@ studentRouter.get("/check-attendence/:id/:pid", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({success: false, message: "Server error"});
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
 // Attendence status router
-studentRouter.get("/attendence-status/:id", async (req, res) => {
-  const {id} = req.params;
+studentRouter.get("/prn/attendence-status/:id", async (req, res) => {
+  const { id } = req.params;
   try {
     const data = await studentModel.findOne(
-      {prn: id},
+      { prn: id },
       {
         _id: 0,
         practical_completed: {
@@ -136,7 +175,47 @@ studentRouter.get("/attendence-status/:id", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({success: false, message: "Server error"});
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// submit manual
+studentRouter.post("/submit-manual", async (req, res) => {
+  const { _id } = req.body;
+  if (!req.files) {
+    return res.status(400).json({
+      error: true,
+      message: "Please upload file.",
+    });
+  }
+
+  const manual = req.files.manual;
+  const file = _id + "_practical_manual_" + ".pdf";
+  const path = `${process.env.MANUAL_FILE_PATH}/${file}`;
+  try {
+    manual.mv(path, (error) => console.log(error));
+    const student = await studentModel.findOneAndUpdate(
+      {
+        "practical_completed._id": _id,
+      },
+      {
+        $set: {
+          "practical_completed.$.manual.url": file,
+          "practical_completed.$.manual.uploaded_on": Date.now(),
+        },
+      }
+    );
+    return res.status(200).json({
+      error: false,
+      message: "Manual submitted successfully.",
+      data: student,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: true,
+      message: "Manual submition failed.",
+    });
   }
 });
 

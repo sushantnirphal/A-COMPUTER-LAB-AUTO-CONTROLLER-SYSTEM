@@ -1,15 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../partials/Header";
 import File_Viewer from "@/partials/File_Viewer";
 import JSZip from "jszip";
-
+import RootLayout from "@/partials/Layout";
+import { StudentContext } from "../../Context/StudentContext";
+import FileViewer from 'react-file-viewer'
+import { Practical } from "@/hooks/usePracticals";
 const ReceivedManual = () => {
   const [fetching, setFetching] = useState(true);
   const [manual, setManuals] = useState([]);
   const [preview, setPreview] = useState("");
+  const [students, setStudents] = useState([]);
+
   const [selectedManuals, setSelectedManuals] = useState<{ _id: string }[]>([]);
+  const [selectedStudent, setSelectedStudent] = useState<{
+    _id: string, practical_completed: any[],
+    name: string;
+    semester: number;
+    year: number;
+    file: string,
+    prn: string
+  } | null>(null);
 
-
+  const { student, setStudent } = useContext<any>(StudentContext);
+  const { semester, year } = student || {}
   async function getManuals() {
     const req = await fetch(
       import.meta.env.VITE_SERVER_URL + "/submitmanual/all_id"
@@ -18,20 +32,28 @@ const ReceivedManual = () => {
     setManuals(res.data);
     setFetching(false);
   }
+  async function getStudents() {
+    const req = await fetch(
+      import.meta.env.VITE_SERVER_URL_API + `/student/${year}/${semester}`
+    );
+    const res = await req.json();
+    setStudents(res);
+    setFetching(false);
+  }
 
   function handleDownloadAll() {
-    const promises = selectedManuals.map(async (manual) => {
+    const promises = selectedManuals.map(async (manual: any) => {
       const response = await fetch(manual.file);
       const blob = await response.blob();
       return blob;
     });
-  
+
     Promise.all(promises)
       .then((blobs) => {
         const zip = new JSZip();
         blobs.forEach((blob, index) => {
-        const fileName = `manual_${index + 1}.pdf`; // Modify the filename format if needed
-        zip.file(fileName, blob);
+          const fileName = `manual_${index + 1}.pdf`; // Modify the filename format if needed
+          zip.file(fileName, blob);
         });
 
         zip.generateAsync({ type: "blob" }).then((content) => {
@@ -49,87 +71,118 @@ const ReceivedManual = () => {
   }
 
   useEffect(() => {
-    getManuals();
+    year && semester && getManuals();
+    year && semester && getStudents();
   }, []);
 
   return (
-    <main className="h-screen w-full gr-bg">
+    <RootLayout>
       {preview && (
-        <section className="w-screen py-8 h-screen fixed inset-0 bg-black/60 ">
+        <section className="w-screen py-8 h-screen fixed inset-0 backdrop-filter backdrop-blur-md bg-black/60 ">
           <div className="h-full overflow-auto relative mx-auto w-full">
-            <span
-              className="text-4xl absolute right-4 top-20 bg-red-500 grid place-items-center z-20 rounded-full w-12 h-12 text-white cursor-pointer"
-              onClick={() => setPreview("")}
-            >
-              &times;
-            </span>
-            {preview && <File_Viewer id={preview} />}
+            <div className="h-full overflow-auto relative mx-auto w-full">
+              <span
+                className="text-4xl z-10 absolute top-0 right-4 cursor-pointer text-red-500"
+                onClick={() => setPreview("")}
+              >
+                &times;
+              </span>
+              {preview && <FileViewer fileType='pdf' filePath={preview} />}
+            </div>
           </div>
         </section>
       )}
-      <Header />
-      <section className="w-full pt-28 p-8 text-white md:w-1/2 min-h-full border-l">
-        <div className="flex justify-end">
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded"
-            onClick={handleDownloadAll}
-            disabled={selectedManuals.length === 0}
-          >
-            Generate Report
-          </button>
-        </div>
-        <h1 className="text-lg font-semibold bg-white text-sky-700 p-4">
-          Submitted Practicals
-        </h1>
-        {fetching ? (
-          <h6 className="py-4 text-center w-full"> Loading...</h6>
-        ) : (
-          <main className="py-8 space-y-6">
-          {manual.map((item:{
-           _id: string;
-           aim: string;
-           sem: number;
-           year: number;
-           file: string
-  }) => (
-    <div
-      key={item._id} // Make sure `item._id` is the correct property name
-      className="flex text-slate-800 items-center bg-white/90 px-6 py-2 rounded"
-    >
-      <h4 className="text-lg w-9/12 font-semibold">{item.aim}</h4>
-      <div className="text-sm w-max shrink-0 flex space-x-2 px-5">
-        <h4>Sem {item.sem}</h4>
-        <span>|</span>
-        <p>Year: {item.year}</p>
-      </div>
-      <div className="ml-auto items-center flex space-x-4">
-        <button
-          className="ml-auto w-max font-semibold underline text-sky-600"
-          onClick={() => setPreview(item._id)} // Make sure `item._id` is the correct property name
+      <div
+        className="flex h-full"
+      >
+        <section
+          className="p-8 text-white md:w-2/5 border-r border-dark-200 h-full"
         >
-          View Doc
-        </button>
-        
-        <input
-      type="checkbox"
-     checked={selectedManuals.some((manual) => manual._id === item._id)}
-     onChange={() => {
-    if (selectedManuals.some((manual) => manual._id === item._id)) {
-      setSelectedManuals((prevSelectedManuals) =>
-        prevSelectedManuals.filter((manual) => manual._id !== item._id)
-      );
-    } else {
-      setSelectedManuals((prevSelectedManuals) => [...prevSelectedManuals, item]);
-    }
-  }}
-/>
+          <main className="text-2xl md:text-3xl leading-14 text-gr bg-clip-text text-transparent font-black">
+            All students.
+          </main>
+          {fetching ? (
+            <h6 className="py-4 text-center w-full"> Loading...</h6>
+          ) : (
+            <main className="py-8 space-y-6">
+              {students.map((item: {
+                _id: string;
+                name: string;
+                semester: number;
+                year: number;
+                file: string,
+                prn: string
+              }) => (
+
+                <div
+                  key={item?._id}
+                  onClick={() => setSelectedStudent(item as any)}
+                  className="text-white cursor-pointer items-center border border-dark-200 bg-dark-400  px-6 pt-3 rounded-md">
+                  <h4 className="text-sm font-medium ">PRN: {item.prn}</h4>
+                  <h4 className="text-sm pt-2">Name: {item.name}</h4>
+                  <div className="text-sm  py-3 shrink-0 flex">
+                    <div
+                      className="flex  text-xs space-x-2"
+                    >
+                      <h4>Sem {item?.semester}</h4>
+                      <span>|</span>
+                      <p>Year : {item?.year || 'NAN'}</p>
+                    </div>
+                    <div className="ml-auto items-center flex space-x-4">
+
+                    </div>
+                  </div>
+                
+                </div>
+              ))}
+            </main>
+          )}
+        </section>
+        <section className="md:w-3/5 p-8 text-white">
+          <div className="flex">
+           
+            <main className="text-2xl md:text-3xl leading-14 text-gr bg-clip-text text-transparent font-black">
+              Submitted manuals.
+            </main>
+
+          </div>
+          {
+            !selectedStudent &&
+            <main className="w-full py-12 leading-14 text-slate-100">
+              Click on student in order to view manuals submitted by individual.
+            </main>
+          }
+          {fetching ? (
+            <h6 className="py-4 text-center w-full"> Loading...</h6>
+          ) : (
+            <main className="py-8 space-y-6">
+              <h3
+                className="underline capitalize"
+              >
+                {selectedStudent?.name}
+              </h3>
+              {selectedStudent && selectedStudent.practical_completed.map((item:Practical) => (
+
+                <div
+                  key={item?._id}
+                  className="text-white items-center border border-dark-200 bg-dark-400  flex px-6 py-3 rounded-md">
+                  <h4 className="text-sm font-medium">
+                    0{item?.practical_no}) {' '}
+                    {item.aim}
+                  </h4>
+                  <button
+                    className="ml-auto text-xs   px-2 py-1 rounded-full bg-purple_pri-500"
+                    onClick={() => setPreview(import.meta.env.VITE_SERVER_URL_API + '/static/manual/' + item?.manual.url)}
+                  >
+                    View Doc
+                  </button>
+                </div>
+              ))}
+            </main>
+          )}
+        </section>
       </div>
-    </div>
-  ))}
-</main>
-        )}
-      </section>
-    </main>
+    </RootLayout>
   );
 };
 

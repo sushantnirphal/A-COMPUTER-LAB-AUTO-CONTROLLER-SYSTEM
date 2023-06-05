@@ -1,4 +1,4 @@
-import {model, Schema} from "mongoose";
+import { model, Schema } from "mongoose";
 
 const studentSchema = Schema({
   name: {
@@ -47,12 +47,19 @@ const studentSchema = Schema({
   practical_completed: [
     {
       aim: String,
-      pid: {type: String, unique: true},
+      pid: { type: String, unique: true },
       status: String,
       date: Date,
-      practical_no : Number,
+      practical_no: Number,
       marks: Number,
       test_cases_passed: Number,
+      manual: {
+        url: String,
+        uploaded_on: {
+          type: Date,
+          default: Date.now(),
+        },
+      },
       attendence_status: String,
     },
   ],

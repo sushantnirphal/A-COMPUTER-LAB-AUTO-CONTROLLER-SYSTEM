@@ -1,9 +1,8 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Header from "@/partials/Header";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
-import FileViewer from "react-file-viewer";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
 
 const UploadManual = () => {
@@ -31,12 +30,12 @@ const UploadManual = () => {
       return;
     }
 
-    const payload: {[k: string]: string | null | number} = extractFormData(
+    const payload: { [k: string]: string | null | number } = extractFormData(
       event.target
     );
     payload.file_type =
       file?.type ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         ? "docx"
         : "pdf";
     if (file) {
@@ -85,7 +84,7 @@ const UploadManual = () => {
   return (
     <div className="gr-bg min-h-screen ">
       <Header />
-      {preview   && (
+      {preview && (
         <section className="w-screen py-8 h-screen fixed inset-0 bg-black/60 ">
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span
@@ -101,7 +100,7 @@ const UploadManual = () => {
         <section className="p-8 w-full md:w-1/2 text-white">
           <div>
             <h1 className="text-lg font-semibold bg-sky-700 p-4 ">
-              submit Practical
+              Submit manual
             </h1>
           </div>
           <div className="p-2">
@@ -113,7 +112,7 @@ const UploadManual = () => {
                 name="subject"
                 type="text"
                 className="border-2"
-              ></input>
+              />
               <br />
               <label htmlFor="">Aim</label>
               <br />
@@ -122,7 +121,7 @@ const UploadManual = () => {
                 name="aim"
                 type="text"
                 className="border-2"
-              ></input>
+              />
               <br />
               <label className=" py-8">Upload file</label>
               <br />
@@ -130,9 +129,10 @@ const UploadManual = () => {
                 required
                 name="file"
                 accept=".pdf, .docx"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => e.target.files && setFile(e.target.files[0])}
                 type="file"
-              ></input>
+                className="accent-purple_pri-500 file:py-2 file:px-4 text-xs file:bg-purple_pri-600 file:rounded-full file:text-white file:border-none border-slate-500"
+              />
               <br />
 
               <label>Year</label>
@@ -142,7 +142,7 @@ const UploadManual = () => {
                 required
                 type="number"
                 className="border-2"
-              ></input>
+              />
 
               <br />
 
@@ -153,11 +153,11 @@ const UploadManual = () => {
                 name="sem"
                 type="number"
                 className="border-2"
-              ></input>
+              />
               <br />
               <button
                 disabled={loading}
-                className="p-2 px-6 text-white my-6 rounded-full bg-green-600"
+                className="p-2 px-6 text-white my-6 rounded-full bg-purple_pri-500"
               >
                 {loading ? "Please wait..." : "Upload"}
               </button>
@@ -166,7 +166,7 @@ const UploadManual = () => {
         </section>
         <section className="w-full p-8 text-white md:w-1/2 min-h-full border-l">
           <h1 className="text-lg font-semibold bg-white text-sky-700 p-4 ">
-            Submitted Practicals
+            Submitted manuals
           </h1>
           {fetching ? (
             <h6 className="py-4 text-center w-full"> Loading...</h6>
