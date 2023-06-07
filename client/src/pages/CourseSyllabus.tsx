@@ -17,7 +17,7 @@ const CourseSyllabus = () => {
     setFetching(false);
   }
 
-  function handleDownloadAll(syllabus) {
+  function handleDownloadAll(syllabus: any) {
     fetch(syllabus.file)
       .then((response) => response.blob())
       .then((blob) => {
@@ -63,6 +63,8 @@ const CourseSyllabus = () => {
                 subject: string;
                 sem: number;
                 file: string;
+                year: string,
+                semester: string
               }) => (
                 <div
                   key={item._id}

@@ -1,8 +1,8 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import facultyModel from "./model/faculty.model.js";
+import facultyModel from "../model/faculty.model.js";
 import nodemailer from "nodemailer";
-import studentModel from "./model/student.model.js";
+import studentModel from "../model/student.model.js";
 const keysecret = process.env.SECRET_KEY;
 
 const transporter = nodemailer.createTransport({
@@ -15,6 +15,18 @@ const transporter = nodemailer.createTransport({
 
 const facultyRouter = express.Router();
 
+facultyRouter.get("/", async (req, res) => {
+  try {
+    const faculties = await facultyModel.find();
+    res.status(200).json({
+      error: false,
+      data: faculties,
+    });
+  } catch (error) {
+    res.status(500).json({ error: true, message: "Server error." });
+  }
+});
+
 facultyRouter.get("/me/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
@@ -25,30 +37,31 @@ facultyRouter.get("/me/:_id", async (req, res) => {
   }
 });
 
-facultyRouter.get("/", async (req, res) => {
-  try {
-    const faculties = await facultyModel.find();
-    res.status(200).json(faculties);
-  } catch (error) {
-    res.status(500).json({ error: true, message: "Server error." });
-  }
-});
-
 facultyRouter.post("/enroll", async (req, res) => {
-  const { payload } = req.body;
-  if (!payload) {
-    return res
-      .status(400)
-      .send({ success: true, message: "All fieds needed." });
-  }
+  const payload = req.body;
+  console.log(payload);
   try {
-    const akg = await facultyModel.create({ ...payload, role: "teacher" });
+    if (!req.files?.profile) {
+      return res
+        .status(400)
+        .send({ success: true, message: "All fields needed." });
+    }
+    const profile = req.files.profile;
+    const file = payload.prn + "_profile_picture_" + ".png";
+    const path = `${process.env.PROFILE_PIC_PATH}/${file}`;
+    profile.mv(path, (error) => console.log(error));
+    const akg = await facultyModel.create({
+      ...payload,
+      name: payload.fname + " " + payload.lname,
+      role: "student",
+      profile: "http://localhost:7890/static/profile/" + file,
+    });
+
     res.status(200).send({ success: true, message: "Created", akg });
   } catch (error) {
-    res
-      .status(200)
-      .send({ success: false, message: "Email or phone already exist" });
+    return res.status(400).send({ success: true, message: "Server error." });
   }
+
 });
 
 facultyRouter.post("/login", async (req, res) => {

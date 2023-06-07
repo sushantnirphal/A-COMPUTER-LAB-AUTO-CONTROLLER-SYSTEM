@@ -16,12 +16,6 @@ const Code = () => {
   const [code, setCode] = useState(localStorage.getItem(id + "_code") || "");
 
   useEffect(() => {
-    return () => {
-
-    };
-  }, []);
-
-  useEffect(() => {
     setCode(localStorage.getItem(id + "_code") || "");
   }, [id]);
   return (

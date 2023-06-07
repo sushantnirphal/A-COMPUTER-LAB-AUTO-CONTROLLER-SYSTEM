@@ -1,13 +1,21 @@
 import usePracticals from "@/hooks/usePracticals";
 import { StudentContext } from "../../../Context/StudentContext";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { HiCheck, HiCheckCircle } from 'react-icons/hi'
+import { HiCheck, HiCheckCircle, HiMinusCircle } from 'react-icons/hi'
 import Loader from "../Loader";
+import { toast } from "react-toastify";
 export const base_url: string = import.meta.env.VITE_SERVER_URL
 const Welcome = ({ id, setter }: { id: string | null, setter: Dispatch<SetStateAction<string | null>> }) => {
   const { student, setStudent, update_student } = useContext<any>(StudentContext);
   const { year, semester: sem } = student || {}
-  const { fetching, practicals, refetch } = usePracticals({ sem, year })
+  const { fetching, practicals, refetch } = usePracticals({ sem, year });
+  const days_window = 7;
+  const is_missed_practical = (date: string) => {
+
+    const diff = new Date(date).getTime() - new Date().getTime();
+    return (diff <= 24 * 60 * 60 * 1000 * days_window);
+
+  }
   return (
 
     <div className="p-6 md:p-6 h-full overflow-y-auto text-slate-100 w-full">
@@ -32,11 +40,24 @@ const Welcome = ({ id, setter }: { id: string | null, setter: Dispatch<SetStateA
       >
         {
           practicals?.map((item: any) => {
-            const isCompleted = !!student?.practical_completed.find((i: any) => i.practical_no === item?.practical_no)
+            const isCompleted = !!student?.practical_completed.find((i: any) => i.practical_no === item?.practical_no);
+            const isMissed = is_missed_practical(item.slot_date);
+            const is_open = new Date(item.slot_date).getTime() <= new Date().getTime();
             return (<article
               key={item?._id}
-              onClick={() => !isCompleted && setter(item?._id)}
-              className={`w-full relative md:w-[32%] cursor-pointer shadow-xl hover:shadow-purple_pri-600/10 group border ${isCompleted ? 'border-green-500 hover:bg-green-500/10 hover:border-green-500 hover:text-green-400' : 'hover:text-purple_pri-600 border-dark-200 hover:bg-purple_pri-500/20 hover:border-purple_pri-500'}  transition mr-[1%] mb-4 rounded-md p-4 bg-dark-400 `}
+              onClick={() => {
+                if (isMissed) return toast('Submission not allowed for this practical, as you\'ve missed deadline.', { type: 'warning', })
+                if (!is_open) return toast(`You can\'t open this, Practical is scheduled for ${new Date(item.slot_date).toLocaleString('en-in', { dateStyle: 'full' })}`, { type: 'warning', })
+                setter(item?._id)
+              }}
+              className={`
+              w-full relative md:w-[32%] cursor-pointer shadow-xl hover:shadow-purple_pri-600/10 group border 
+              ${isCompleted ? 'border-green-500 hover:bg-green-500/10 hover:border-green-500 hover:text-green-400'
+                  : isMissed
+                    ? 'hover:text-red-600 border-red-500 hover:bg-red-500/20 hover:border-red-500'
+                    : 'hover:text-purple_pri-600 border-dark-200 hover:bg-purple_pri-500/20 hover:border-purple_pri-500'
+                }
+                transition mr-[1%] mb-4 rounded-md p-4 bg-dark-400 `}
             >
               <p
                 className="text-sm  font-semibold"
@@ -48,11 +69,18 @@ const Welcome = ({ id, setter }: { id: string | null, setter: Dispatch<SetStateA
               >
                 <p>
                   Posted on : {new Date(item?.createdAt).toLocaleString('en-us', { dateStyle: 'full' })}
+                  <br />
+                  Scheduled for: {new Date(item?.slot_date).toLocaleString('en-us', { dateStyle: 'full' })}
                 </p>
               </div>
               {
                 isCompleted
                   ? <HiCheckCircle className="text-green-500 absolute bottom-4 right-4" />
+                  : null
+              }
+              {
+                isMissed
+                  ? <HiMinusCircle className="text-red-500 absolute bottom-4 right-4" />
                   : null
               }
             </article>)

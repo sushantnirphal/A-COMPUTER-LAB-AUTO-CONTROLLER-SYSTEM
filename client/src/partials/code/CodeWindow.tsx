@@ -56,14 +56,9 @@ const CodeWindow: FC<{
   // handle test cases
   let result_cases: boolean[] = [];
   const handleCheckTests = () => {
-    const section = document.querySelector(".test-cases-section");
-    if (section) {
-      section?.innerHTML;
-    }
 
-    set_test_result([]);
     result_cases = [];
-    testcases.forEach(async (testcase) => {
+    testcases.forEach((testcase, index, array) => {
       const encodedParams = new URLSearchParams();
       encodedParams.append("LanguageChoice", `${langCode}`);
       encodedParams.append("Program", `${code}`);
@@ -83,20 +78,17 @@ const CodeWindow: FC<{
       fetch("https://code-compiler.p.rapidapi.com/v2", options)
         .then((a) => a.json())
         .then((a) => {
-          result_cases.push(a.Result.trim() == testcase.output);
-          let b = result_cases.map((item, index) => {
-            return `<button
-            className=' py-2 px-4 rounded-md mb-4 ${item ? "bg-green-500" : "bg-red-500"
-              }'
-            >test case ${index + 1} ${item ? "passed" : "failed"}<button>`;
-          });
-          if (section) {
-            section.innerHTML = b.join("<br/> ");
+          const res = a.Result.trim() == testcase.output
+          result_cases.push(res);
+          toast(`Test ${index + 1} ${res ? 'Passed' : 'Failed'}`, { position: 'top-right', 'type': res ? 'success' : 'error' })
+          if (array.length === index + 1) {
+            toast('completed')
           }
         });
     });
   };
 
+  //  run code 
   async function runCode(code: string, customInput: string, langCode: string) {
     console.log(typeof code, code);
     if (!(code && code.trim())) {
@@ -130,8 +122,6 @@ const CodeWindow: FC<{
 
   useEffect(() => {
     get_test_cases_by_id();
-
-    console.log(testcases);
   }, [id]);
 
   useEffect(() => {
@@ -146,6 +136,13 @@ const CodeWindow: FC<{
 
   return (
     <div className=" resize-x relative flex-1 border-l border-dark-200 flex flex-col">
+
+      <div
+        className="absolute bg-purple_pri-500/40  p-4 text-white backdrop-filter backdrop-blur-sm rounded-r-md top-44 z-40 left-0"
+      >sanket
+
+      </div>
+
       <section className="fixed test-cases-section z-40 right-0 top-44">
         {test_result.map((item, index) => (
           <button
@@ -184,9 +181,6 @@ const CodeWindow: FC<{
             );
           })}
         </select>
-
-
-
 
         <div className="space-x-2 flex px-4">
           <ReverseTimer

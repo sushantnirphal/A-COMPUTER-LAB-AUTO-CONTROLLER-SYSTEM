@@ -1,6 +1,6 @@
 import { StudentContext } from "../../Context/StudentContext";
 import { StudentType } from "interfaces/student";
-import React, { useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Academic from "@/pages/Academic";
@@ -9,11 +9,12 @@ import { FacultyContext } from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
 import UploadSyllabus from "@/pages/UploadSyllabus";
 
-import { HiHome, HiCode, HiClipboardCheck, HiLogout, HiBookOpen, HiUpload, HiViewList, HiBeaker, HiDocument } from 'react-icons/hi'
+import { HiHome, HiCode, HiClipboardCheck, HiLogout, HiBookOpen, HiUpload, HiViewList, HiBeaker, HiDocument, HiUser, HiUserGroup, HiUsers } from 'react-icons/hi'
 
 const Header = () => {
   const { student, setStudent } = useContext<any>(StudentContext);
   const isStudent = student?.role === "student";
+  const isAdmin = student?.role === "admin";
   const navigate = useNavigate();
   const router = useLocation();
 
@@ -35,7 +36,7 @@ const Header = () => {
   function logout() {
     setStudent({});
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   }
   const [isExpected, setIsExpected] = useState(false);
 
@@ -47,9 +48,10 @@ const Header = () => {
         <img
           className="w-6/12 mx-auto rounded-full border-2 bg-dark-400"
           src={student?.profile} alt={student?.name}
+          onError={(e: ChangeEvent<HTMLImageElement>) => e.target.src = '/icons/coding.png'}
         />
         <div
-        className="w-full text-center pt-4"
+          className="w-full text-center pt-4"
         >
 
           <Link
@@ -60,7 +62,12 @@ const Header = () => {
           </Link>
         </div>
         <h4 className="text-xs uppercase font-semibold mt-4 py-1  px-6 bg-purple_pri-500 text-white">
-          {student?.role === "student" ? "Student" : "Faculty"}
+          {student?.role === "student" ? "Student"
+            :
+            student?.role === "admin"
+              ? 'Admin'
+              : "Faculty"
+          }
         </h4>
       </main>
       <nav className="space-y-2 px-3 py-8 flex-col flex text-gray-400">
@@ -124,7 +131,7 @@ const Header = () => {
                 }
               </>
             ) : null}
-            {!isStudent ? (
+            {!isStudent && !isAdmin ? (
               <>
 
                 {
@@ -172,7 +179,32 @@ const Header = () => {
                 }
               </>
             ) : null}
+            {
+              student && student?.role === 'admin' &&
 
+              [
+                {
+                  title: 'Students',
+                  link: '/admin/student',
+                  icon: <HiUser />,
+                },
+                {
+                  title: 'Faculty',
+                  link: '/admin/faculty',
+                  icon: <HiUsers />,
+                },
+              ].map(({ link, title, icon }) =>
+                <NavLink
+                  key={title}
+                  className={({ isActive }) => ` ${isActive ? 'bg-gradient-to-tr to-cyan_pri from-purple_pri-700 text-white' : 'bg-dark-200 hover:bg-dark-300'} flex items-center space-x-2 py-2 px-4 rounded-md text-sm`}
+                  to={link}
+                >
+                  {icon}
+                  <p>
+                    {title}
+                  </p>
+                </NavLink>)
+            }
 
           </>
         ) : (

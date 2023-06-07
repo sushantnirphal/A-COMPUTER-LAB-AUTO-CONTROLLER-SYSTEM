@@ -86,9 +86,14 @@ const UploadManual = () => {
       <main className=" flex flex-wrap h-screen">
         <section className="p-8 w-full md:w-1/2 text-white">
           <div>
-            <h1 className="text-xl text-purple_pri-500 font-semibold">
-              Submit Practical
+            <h1 className="text-xl bg-clip-text text-transparent text-gr font-semibold">
+              Submit Practical.
             </h1>
+            <p
+              className="text-sm opacity-90"
+            >
+             Choose practical from dropdown and submit manual for the particular practical.
+            </p>
           </div>
           <div className="p-2 text-sm bg-dark-400 rounded-lg mt-8 border border-dark-200 px-12">
             <form className="max-w-[400px] mt-8" onSubmit={handle_manual_submit}>
@@ -143,9 +148,14 @@ const UploadManual = () => {
           </div>
         </section>
         <section className="w-full p-8 text-white md:w-1/2 h-full border-l border-dark-200">
-          <h1 className="text-xl font-semibold">
-            Submitted Practical
+          <h1 className="text-xl bg-clip-text text-transparent text-gr font-semibold">
+            Practicals attended.
           </h1>
+          <p
+          className="text-sm opacity-90"
+          >
+            All attended practicals will be shown here, along with manuals submitted for particular practical.
+          </p>
           <main className="py-8 h-full pr-8 overflow-auto space-y-6">
             {student?.practical_completed?.map(
               (item: StudentPracticalType) => (

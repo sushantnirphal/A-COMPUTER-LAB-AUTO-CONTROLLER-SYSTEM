@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { HiClock } from "react-icons/hi";
+import { StudentContext, StudentContextType } from "../../../Context/StudentContext";
+import React, { useState, useEffect, useContext } from "react";
+import { HiBadgeCheck, HiCheck, HiClock } from "react-icons/hi";
 import { toast } from "react-toastify";
 
 function ReverseTimer({
@@ -17,18 +18,21 @@ function ReverseTimer({
 }) {
   const initialtime = 20;
   const attendence_time = initialtime - 10;
-
+  const { student: user } = useContext(StudentContext) as StudentContextType
   const [time, setTime] = useState<number>(initialtime); // 2 hours in seconds
   const [start, setStart] = useState(false);
-  const [attendence, setAttendence] = useState(""); // 2 hours in seconds
+  const [attendence, setAttendence] = useState("");
+  const isCompleted = !!(user?.practical_completed?.find((a: any) => a.pid === id))
   let intervalId: any;
   let timeoutid: any;
+  
   useEffect(() => {
     return () => {
       clearInterval(intervalId);
       clearTimeout(timeoutid);
     }; // clean up
   }, []);
+
 
   function start_timer() {
     setStart(true);
@@ -63,7 +67,6 @@ function ReverseTimer({
   }
   const formatTime = (time: number) => {
     if (typeof time === "string") return time;
-
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
@@ -82,25 +85,38 @@ function ReverseTimer({
   }, [id]);
   return (
     <div>
-      <button
-        onClick={start_timer}
-        className="flex content-center bg-dark-200 shadow-xl text-slate-200 py-2 px-3 rounded-full"
-      >
-        {attendence ? attendence : null}
-        {!attendence
-          ?
-          (start ? formatTime(time)
-            : <span
-              className="flex space-x-2 items-center"
-            >
-              <HiClock />
-              <p>
-                Start timer
-              </p>
-            </span>
+      {
+        isCompleted
+          ? <button
+            className="flex items-center space-x-1 bg-green-600 shadow-xl text-slate-200 py-2 px-3 rounded-full"
+          >
 
-          ) : null}
-      </button>
+            <p>
+              Attended
+            </p>
+            <HiBadgeCheck />
+          </button>
+          :
+          <button
+            onClick={start_timer}
+            className="flex content-center bg-dark-200 shadow-xl text-slate-200 py-2 px-3 rounded-full"
+          >
+            {attendence ? attendence : null}
+            {!attendence
+              ?
+              (start ? formatTime(time)
+                : <span
+                  className="flex space-x-2 items-center"
+                >
+                  <HiClock />
+                  <p>
+                    Start timer
+                  </p>
+                </span>
+
+              ) : null}
+          </button>
+      }
     </div>
   );
 }

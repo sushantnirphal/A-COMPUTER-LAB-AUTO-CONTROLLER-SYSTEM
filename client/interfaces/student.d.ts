@@ -10,5 +10,6 @@ export interface StudentType {
     address: string;
     branch: string;
     role:string
-    photo: string;
+    profile: string;
+
   }

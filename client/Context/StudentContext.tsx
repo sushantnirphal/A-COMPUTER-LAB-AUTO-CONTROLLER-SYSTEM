@@ -24,6 +24,7 @@ const StudentContextProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   function update_student() {
+    if (!student?._id || student?.role === 'admin') return
     fetch(`${import.meta.env.VITE_SERVER_URL_API}/student/${student?._id}?all=true`)
       .then(a => a.json())
       .then(b => {
@@ -32,7 +33,7 @@ const StudentContextProvider: React.FC<{ children: ReactNode }> = ({
       })
   }
   function update_faculty() {
-    if (!student?._id) return
+    if (!student?._id || student?.role === 'admin') return
     fetch(`${import.meta.env.VITE_SERVER_URL_API}/faculty/me/${student?._id}`)
       .then(a => a.json())
       .then(b => {

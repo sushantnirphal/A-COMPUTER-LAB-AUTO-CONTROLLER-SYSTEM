@@ -31,6 +31,11 @@ import ReceivedManual from "./pages/ReceivedManual";
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import { StudentContext, StudentContextType } from "../Context/StudentContext";
+import AdminLogin from "./pages/AdminLogin";
+import { Layout } from "@syncfusion/ej2-react-documenteditor";
+import RootLayout from "./partials/Layout";
+import Student from "./pages/admin/Student";
+import Faculty from "./pages/admin/Faculty";
 
 // import FacultyHome from './p'
 const router = createHashRouter([
@@ -128,6 +133,19 @@ const router = createHashRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  // admin route
+  {
+    path: "/admin/login",
+    element:<AdminLogin/>,
+  },
+  {
+    path: "/admin/student",
+    element: <Student/>
+  },
+  {
+    path: "/admin/faculty",
+    element:<Faculty/>,
   },
   {
     path: "*",

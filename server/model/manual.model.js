@@ -1,4 +1,4 @@
-import {model, Schema} from "mongoose";
+import { model, Schema } from "mongoose";
 
 const manualSchema = new Schema(
   {
@@ -31,6 +31,9 @@ const manualSchema = new Schema(
       required: true,
     },
     practical_no: Number,
+    slot_date: {
+      type: Date,
+    },
     test_case: [
       {
         input: {
@@ -44,7 +47,7 @@ const manualSchema = new Schema(
       },
     ],
   },
-  {timestamps: true}
+  { timestamps: true }
 );
 
 export default model("manual", manualSchema);

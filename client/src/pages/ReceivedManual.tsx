@@ -132,7 +132,7 @@ const ReceivedManual = () => {
 
                     </div>
                   </div>
-                
+
                 </div>
               ))}
             </main>
@@ -140,7 +140,7 @@ const ReceivedManual = () => {
         </section>
         <section className="md:w-3/5 p-8 text-white">
           <div className="flex">
-           
+
             <main className="text-2xl md:text-3xl leading-14 text-gr bg-clip-text text-transparent font-black">
               Submitted manuals.
             </main>
@@ -161,7 +161,7 @@ const ReceivedManual = () => {
               >
                 {selectedStudent?.name}
               </h3>
-              {selectedStudent && selectedStudent.practical_completed.map((item:Practical) => (
+              {selectedStudent && selectedStudent.practical_completed.map((item: Practical) => (
 
                 <div
                   key={item?._id}
@@ -170,12 +170,22 @@ const ReceivedManual = () => {
                     0{item?.practical_no}) {' '}
                     {item.aim}
                   </h4>
-                  <button
-                    className="ml-auto text-xs   px-2 py-1 rounded-full bg-purple_pri-500"
-                    onClick={() => setPreview(import.meta.env.VITE_SERVER_URL_API + '/static/manual/' + item?.manual.url)}
-                  >
-                    View Doc
-                  </button>
+                  {
+                    item?.manual.url
+                      ?
+                      <button
+                        className="ml-auto text-xs   px-2 py-1 rounded-full bg-purple_pri-500"
+                        onClick={() => setPreview(import.meta.env.VITE_SERVER_URL_API + '/static/manual/' + item?.manual.url)}
+                      >
+                        View
+                      </button>
+                      : <button
+                        className="ml-auto text-xs   px-2 py-1 rounded-full bg-red-600"
+                        
+                      >
+                        Submission pending
+                      </button>
+                  }
                 </div>
               ))}
             </main>

@@ -68,7 +68,7 @@ const UploadPracticals = ({ onSaveTestCases }: { onSaveTestCases: any }) => {
       reader.onload = async (e) => {
 
         payload.file = reader.result as string;
-    
+
         const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/manual`, {
           method: "post",
           headers: {
@@ -180,6 +180,22 @@ const UploadPracticals = ({ onSaveTestCases }: { onSaveTestCases: any }) => {
                 type="number"
                 className="border border-slate-500"
               />
+              <label htmlFor="">
+                Practical slot date.
+              </label>
+
+              <br />
+              <input
+                required
+                name="slot_date"
+                type="date"
+                className="border uppercase border-slate-500"
+              />
+              <small
+              className="inline-block -mt-3 mb-3 text-yellow-500"
+              >
+                Students will get window of 7 days to complete practical from the practical slot date.
+              </small>
               <input
                 name="year"
                 required
@@ -262,12 +278,12 @@ const UploadPracticals = ({ onSaveTestCases }: { onSaveTestCases: any }) => {
                   slug: string;
                   file: string;
                   file_type: string;
-                  practical_no:number
+                  practical_no: number
                 }) => (
                   <div
                     key={item?._id}
                     className="text-white items-center border border-dark-200 bg-dark-400  px-6 pt-3 rounded-md">
-                    <h4 className="text-sm font-medium"> { item.practical_no} ) {item.aim}</h4>
+                    <h4 className="text-sm font-medium"> {item.practical_no} ) {item.aim}</h4>
                     <div className="text-sm  py-3 shrink-0 flex">
                       <div
                         className="flex space-x-2"

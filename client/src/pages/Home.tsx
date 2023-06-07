@@ -26,7 +26,6 @@ const Home = () => {
           <h5 className="text-3xl font-semibold text-white flex ">Hey<FaHandSparkles className="text-yellow-400" />, {greet_message()}!</h5>
           <main className="text-2xl md:text-6xl lg:text-[6rem] leading-14 py-4 text-gr bg-clip-text text-transparent font-black">
             <h2> Welcome to CodeX </h2>
-
             <h2
               className="capitalize"
             >
@@ -79,7 +78,9 @@ const Home = () => {
               </article>
             )
           }
+          
         </main>
+        
       </section>
     </RootLayout>
   );

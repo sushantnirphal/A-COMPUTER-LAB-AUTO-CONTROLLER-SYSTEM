@@ -40,7 +40,11 @@ const Manual: FC<{ id: string, setter: Dispatch<SetStateAction<string | null>> }
 
       <h4 className="p-6 py-4 flex items-center backdrop-filter backdrop-blur-lg bg-dark-400 absolute top-0 w-full text-slate-200 text-sm font-medium border-b border-dark-200 z-20 ">
         <span
-          onClick={() => setter('')}
+          onClick={() => {
+            if (confirm('Are you sure to exit ?')) {
+              setter('')
+            }
+          }}
           className="text-white cursor-pointer bg-dark-200 px-2 py-1 rounded-full mr-4"
         >
           <HiArrowLeft className="" />

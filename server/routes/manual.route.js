@@ -25,6 +25,7 @@ ManualRouter.get("/", async (req, res) => {
 
 // get manual ids
 ManualRouter.get("/all_id", async (req, res) => {
+  console.log(req.params);
   if (!req.params.year || !req.params.semester) {
     return res
       .status(400)
@@ -81,9 +82,10 @@ ManualRouter.get("/all_id/:year/:semester", async (req, res) => {
         createdAt: 1,
         file_type: 1,
         semester: 1,
+        slot_date:1,
         year: 1,
         practical_no: 1,
-        test_case :1,
+        test_case: 1,
       }
     );
 
@@ -187,9 +189,11 @@ ManualRouter.post("/test-cases/:id", async (req, res) => {
   }
 });
 
+
+// create manual
 ManualRouter.post("/", async (req, res) => {
   const payload = req.body;
-  payload.slug = payload.aim.toLowerCase().replace("/ /", "-");
+  payload.slug = payload.aim.toLowerCase().replace(/ /g, "-");
   if (!payload) {
     res
       .status(400)

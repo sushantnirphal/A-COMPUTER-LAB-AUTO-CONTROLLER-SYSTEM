@@ -9,13 +9,13 @@ import React, {
 import { AimType } from "../aims";
 import { api } from "../aims";
 import { ItemType } from "./Manual";
-import { StudentContext } from "../../../Context/StudentContext";
+import { StudentContext, StudentContextType } from "../../../Context/StudentContext";
 
 const Sidebar: FC<{
   id: string | null;
   setter: Dispatch<SetStateAction<string | null>>;
 }> = ({ setter, id }) => {
-  const { student } = useContext<{ student: any }>(StudentContext);
+  const { student } = useContext(StudentContext) as StudentContextType;
   const { semester: sem, year } = student || { semester: 0, year: 0 };
   console.log(year, sem);
   const [ids, setIDs] = useState([]);

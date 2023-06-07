@@ -41,6 +41,11 @@ function SelectPage() {
                 title: 'Faculty',
                 link: '/faculty/login',
                 image: '/icons/class.png'
+              },
+              {
+                title: 'HOD',
+                link: '/admin/login',
+                image: '/icons/hod2.png'
               }
             ].map(({ link, title, image }) =>
 

@@ -5,8 +5,18 @@ import manualModel from "../model/manual.model.js";
 const studentRouter = express.Router();
 
 studentRouter.get("/", async (req, res) => {
-  const students = await studentModel.find();
-  res.json(students);
+  try {
+    const students = await studentModel.find().select("-practical_completed");
+    return res.status(200).json({
+      error: false,
+      data: students,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal server error",
+    });
+  }
 });
 
 studentRouter.get("/:year/:semester", async (req, res) => {
@@ -56,14 +66,29 @@ studentRouter.get("/:id", async (req, res) => {
 });
 
 studentRouter.post("/enroll", async (req, res) => {
-  const { payload } = req.body;
-  if (!payload) {
-    return res
-      .status(400)
-      .send({ success: true, message: "All fields needed." });
+  const payload = req.body;
+  console.log(payload);
+  try {
+    if (!req.files?.profile) {
+      return res
+        .status(400)
+        .send({ success: true, message: "All fields needed." });
+    }
+    const profile = req.files.profile;
+    const file = payload.prn + "_profile_picture_" + ".png";
+    const path = `${process.env.PROFILE_PIC_PATH}/${file}`;
+    profile.mv(path, (error) => console.log(error));
+    const akg = await studentModel.create({
+      ...payload,
+      name: payload.fname + " " + payload.lname,
+      role: "student",
+      profile: process.env + "/static/profile/" + file,
+    });
+
+    res.status(200).send({ success: true, message: "Created", akg });
+  } catch (error) {
+    return res.status(400).send({ success: true, message: "Server error." });
   }
-  const akg = await studentModel.create({ ...payload, role: "student" });
-  res.status(200).send({ success: true, message: "Created", akg });
 });
 
 studentRouter.post("/login", async (req, res) => {
@@ -214,7 +239,7 @@ studentRouter.post("/submit-manual", async (req, res) => {
     console.log(error);
     return res.status(400).json({
       error: true,
-      message: "Manual submition failed.",
+      message: "Manual submission failed.",
     });
   }
 });
