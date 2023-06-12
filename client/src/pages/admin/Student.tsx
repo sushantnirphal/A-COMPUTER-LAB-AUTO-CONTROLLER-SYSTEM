@@ -11,9 +11,6 @@ import { toast } from 'react-toastify'
 function Student() {
 
   function sort(obj: any, current: any) {
-    let i = 0;
-    console.log(++i)
-    console.log(obj)
     if (obj[current.semester]) {
       obj[current.semester].push(current);
       return obj
@@ -23,15 +20,13 @@ function Student() {
       return obj
     }
   }
-  const { fetching, refetch, students } = useStudents();
+  const { fetching, refetch, students } = useStudents({});
   const student_sorted = students?.reduce(sort, {})
-  console.log(student_sorted)
 
   const [addForm, setAddForm] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState("");
-  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -80,6 +75,13 @@ function Student() {
         setter(reader.result as string);
       };
     }
+  }
+
+  async function delete_student(_id: string) {
+    const res = await fetch(`${import.meta.env.VITE_SERVER_URL_API}/student/${_id}`, { method: 'delete' })
+    const akg = await res.json()
+    toast(akg.message, { type: 'info', theme: 'light',  });
+    refetch();
   }
   return (
     <RootLayout>
@@ -326,7 +328,7 @@ function Student() {
         }
 
         {
-          !students?.length ?
+         !fetching && !students?.length ?
             <main
               className='w-11/12 max-w-[400px] first-letter: py-3 px-5 text-white rounded-lg my-4 bg-red-500'
             >
@@ -344,7 +346,6 @@ function Student() {
         {
           students && Object.values(student_sorted).map((item: any, index: number) =>
             <details
-              className='mb-4'
             >
               <summary
                 className='underline mb-4 justify-between text-white cursor-pointer bg-dark-400 rounded-lg border max-w-[700px] flex text-sm border-dark-200 p-3'
@@ -366,24 +367,30 @@ function Student() {
                       <div>
 
                         <h4 className="text-sm font-medium ">PRN: {prn}</h4>
-                        <h4 className="text-sm pt-2">Name: {name}</h4>
-                        <h4 className="text-sm pt-2">Name: {email}</h4>
-                        <div className="text-sm  py-3 shrink-0 flex">
-                          <div
-                            className="flex  text-xs space-x-2"
-                          >
-                            <h4>Sem {semester}</h4>
-                            <span>|</span>
-                            <p>Year : {year || 'NAN'}</p>
-                          </div>
-                          <div className="ml-auto items-center flex space-x-4">
+                        <h4 className="text-xs pt-2">Name: {name}</h4>
+                        <h4 className="text-xs pt-2">Name: {email}</h4>
+                        <div className="text-xs  py-3 shrink-0 flex">
 
-                          </div>
+                          <button
+                            onClick={e => {
+                              if (confirm(`Are you sure to delete profile of ${name}`)) {
+                                delete_student(_id)
+                              }
+                            }}
+                            className='rounded-full px-4 py-1 text-[10px] text-white bg-red-500'
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
-                      <img
-                        className='w-16 h-16 rounded-full'
-                        src={profile} alt={profile} />
+                      <main>
+                        <img
+                          className='w-16 h-16 rounded-full'
+                          src={profile}
+                          alt={profile}
+                        />
+
+                      </main>
 
                     </main>
                   </div>
@@ -393,8 +400,8 @@ function Student() {
 
           )
         }
-      </section>
-    </RootLayout>
+      </section >
+    </RootLayout >
   )
 }
 

@@ -44,6 +44,10 @@ const studentSchema = Schema({
     required: true,
   },
   role: String,
+  in_trash: {
+    type: Boolean,
+    default: false,
+  },
   practical_completed: [
     {
       aim: String,

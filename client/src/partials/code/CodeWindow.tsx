@@ -59,6 +59,7 @@ const CodeWindow: FC<{
 
     result_cases = [];
     testcases.forEach((testcase, index, array) => {
+
       const encodedParams = new URLSearchParams();
       encodedParams.append("LanguageChoice", `${langCode}`);
       encodedParams.append("Program", `${code}`);
@@ -82,6 +83,17 @@ const CodeWindow: FC<{
           result_cases.push(res);
           toast(`Test ${index + 1} ${res ? 'Passed' : 'Failed'}`, { position: 'top-right', 'type': res ? 'success' : 'error' })
           if (array.length === index + 1) {
+            fetch(import.meta.env.VITE_SERVER_URL_API + '/student/test-case-status', {
+              method: 'post',
+              body: JSON.stringify({
+                pid: id,
+                sid: student?._id,
+                test_cases_passed: result_cases.filter(a => a).length
+              }),
+              headers: {
+                'Content-type': 'application/json'
+              }
+            })
             toast('completed')
           }
         });
@@ -136,13 +148,6 @@ const CodeWindow: FC<{
 
   return (
     <div className=" resize-x relative flex-1 border-l border-dark-200 flex flex-col">
-
-      <div
-        className="absolute bg-purple_pri-500/40  p-4 text-white backdrop-filter backdrop-blur-sm rounded-r-md top-44 z-40 left-0"
-      >sanket
-
-      </div>
-
       <section className="fixed test-cases-section z-40 right-0 top-44">
         {test_result.map((item, index) => (
           <button

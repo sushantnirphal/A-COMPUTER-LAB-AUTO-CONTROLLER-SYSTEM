@@ -263,11 +263,11 @@ export default function Student() {
         }
 
         {
-          !faculties?.length &&
+          !fetching &&  !faculties?.length &&
           <main
             className='w-11/12 max-w-[400px] first-letter: py-3 px-5 text-white rounded-lg my-4 bg-red-500'
           >
-            <h3> No students found</h3>
+            <h3> No faculties found</h3>
 
           </main>
         }

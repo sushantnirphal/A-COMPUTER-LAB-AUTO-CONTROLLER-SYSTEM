@@ -9,7 +9,7 @@ import { FacultyContext } from "../../Context/FacultyContex";
 import UploadPracticals from "@/pages/UploadPracticals";
 import UploadSyllabus from "@/pages/UploadSyllabus";
 
-import { HiHome, HiCode, HiClipboardCheck, HiLogout, HiBookOpen, HiUpload, HiViewList, HiBeaker, HiDocument, HiUser, HiUserGroup, HiUsers } from 'react-icons/hi'
+import { HiHome, HiCode, HiClipboardCheck, HiLogout, HiBookOpen, HiUpload, HiViewList, HiBeaker, HiDocument, HiUser, HiUserGroup, HiUsers, HiTrash } from 'react-icons/hi'
 
 const Header = () => {
   const { student, setStudent } = useContext<any>(StudentContext);
@@ -46,7 +46,7 @@ const Header = () => {
         className="border-b  bg-purple_pri-500/20 w-11/12 mx-auto mt-3 rounded-md overflow-hidden shadow-lg border-dark-200 pt-4 mb-4"
       >
         <img
-          className="w-6/12 mx-auto rounded-full border-2 bg-dark-400"
+          className="w-6/12 mx-auto rounded-full border-2 text-white bg-dark-400"
           src={student?.profile} alt={student?.name}
           onError={(e: ChangeEvent<HTMLImageElement>) => e.target.src = '/icons/coding.png'}
         />
@@ -192,6 +192,11 @@ const Header = () => {
                   title: 'Faculty',
                   link: '/admin/faculty',
                   icon: <HiUsers />,
+                },
+                {
+                  title: 'Trash',
+                  link: '/admin/trash',
+                  icon: <HiTrash />,
                 },
               ].map(({ link, title, icon }) =>
                 <NavLink

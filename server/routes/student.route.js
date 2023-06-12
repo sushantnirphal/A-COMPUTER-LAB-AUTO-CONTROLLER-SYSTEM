@@ -4,9 +4,12 @@ import manualModel from "../model/manual.model.js";
 
 const studentRouter = express.Router();
 
+//  all students && !== trashed
 studentRouter.get("/", async (req, res) => {
   try {
-    const students = await studentModel.find().select("-practical_completed");
+    const students = await studentModel
+      .find({ in_trash: false })
+      .select("-practical_completed");
     return res.status(200).json({
       error: false,
       data: students,
@@ -16,6 +19,50 @@ studentRouter.get("/", async (req, res) => {
       error: true,
       message: "Internal server error",
     });
+  }
+});
+
+// trashed students
+studentRouter.get("/trashed", async (req, res) => {
+  try {
+    const students = await studentModel
+      .find({ in_trash: true })
+      .select("-practical_completed");
+    return res.status(200).json({
+      error: false,
+      data: students,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal server error",
+    });
+  }
+});
+
+// restore student
+studentRouter.delete("/restore/:_id", async (req, res) => {
+  console.log(req.params)
+  const { _id } = req.params;
+  try {
+    const student = await studentModel.updateOne(
+      { _id },
+      {
+        $set: {
+          in_trash: false,
+        },
+      }
+    );
+    console.log(student);
+    res.status(200).json({
+      success: true,
+      message: `One student is re-moved to trash.`,
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json({ error: true, message: "Error while getting student profile." });
   }
 });
 
@@ -31,6 +78,7 @@ studentRouter.get("/:year/:semester", async (req, res) => {
       {
         year,
         semester,
+        in_trash: false,
       },
       {
         profile: 0,
@@ -46,7 +94,7 @@ studentRouter.get("/:year/:semester", async (req, res) => {
 });
 
 studentRouter.get("/no-photo", async (req, res) => {
-  const students = await studentModel.find({}, { profile: 0 });
+  const students = await studentModel.find({ in_trash: false }, { profile: 0 });
   res.json(students);
 });
 
@@ -54,7 +102,7 @@ studentRouter.get("/:id", async (req, res) => {
   const { all } = req.query;
   try {
     const students = await studentModel
-      .findOne({ _id: req.params.id })
+      .findOne({ _id: req.params.id, in_trash: false })
       .select(!all ? "-profile" : "");
 
     res.status(200).json(students);
@@ -95,7 +143,14 @@ studentRouter.post("/login", async (req, res) => {
   const { prn, phone } = req.body;
   try {
     const student = await studentModel.findOne({ prn, phone });
-
+    if (student && student.in_trash) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Your account is deactivated, please contact HOD to re-activate it.",
+        student: student,
+      });
+    }
     if (student) {
       student.role = "student";
       // User found, return success response
@@ -241,6 +296,61 @@ studentRouter.post("/submit-manual", async (req, res) => {
       error: true,
       message: "Manual submission failed.",
     });
+  }
+});
+
+// test case status
+studentRouter.post("/test-case-status", async (req, res) => {
+  const { sid, pid, test_cases_passed } = req.body;
+  console.log(req.body);
+  try {
+    const akg = await studentModel.findOneAndUpdate(
+      {
+        _id: sid,
+        "practical_completed.pid": pid,
+      },
+      {
+        $set: {
+          "practical_completed.$.test_cases_passed": test_cases_passed,
+          "practical_completed.$.status": "completed",
+        },
+      }
+    );
+    return res.status(200).json({
+      error: false,
+      message: "Test cases result saved successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: true,
+      message: "Failed to save test cases result.",
+    });
+  }
+});
+
+// move to trash student
+studentRouter.delete("/:_id", async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const student = await studentModel.updateOne(
+      { _id },
+      {
+        $set: {
+          in_trash: true,
+        },
+      }
+    );
+    console.log(student);
+    res.status(200).json({
+      success: true,
+      message: `One student is moved to trash.`,
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json({ error: true, message: "Error while getting student profile." });
   }
 });
 

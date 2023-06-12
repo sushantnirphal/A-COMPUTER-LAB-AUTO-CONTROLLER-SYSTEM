@@ -116,8 +116,9 @@ const CheckAttendence = () => {
                         attendence_status: "absent",
                         date: ''
                       }),
-                    ]).map((i: PracticalType, index: number) => (
-                      <td key={index} className="px-6 border text-lg py-3">
+                    ]).map((i: PracticalType, index: number) => {
+                      const marks = i.pid ? i.test_cases_passed * 2 + (i.manual.url ? 4 : 0) : 0
+                      return <td key={index} className="px-6 border text-lg py-3">
                         <span className="w-max text-[14px] bg-dark-400 px-2 rounded-md flex">
                           {i.status === "completed" ? "Comp." : "Incom."}{" "}
                           <span
@@ -128,7 +129,7 @@ const CheckAttendence = () => {
                           >
                             {i.attendence_status === "present" ? "P" : "A"}
                           </span>{" "}
-                          {i.marks}
+                          {marks}
                         </span>
                         <p
                           className="text-xs py-2"
@@ -136,7 +137,8 @@ const CheckAttendence = () => {
                           {i?.date ? new Date(i?.date).toLocaleString('en-in', { dateStyle: 'short' }) : 'Absent'}
                         </p>
                       </td>
-                    ))}
+                    }
+                    )}
                   </tr>
                 );
               })}

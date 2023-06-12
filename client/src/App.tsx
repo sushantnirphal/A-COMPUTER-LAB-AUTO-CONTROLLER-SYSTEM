@@ -36,6 +36,7 @@ import { Layout } from "@syncfusion/ej2-react-documenteditor";
 import RootLayout from "./partials/Layout";
 import Student from "./pages/admin/Student";
 import Faculty from "./pages/admin/Faculty";
+import { Trash } from "./pages/admin/Trash";
 
 // import FacultyHome from './p'
 const router = createHashRouter([
@@ -146,6 +147,10 @@ const router = createHashRouter([
   {
     path: "/admin/faculty",
     element:<Faculty/>,
+  },
+  {
+    path: "/admin/trash",
+    element:<Trash/>,
   },
   {
     path: "*",

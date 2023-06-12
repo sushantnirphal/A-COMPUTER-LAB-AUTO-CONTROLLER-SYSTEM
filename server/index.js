@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import studentRouter from "./routes/student.route.js";
 import facultyRouter from "./routes/faculty.route.js";
 import ManualRouter from "./routes/manual.route.js";
-import SubmitManualRouter from "./routes/submitmanual.route.js";
 import SyllabusRouter from "./routes/syllabus.route.js";
 import express_fileupload from "express-fileupload";
 import AdminRouter from "./routes/admin.route.js";
@@ -17,6 +16,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
+    methods: ["GET", "POST", "HEAD", "PATCH", "DELETE"],
   })
 );
 app.use(express.urlencoded({ extended: true }));
@@ -33,7 +33,6 @@ app.use("/student", studentRouter);
 app.use("/faculty", facultyRouter);
 app.use("/admin", AdminRouter);
 app.use("/api/manual", ManualRouter);
-app.use("/api/submitmanual", SubmitManualRouter);
 app.use("/api/syllabus", SyllabusRouter);
 
 try {

@@ -30,6 +30,10 @@ const facultySchema = Schema({
     type: String,
     required: true,
   },
+  in_trash: {
+    type: Boolean,
+    default: false,
+  },
   tokens: [
     {
       token: {

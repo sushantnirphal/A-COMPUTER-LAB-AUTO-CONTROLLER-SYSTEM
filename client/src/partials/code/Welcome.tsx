@@ -1,7 +1,7 @@
 import usePracticals from "@/hooks/usePracticals";
 import { StudentContext } from "../../../Context/StudentContext";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { HiCheck, HiCheckCircle, HiMinusCircle } from 'react-icons/hi'
+import { HiCheck, HiCheckCircle, HiClock, HiMinusCircle, HiTerminal } from 'react-icons/hi'
 import Loader from "../Loader";
 import { toast } from "react-toastify";
 export const base_url: string = import.meta.env.VITE_SERVER_URL
@@ -9,11 +9,11 @@ const Welcome = ({ id, setter }: { id: string | null, setter: Dispatch<SetStateA
   const { student, setStudent, update_student } = useContext<any>(StudentContext);
   const { year, semester: sem } = student || {}
   const { fetching, practicals, refetch } = usePracticals({ sem, year });
-  const days_window = 7;
+  const days_window = 6;
   const is_missed_practical = (date: string) => {
 
-    const diff = new Date(date).getTime() - new Date().getTime();
-    return (diff <= 24 * 60 * 60 * 1000 * days_window);
+    const diff = new Date().getTime() - new Date(date).getTime();
+    return (diff >= 24 * 60 * 60 * 1000 * days_window) && diff > 0;
 
   }
   return (
@@ -40,14 +40,14 @@ const Welcome = ({ id, setter }: { id: string | null, setter: Dispatch<SetStateA
       >
         {
           practicals?.map((item: any) => {
-            const isCompleted = !!student?.practical_completed.find((i: any) => i.practical_no === item?.practical_no);
+            const isCompleted = !!student?.practical_completed.find((i: any) => (i.practical_no === item?.practical_no) && (i.aim === item?.aim));
             const isMissed = is_missed_practical(item.slot_date);
-            const is_open = new Date(item.slot_date).getTime() <= new Date().getTime();
+            const is_open = new Date(item.slot_date).getTime() <= new Date().getTime() && !isMissed;
             return (<article
               key={item?._id}
               onClick={() => {
                 if (isMissed) return toast('Submission not allowed for this practical, as you\'ve missed deadline.', { type: 'warning', })
-                if (!is_open) return toast(`You can\'t open this, Practical is scheduled for ${new Date(item.slot_date).toLocaleString('en-in', { dateStyle: 'full' })}`, { type: 'warning', })
+                if (!is_open && !isCompleted) return toast(`You can\'t open this, Practical is scheduled for ${new Date(item.slot_date).toLocaleString('en-in', { dateStyle: 'full' })}`, { type: 'warning', })
                 setter(item?._id)
               }}
               className={`
@@ -83,6 +83,13 @@ const Welcome = ({ id, setter }: { id: string | null, setter: Dispatch<SetStateA
                   ? <HiMinusCircle className="text-red-500 absolute bottom-4 right-4" />
                   : null
               }
+              {
+                is_open && !isCompleted
+                  ? <HiClock className="text-green-500 absolute bottom-4 right-4" />
+                  : null
+              }
+
+
             </article>)
           }
           )
