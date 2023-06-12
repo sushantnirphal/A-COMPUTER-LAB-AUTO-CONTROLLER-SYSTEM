@@ -9,5 +9,7 @@ export interface StudentType {
     dob: string;
     address: string;
     branch: string;
-    photo: string;
+    role:string
+    profile: string;
+
   }

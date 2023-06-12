@@ -1,10 +1,11 @@
-import React, {SetStateAction} from "react";
+import React, { SetStateAction, useContext, useEffect } from "react";
 import {
   createBrowserRouter,
   createHashRouter,
   RouterProvider,
 } from "react-router-dom";
-import StudentContext from "../Context/StudentContext";
+
+
 import Home from "./pages/Home";
 import Code from "./pages/Code";
 import LoginPage from "./pages/Login";
@@ -23,11 +24,19 @@ import CourseSyllabus from "./pages/CourseSyllabus";
 import FacultyLogin from "./pages/faculty/LoginPage";
 import FacultyEnrollPage from "./pages/faculty/EnrollPage";
 import SelectPage from "./pages/SelectPage";
-import FacultyContext from "../Context/FacultyContex";
 import Error from "./pages/Error";
 import UploadPracticals from "./pages/UploadPracticals";
 import CheckAttendence from "./pages/CheckAttendence";
 import ReceivedManual from "./pages/ReceivedManual";
+import Profile from "./pages/Profile";
+import { ToastContainer } from "react-toastify";
+import { StudentContext, StudentContextType } from "../Context/StudentContext";
+import AdminLogin from "./pages/AdminLogin";
+import { Layout } from "@syncfusion/ej2-react-documenteditor";
+import RootLayout from "./partials/Layout";
+import Student from "./pages/admin/Student";
+import Faculty from "./pages/admin/Faculty";
+import { Trash } from "./pages/admin/Trash";
 
 // import FacultyHome from './p'
 const router = createHashRouter([
@@ -44,27 +53,27 @@ const router = createHashRouter([
     path: "/academic",
     element: <Academic />,
   },
-  { 
+  {
     path: "/forgotpassword/:id/:token",
     element: <ForgotPassword />,
 
   },
-  { 
+  {
     path: "/passwordreset",
     element: <PasswordReset />,
 
   },
 
- {
-  path:"/uploadpracticals",
-  element: <UploadPracticals onSaveTestCases={undefined}/>,
- },
- {
-  path:"/coursesyllabus",
-  element:<CourseSyllabus/>,
- },
   {
-   path: "/createmanual",
+    path: "/uploadpracticals",
+    element: <UploadPracticals onSaveTestCases={undefined} />,
+  },
+  {
+    path: "/coursesyllabus",
+    element: <CourseSyllabus />,
+  },
+  {
+    path: "/createmanual",
     element: <CreateManual />,
   },
   {
@@ -80,7 +89,7 @@ const router = createHashRouter([
     element: (
       <Practice
         code={""}
-        setCode={function (value: SetStateAction<string>): void {}}
+        setCode={function (value: SetStateAction<string>): void { }}
       />
     ),
   },
@@ -98,9 +107,9 @@ const router = createHashRouter([
   },
   {
     path: "/uploadsyllabus",
-    element:<UploadSyllabus/>,
+    element: <UploadSyllabus />,
   },
-  
+
   {
     path: "/login",
     element: <LoginPage />,
@@ -117,10 +126,31 @@ const router = createHashRouter([
     path: "/faculty/login",
     element: <FacultyLogin />,
   },
-  
+
   {
     path: "/faculty/home",
     // element: <FacultyHome />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  // admin route
+  {
+    path: "/admin/login",
+    element:<AdminLogin/>,
+  },
+  {
+    path: "/admin/student",
+    element: <Student/>
+  },
+  {
+    path: "/admin/faculty",
+    element:<Faculty/>,
+  },
+  {
+    path: "/admin/trash",
+    element:<Trash/>,
   },
   {
     path: "*",
@@ -128,14 +158,18 @@ const router = createHashRouter([
   },
 ]);
 const App = () => {
+  const { student, update_student, update_faculty } = useContext(StudentContext) as StudentContextType;
+  useEffect(() => {
+    // update student on first load
+    student?._id &&
+      (student?.role === 'student'
+        ? update_student()
+        : update_faculty()
+      )
+  }, [student?._id])
   return (
     <section className="w-full">
-      {/* <Header /> */}
-      <StudentContext>
-        <FacultyContext>
-          <RouterProvider fallbackElement={<>Error</>} router={router} />
-        </FacultyContext>
-      </StudentContext>
+      <RouterProvider fallbackElement={<>Error</>} router={router} />
     </section>
   );
 };

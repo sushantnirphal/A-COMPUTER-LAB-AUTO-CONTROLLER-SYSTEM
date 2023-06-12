@@ -1,76 +1,53 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import Header from "@/partials/Header";
-import {Link} from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
+import RootLayout from "@/partials/Layout";
+import { StudentContext, StudentContextType } from '../../Context/StudentContext'
+import usePracticals, { Practical, StudentPracticalType } from "@/hooks/usePracticals";
+import FileViewer from "react-file-viewer";
+
 const UploadManual = () => {
+  const { student, update_student } = useContext<any>(StudentContext) as StudentContextType;
+  const { year, semester: sem } = student || []
   const [preview, setPreview] = useState("");
-
   const [file, setFile] = useState<Blob>();
-  const [fetching, setFetching] = useState(true);
+  const [_id, set_id] = useState<string>();
   const [loading, setLoading] = useState(false);
-  const [submitmanual, setManuals] = useState([]);
-  const reader = new FileReader();
-  async function getManuals() {
-    const req = await fetch(
-      import.meta.env.VITE_SERVER_URL + "/submitmanual/all_id"
-    );
-    const res = await req.json();
-    setManuals(res.data);
-    setFetching(false);
-  }
-  async function handleUpload(event: ChangeEvent<HTMLFormElement>) {
+
+  //  submit manual
+  async function handle_manual_submit(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (
-      ![
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/pdf",
-      ].includes(file?.type || "")
-    ) {
-      alert("Please upload only PDF or DOCX files");
-      return;
+    setLoading(true);
+    const payload = new FormData();
+
+    payload.append("_id", _id as any);
+    payload.append("manual", file as any);
+
+    const req = await fetch(
+      `${import.meta.env.VITE_SERVER_URL_API}/student/submit-manual`,
+      {
+        method: "post",
+        body: payload
+      }
+    )
+    const res = await req.json();
+    update_student();
+    event.target.reset();
+    setLoading(false);
+
+    if (!res.success) {
+      toast(res.message, {
+        position: 'top-right',
+        type: 'success'
+      });
     }
+  };
 
-    const payload: {[k: string]: string | null | number} = extractFormData(
-      event.target
-    );
-    payload.file_type =
-      file?.type ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ? "docx"
-        : "pdf";
-    if (file) {
-      setLoading(true);
-      reader.readAsDataURL(file);
-      reader.onload = async (e) => {
-        payload.file = reader.result as string;
 
-        const req = await fetch(
-          `${import.meta.env.VITE_SERVER_URL}/submitmanual`,
-          {
-            method: "post",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
-        );
-        const res = await req.json();
-        getManuals();
-        console.log("here", res);
-        event.target.reset();
-        // console.log(res);
-        setLoading(false);
-        if (!res.success) {
-          alert(res.message);
-        }
-      };
-    }
-
-    // console.log(payload);
-  }
-
+  // delete manual
   async function delete_manual(id: string) {
     const res = await fetch(
       `${import.meta.env.VITE_SERVER_URL}/submitmanual/delete/${id}`,
@@ -80,86 +57,87 @@ const UploadManual = () => {
     ).then((a) => a.json());
 
     toast(res.message);
-    getManuals();
   }
 
   useEffect(() => {
-    getManuals();
+
+    window.onkeydown = (e) => {
+      if (e.code === 'Escape') {
+        setPreview('')
+      }
+    }
   }, []);
   return (
-    <div className="gr-bg min-h-screen ">
-      <Header />
+    <RootLayout>
+
       {preview && (
-        <section className="w-screen py-8 h-screen fixed inset-0 bg-black/60 ">
+        <section tabIndex={-1} className="w-screen py-8 h-screen fixed inset-0 bg-black/60 ">
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span
-              className="text-4xl absolute right-4 top-4 bg-red-500 grid place-items-center z-20 rounded-full w-12 h-12 text-white cursor-pointer"
+              className="text-3xl text-red-500  z-10 absolute top-0 right-0 cursor-pointer p-4"
               onClick={() => setPreview("")}
             >
               &times;
             </span>
-            {preview && <File_Viewer id={preview} />}
+            {preview && <FileViewer fileType={'pdf'} filePath={preview} />}
           </div>
         </section>
       )}
-      <main className="pt-20 flex flex-wrap h-screen">
+      <main className=" flex flex-wrap h-screen">
         <section className="p-8 w-full md:w-1/2 text-white">
           <div>
-            <h1 className="text-lg font-semibold bg-sky-700 p-4 ">
-              Submit Practical
+            <h1 className="text-xl bg-clip-text text-transparent text-gr font-semibold">
+              Submit Practical.
             </h1>
+            <p
+              className="text-sm opacity-90"
+            >
+             Choose practical from dropdown and submit manual for the particular practical.
+            </p>
           </div>
-          <div className="p-2">
-            <form className="max-w-[400px] mt-8" onSubmit={handleUpload}>
-              <label htmlFor="">Subject</label>
-              <br />
+          <div className="p-2 text-sm bg-dark-400 rounded-lg mt-8 border border-dark-200 px-12">
+            <form className="max-w-[400px] mt-8" onSubmit={handle_manual_submit}>
+              {/* <label htmlFor="">Subject</label>
+              
               <input
                 required
                 name="subject"
                 type="text"
-                className="border-2"
-              ></input>
-              <br />
+                className="border border-slate-400 mt-2"
+              /> */}
+
               <label htmlFor="">Aim</label>
-              <br />
-              <input
+              <select
+                className="border w-full mb-4 border-slate-400 py-2 px-4 rounded-lg   bg-transparent "
+                name="_id"
                 required
-                name="aim"
-                type="text"
-                className="border-2"
-              ></input>
-              <br />
+                onChange={e => set_id(e.target.value)}
+              >
+                <option
+                  className="bg-dark-400 text-purple_pri-500"
+                  value="">--Select Practical--</option>
+                {
+                  student?.practical_completed?.map(({ aim, _id }: { aim: string, _id: string }) =>
+                    <option
+                      className="bg-dark-400 text-purple_pri-500"
+                      key={_id} value={_id}>
+                      {aim}
+                    </option>
+                  )
+                }
+              </select>
+
               <label className=" py-8">Upload file</label>
-              <br />
+
               <input
                 required
-                name="file"
-                accept=".pdf, .docx"
-                onChange={(e) => setFile(e.target.files[0])}
+                name="manual"
+                accept=".pdf"
+                onChange={e => e.target.files && setFile(e.target.files[0])}
                 type="file"
-              ></input>
-              <br />
+                className="accent-purple_pri-500 w-full file:py-2 file:px-4 text-xs file:bg-purple_pri-600 file:rounded-full file:text-white file:border-none border-slate-500"
+              />
 
-              <label>Year</label>
-              <br />
-              <input
-                name="year"
-                required
-                type="number"
-                className="border-2"
-              ></input>
-
-              <br />
-
-              <label>Sem</label>
-              <br />
-              <input
-                required
-                name="sem"
-                type="number"
-                className="border-2"
-              ></input>
-              <br />
               <button
                 disabled={loading}
                 className="p-2 px-6 text-white my-6 rounded-full bg-green-600"
@@ -169,56 +147,67 @@ const UploadManual = () => {
             </form>
           </div>
         </section>
-        <section className="w-full p-8 text-white md:w-1/2 min-h-full border-l">
-          <h1 className="text-lg font-semibold bg-white text-sky-700 p-4 ">
-            Submitted Practical
+        <section className="w-full p-8 text-white md:w-1/2 h-full border-l border-dark-200">
+          <h1 className="text-xl bg-clip-text text-transparent text-gr font-semibold">
+            Practicals attended.
           </h1>
-          {fetching ? (
-            <h6 className="py-4 text-center w-full"> Loading...</h6>
-          ) : (
-            <main className="py-8 space-y-6">
-              {submitmanual.map(
-                (item: {
-                  _id: string;
-                  aim: string;
-                  sem: number;
-                  year: number;
-                  slug: string;
-                  file: string;
-                  file_type: string;
-                }) => (
-                  <div
-                    key={item?._id}
-                    className="flex text-slate-800 items-center bg-white/90  px-6 py-2 rounded">
-                    <h4 className="text-lg w-9/12 font-semibold">{item.aim}</h4>
-                    <div className="text-sm w-max shrink-0 flex space-x-2 px-5">
-                      <h4>Sem {item?.sem}</h4>
-                      <span>|</span>
-                      <p>Year : {item?.year}</p>
-                    </div>
-                    <div className="ml-auto items-center flex space-x-4">
+          <p
+          className="text-sm opacity-90"
+          >
+            All attended practicals will be shown here, along with manuals submitted for particular practical.
+          </p>
+          <main className="py-8 h-full pr-8 overflow-auto space-y-6">
+            {student?.practical_completed?.map(
+              (item: StudentPracticalType) => (
+                <div
+                  key={item?._id}
+                  className="text-white items-center border border-dark-200 bg-dark-400  px-6 pt-3 rounded-md">
+                  <h4 className="text-sm font-medium">
+                    0{item.practical_no})
+                    {item.aim}
+                  </h4>
+                  <div className="text-sm  py-3 shrink-0 flex">
+
+                    <div className="ml-auto items-center flex space-x-2">
+
                       <button
-                        className="ml-auto w-max font-semibold underline text-sky-600"
-                        onClick={() => setPreview(item?._id)}
+                        className="ml-auto text-xs   px-2 py-1 rounded-full bg-dark-200"
                       >
-                        View Doc
+                        Uploaded on : {item?.manual.url ? new Date(item.manual.uploaded_on).toLocaleDateString('en-in', { dateStyle: 'full' }) : 'Yet to submit'}
                       </button>
-                      <button
-                        onClick={() => delete_manual(item?._id)}
-                        // className="bg-red-600 text- rounded-full px-6 py-2 text-sm "
-                        className="ml-auto font-semibold underline text-red-600"
-                      >
-                        Delete
-                      </button>
+                      {
+                        item?.manual.url
+                          ?
+                          <button
+                            className="ml-auto text-xs   px-2 py-1 rounded-full bg-purple_pri-500"
+                            onClick={() => setPreview(import.meta.env.VITE_SERVER_URL_API + '/static/manual/' + item?.manual.url)}
+                          >
+                            View
+                          </button>
+                          :
+                          <button
+                            className="ml-auto text-xs   px-2 py-1 rounded-full bg-red-500"
+                          >
+                            Submission pending
+                          </button>
+                      }
+
+                      {/* <button
+                          onClick={() => delete_manual(item?._id)}
+                          className="ml-auto text-xs   px-2 py-1 rounded-full bg-red-600"
+                        >
+                          Delete
+                        </button> */}
                     </div>
                   </div>
-                )
-              )}
-            </main>
-          )}
+                </div>
+              )
+            )}
+          </main>
+
         </section>
       </main>
-    </div>
+    </RootLayout>
   );
 };
 

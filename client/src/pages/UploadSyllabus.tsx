@@ -1,9 +1,10 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Header from "@/partials/Header";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import extractFormData from "@/utils/Extractform";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import File_Viewer from "@/partials/File_Viewer";
+import RootLayout from "@/partials/Layout";
 
 const UploadSyllabus = () => {
   const [preview, setPreview] = useState("");
@@ -32,12 +33,12 @@ const UploadSyllabus = () => {
       return;
     }
 
-    const payload: {[k: string]: string | null | number} = extractFormData(
+    const payload: { [k: string]: string | null | number } = extractFormData(
       event.target
     );
     payload.file_type =
       file?.type ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         ? "docx"
         : "pdf";
     if (file) {
@@ -84,14 +85,13 @@ const UploadSyllabus = () => {
     getSyllabus();
   }, []);
   return (
-    <div className="gr-bg min-h-screen w-full ">
-      <Header />
+    <RootLayout>
       {preview && (
         <section className="py-8 h-screen fixed inset-0 bg-black/60">
           <div className="h-full overflow-auto relative mx-auto w-full">
             <span
               className="text-4xl absolute right-4 top-4 bg-red-500 grid place-items-center z-20 rounded-full w-12 h-12 text-white cursor-pointer"
-              onClick={() => setPreview(null)}
+              onClick={() => setPreview('')}
             >
               &times;
             </span>
@@ -123,7 +123,7 @@ const UploadSyllabus = () => {
                 required
                 name="file"
                 accept=".pdf, .docx"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => { e.target.files && setFile(e.target.files[0]) }}
                 type="file"
               ></input>
               <br />
@@ -136,12 +136,12 @@ const UploadSyllabus = () => {
                 className="border-2"
               ></input>
               <br />
-              
+
               <button
                 disabled={loading}
                 className="p-2 px-6 text-white my-6 rounded-full bg-green-600"
               >
-                {loading ? "Please wait..." : "Upload"} 
+                {loading ? "Please wait..." : "Upload"}
               </button>
             </form>
           </div>
@@ -169,7 +169,7 @@ const UploadSyllabus = () => {
                   >
                     <h4 className="text-lg w-9/12 font-semibold">{item.subject}</h4>
                     <div className="text-sm w-max shrink-0 flex space-x-2 px-5">
-                    <span>|</span>
+                      <span>|</span>
                       <h4>Sem {item?.sem}</h4>
                     </div>
                     <div className="ml-auto items-center flex space-x-4">
@@ -194,7 +194,7 @@ const UploadSyllabus = () => {
           )}
         </section>
       </main>
-    </div>
+    </RootLayout>
   );
 };
 

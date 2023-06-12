@@ -1,22 +1,31 @@
-import React, {useState, useEffect} from "react";
+import { StudentContext, StudentContextType } from "../../../Context/StudentContext";
+import React, { useState, useEffect, useContext } from "react";
+import { HiBadgeCheck, HiCheck, HiClock } from "react-icons/hi";
+import { toast } from "react-toastify";
 
 function ReverseTimer({
   id,
   elem,
   student,
+  update_student,
+  toast
 }: {
   id: string;
   elem: HTMLDivElement | null;
   student: string;
+  update_student: () => void;
+  toast: any
 }) {
-  const initialtime = 60;
-  const attendence_time = initialtime - 40;
-
-  const [time, setTime] = useState<string | number>(initialtime); // 2 hours in seconds
+  const initialtime = 20;
+  const attendence_time = initialtime - 10;
+  const { student: user } = useContext(StudentContext) as StudentContextType
+  const [time, setTime] = useState<number>(initialtime); // 2 hours in seconds
   const [start, setStart] = useState(false);
-  const [attendence, setAttendence] = useState(""); // 2 hours in seconds
+  const [attendence, setAttendence] = useState("");
+  const isCompleted = !!(user?.practical_completed?.find((a: any) => a.pid === id))
   let intervalId: any;
   let timeoutid: any;
+  
   useEffect(() => {
     return () => {
       clearInterval(intervalId);
@@ -24,12 +33,13 @@ function ReverseTimer({
     }; // clean up
   }, []);
 
+
   function start_timer() {
     setStart(true);
     if (elem) {
       elem.requestFullscreen();
       intervalId = setInterval(() => {
-        setTime((prevTime) => {
+        setTime((prevTime: any) => {
           if (prevTime === attendence_time) {
             alert("You can  run test cases now");
             fetch(`http://localhost:7890/student/attendence/${student}/${id}`, {
@@ -38,13 +48,13 @@ function ReverseTimer({
               .then((a) => a.json())
               .then((a) => {
                 if (a.success) {
-                  alert("Attendence marked");
+                  alert("Attendence marked.");
                   setAttendence("Present");
+                  update_student()
                 }
               });
-            elem.requestFullscreen();
           }
-          return prevTime - 1;
+          return (prevTime - 1);
         });
       }, 1000); // runs every 1 second
     }
@@ -52,19 +62,16 @@ function ReverseTimer({
     // clear interval after 2 hours
     timeoutid = setTimeout(() => {
       clearInterval(intervalId);
-      // alert("Project slot ended, You can take a break now");
       setTime(0);
     }, time * 1000);
   }
   const formatTime = (time: number) => {
     if (typeof time === "string") return time;
-
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
-    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${
-      seconds < 10 ? "0" : ""
-    }${seconds}`;
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""
+      }${seconds}`;
   };
 
   useEffect(() => {
@@ -72,28 +79,44 @@ function ReverseTimer({
   }, [time]);
 
   useEffect(() => {
-    // if (id) {
-    //   const time = Number(localStorage.getItem("project_timer_" + id));
-    //   if (time > 0) {
-    //     start_timer();
-    //     setTime(time);
-    //     console.log(id, time);
-    //   }
-    // }
-    // setStart(false);
     setTime(initialtime);
     setAttendence("");
     setStart(false);
   }, [id]);
   return (
     <div>
-      <button
-        onClick={start_timer}
-        className="flex content-center  text-slate-100 py-2 px-3 rounded-full"
-      >
-        {attendence ? attendence : null}
-        {!attendence ? (start ? formatTime(time) : "Start timer") : null}
-      </button>
+      {
+        isCompleted
+          ? <button
+            className="flex items-center space-x-1 bg-green-600 shadow-xl text-slate-200 py-2 px-3 rounded-full"
+          >
+
+            <p>
+              Attended
+            </p>
+            <HiBadgeCheck />
+          </button>
+          :
+          <button
+            onClick={start_timer}
+            className="flex content-center bg-dark-200 shadow-xl text-slate-200 py-2 px-3 rounded-full"
+          >
+            {attendence ? attendence : null}
+            {!attendence
+              ?
+              (start ? formatTime(time)
+                : <span
+                  className="flex space-x-2 items-center"
+                >
+                  <HiClock />
+                  <p>
+                    Start timer
+                  </p>
+                </span>
+
+              ) : null}
+          </button>
+      }
     </div>
   );
 }
