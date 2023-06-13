@@ -165,6 +165,55 @@ function EnrollPage() {
               />
             </div>
           </section>
+          <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
+            
+            <div className="mb-4 w-full md:w-auto flex-1">
+              <label
+                htmlFor="year"
+                className="block text-gray-300 font-bold mb-2"
+              >
+                Year 
+              </label>
+              <input
+                list="year-list"
+                type="text"
+                name="year"
+                id="year"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
+              />
+              <datalist id="year-list">
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+              </datalist>
+            </div>
+            <div className="mb-4 w-full md:w-auto flex-1">
+              <label
+                htmlFor="semester"
+                className="block text-gray-300 font-bold mb-2"
+              >
+                Semester 
+              </label>
+              <input
+                list="semester-list"
+                type="text"
+                name="semester"
+                id="semester"
+                className="shadow appearance-none border-slate-600 border-2 focus:border-sky-600 rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline bg-transparent border border-slate-300"
+              />
+              <datalist id="semester-list">
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+                <option value="6"></option>
+                <option value="7"></option>
+                <option value="8"></option>
+              </datalist>
+            </div>
+          </section>
 
           <section className="flex flex-col sm:flex-row items-center space-x-0 md:space-x-4">
             <div className="mb-4 w-full md:w-auto flex-1">

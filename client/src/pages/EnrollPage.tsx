@@ -82,7 +82,6 @@ function EnrollPage() {
                 className="w-full h-full object-cover  "
               />
             </label>
-
             <input
               type="file"
               name="profile-image"

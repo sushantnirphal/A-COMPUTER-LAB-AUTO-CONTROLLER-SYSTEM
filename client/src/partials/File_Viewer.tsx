@@ -17,10 +17,15 @@ const File_Viewer = ({id}: {id: string}) => {
   }, [id]);
   return (
     <div>
-      {file && (
-        <FileViewer key={id} type={file?.file_type || "pdf"} url={file?.file} />
-      )}
-      {file && <p>{JSON.stringify(file)}</p>}
+      
+        <FileViewer 
+        
+        key={id} 
+        fileType={file.file_type || "pdf"} 
+        filePath={file.file || ""} 
+        />
+      
+      
     </div>
   );
 };

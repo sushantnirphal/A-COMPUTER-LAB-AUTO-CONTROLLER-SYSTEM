@@ -6,8 +6,10 @@ import "react-quill/dist/quill.snow.css";
 import {Button} from "semantic-ui-react";
 import {useNavigate} from "react-router-dom";
 import {StudentContext} from "../../Context/StudentContext";
+import CodeWindow from "../partials/code/CodeWindow"
 
 interface PracticalType {
+  result_cases: number;
   aim: string;
   pid: string;
   status: "not-completed" | "completed";
@@ -105,7 +107,7 @@ const CheckAttendence = () => {
                   </main>
                 </th>
               </tr>
-
+              
               {Attendence.map((student: any) => {
                 return (
                   <tr className="px-6 py-3 border text-left text-xs font-medium text-slate-100 tracking-wider">
@@ -124,7 +126,7 @@ const CheckAttendence = () => {
                         status: null,
                         practical_no: undefined,
                         marks: 0,
-                        test_cases_passed: 0,
+                        result_cases: 0,
                         attendence_status: "absent",
                       }),
                     ]).map((i: PracticalType, index: number) => (
@@ -139,8 +141,19 @@ const CheckAttendence = () => {
                             } mx-1 px-2`}
                           >
                             {i.attendence_status === "present" ? "P" : "A"}
-                          </span>{" "}
-                          {i.marks}
+                          </span>
+                         
+                            <span
+                          className={`${
+                              i.result_cases === 1
+                                ? "bg-green-600"
+                                : "bg-red-500"
+                            } mx-1 px-2`} >
+                              {i.result_cases === 1 ? i.marks=10 : i.marks=5}
+                          </span>
+                           
+                         
+                          
                         </span>
                       </td>
                     ))}
