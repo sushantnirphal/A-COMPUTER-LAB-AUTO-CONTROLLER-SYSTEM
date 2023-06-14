@@ -32,11 +32,11 @@ const Profile = () => {
         <h5>Sem : {student?.semester}</h5>
 
 
-        <pre>
+        {/* <pre>
           {
             JSON.stringify(student, null, 4)
           }
-        </pre>
+        </pre> */}
       </div>
     </RootLayout>
   );

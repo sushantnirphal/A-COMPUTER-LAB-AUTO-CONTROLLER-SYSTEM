@@ -33,6 +33,7 @@ const Welcome = ({ id, setter }: { id: string | null, setter: Dispatch<SetStateA
           :
           <div className="border-t-2 border-t-dark-200 pt-2 ">
             <h1 className="font-bold text-2xl">List  of Practicals you have to Perform.</h1>
+            <p className="text-sm text-gray-400">Students will get window of 7 days to complete practical from the practical slot date.</p>
           </div>
       }
       <main

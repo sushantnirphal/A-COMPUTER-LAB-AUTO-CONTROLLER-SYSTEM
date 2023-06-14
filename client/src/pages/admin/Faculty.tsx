@@ -284,7 +284,7 @@ export default function Student() {
                 </pre> */}
                 <div>
                   <h4 className="text-sm pt-2">Name: {name}</h4>
-                  <h4 className="text-sm pt-2">Name: {email}</h4>
+                  <h4 className="text-sm pt-2">Email: {email}</h4>
                   <div className="text-sm  py-3 shrink-0 flex">
                     <div
                       className="flex  text-xs space-x-2"

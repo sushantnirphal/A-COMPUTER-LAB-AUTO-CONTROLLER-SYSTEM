@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Header from "../partials/Header";
-import { api } from "../partials/aims";
 import Output from "../partials/code/Output";
 import CodeWindow from "../partials/code/CodeWindow";
 import Manual from "../partials/code/Manual";

@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import aims from "../aims";
+
 import Welcome from "./Welcome";
 import FileViewer from "react-file-viewer";
 import { HiArrowLeft } from "react-icons/hi";

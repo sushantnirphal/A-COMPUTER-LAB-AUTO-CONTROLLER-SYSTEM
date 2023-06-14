@@ -14,6 +14,7 @@ interface PracticalType {
   pid: string;
   status: "not-completed" | "completed";
   practical_no: number;
+  manual : any,
   marks: number;
   test_cases_passed: number;
   attendence_status: "absent" | "present";

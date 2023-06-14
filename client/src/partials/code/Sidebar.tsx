@@ -6,8 +6,7 @@ import React, {
   useState,
   useContext,
 } from "react";
-import { AimType } from "../aims";
-import { api } from "../aims";
+
 import { ItemType } from "./Manual";
 import { StudentContext, StudentContextType } from "../../../Context/StudentContext";
 

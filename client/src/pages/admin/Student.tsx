@@ -368,7 +368,7 @@ function Student() {
 
                         <h4 className="text-sm font-medium ">PRN: {prn}</h4>
                         <h4 className="text-xs pt-2">Name: {name}</h4>
-                        <h4 className="text-xs pt-2">Name: {email}</h4>
+                        <h4 className="text-xs pt-2">Email: {email}</h4>
                         <div className="text-xs  py-3 shrink-0 flex">
 
                           <button
